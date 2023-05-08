@@ -104,7 +104,7 @@
 <table border="0" cellpadding="0" cellspacing="0" class="image_block block-2" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
 <tr>
 <td class="pad" style="width:100%;padding-right:0px;padding-left:0px;padding-top:8px;">
-<div align="center" class="alignment" style="line-height:10px"><img alt="Reset Password" src="<?php echo base_url('assets/img/reset-password/') ?>header3.png" style="display: block; height: auto; border: 0; width: 150px; max-width: 100%; margin-bottom: 20px;" title="Reset Password" width="232"/></div>
+<div align="center" class="alignment" style="line-height:10px"><img alt="Reset Password" src="<?php echo url('assets/img/reset-password/') ?>header3.png" style="display: block; height: auto; border: 0; width: 150px; max-width: 100%; margin-bottom: 20px;" title="Reset Password" width="232"/></div>
 </td>
 </tr>
 </table>
@@ -203,7 +203,7 @@
 <table border="0" cellpadding="5" cellspacing="0" class="image_block block-1" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
 <tr>
 <td class="pad">
-<div align="center" class="alignment" style="line-height:10px"><img alt="Himanika Polije" src="<?php echo base_url('assets/img/') ?>logo.png" style="display: block; height: auto; border: 0; width: 120px; max-width: 100%;" title="Himanika Polije" width="120"/></div>
+<div align="center" class="alignment" style="line-height:10px"><img alt="Himanika Polije" src="<?php echo url('assets/img/') ?>logo.png" style="display: block; height: auto; border: 0; width: 120px; max-width: 100%;" title="Himanika Polije" width="120"/></div>
 </td>
 </tr>
 </table>

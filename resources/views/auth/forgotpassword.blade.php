@@ -10,7 +10,7 @@
 	<title><?php echo $title ?></title>
 	<meta name="description" content="Official website Himpunan Mahasiswa Teknik Informatika (Himanika) POLIJE.">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<link rel="icon" href="<?php echo base_url('assets/img/logo2-himanika.png') ?>" type="image/icon type">
+	<link rel="icon" href="<?php echo url('assets/img/logo2-himanika.png') ?>" type="image/icon type">
 
 	<?= stylesheet([
       'plugin/fontawesome/css/all.min.css',
@@ -32,7 +32,7 @@
 						<div class="row" style="background-color:black;">
 							<div class="col-lg-5 d-none d-lg-block bg-login-image pt-5">
 								<div class="col-md-2">
-									<img src="<?php echo base_url() ?>assets/img/logo.png" alt="simanika">
+									<img src="<?php echo url() ?>assets/img/logo.png" alt="simanika">
 								</div>
 
 							</div>
@@ -55,7 +55,7 @@
 											</div>
 											<div class="h6 text-right">
 												<a class="small text-white mb-4"
-													href="<?php echo base_url('login') ?>">Back to Login</a>
+													href="<?php echo url('login') ?>">Back to Login</a>
 											</div>
 										</form>
 									</div>
@@ -70,7 +70,7 @@
 
 	<script>
 		function get_api_url() {
-			return "<?php echo base_url('api/') ?>";
+			return "<?php echo url('api/') ?>";
 		}
 
 	</script>

@@ -2,9 +2,7 @@
 @section('title', 'Meeting')
 @section('content')
 
-<?php 
-	$user = $this->Func->get_profile();
-?>
+
 <div class="main-content-container container-fluid px-4">
 	<div class="page-header row no-gutters py-4">
 		<div class="col-12 col-sm-4 text-center text-sm-left mb-0">
