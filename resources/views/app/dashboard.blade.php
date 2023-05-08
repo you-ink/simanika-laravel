@@ -10,7 +10,7 @@
     <link rel="icon" href="<?php echo url('assets/img/logo2-himanika.png') ?>" type="image/icon type">
 
     <?= stylesheet([
-      'css/main.css',
+      '',
       'plugin/fontawesome/css/all.min.css',
       'plugin/bootstrap/css/bootstrap.min.css',
       'template/shards-dashboard/styles/extras.1.1.0.min.css',
@@ -18,6 +18,7 @@
       'plugin/select2/css/select2.min.css',
       'plugin/fancy-file-uploader/fancy_fileupload.css',
     ]); ?>
+    <link href="assets/css/main.css" rel="stylesheet">
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" id="main-stylesheet" data-version="1.1.0"
