@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ArtikelController;
+use App\Http\Controllers\NotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +23,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('artikel/{id}', [ArtikelController::class, 'update'])->middleware('artikel-owner');
     Route::delete('artikel/{id}', [ArtikelController::class, 'destroy'])->middleware('artikel-owner');
 
+    // Notifikasi
+    Route::post('notifikasi', [NotificationController::class, 'store']);
 
     // Auth
     Route::post('akun', [AuthController::class, 'akun']);
@@ -31,5 +34,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 // Hanya untuk testing, nanti ditaruh di group sanctum lagi
 Route::get('artikel', [ArtikelController::class, 'index']);
 Route::get('artikel/{id}', [ArtikelController::class, 'show']);
+Route::get('notifikasi', [NotificationController::class, 'index']);
+Route::get('notifikasi/{id}', [NotificationController::class, 'show']);
 
 Route::post('login', [AuthController::class, 'login']);
