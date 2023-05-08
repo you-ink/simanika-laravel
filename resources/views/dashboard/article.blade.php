@@ -1,4 +1,5 @@
-@extends('app.template')
+@extends('app.dashboard')
+@section('title', 'Article')
 @section('content')
 
 

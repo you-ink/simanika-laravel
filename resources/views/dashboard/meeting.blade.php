@@ -1,3 +1,7 @@
+@extends('app.dashboard')
+@section('title', 'Meeting')
+@section('content')
+
 <?php 
 	$user = $this->Func->get_profile();
 ?>
@@ -127,3 +131,7 @@
 		</div>
 	</div>
 </div>
+
+
+
+@endsection
