@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Artikel;
 use App\Models\ArtikelFile;
 use Illuminate\Support\Str;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -104,6 +105,12 @@ class ArtikelController extends Controller
         }
 
         $artikelDetail = ArtikelFile::insert($fileArray);
+
+        // Tambahkan Notifikasi
+        $notifikasi = Notification::create([
+            'judul' => "Artikel Baru!",
+            'isi' => "Terdapat arikel yang baru ditambahkan. Cek sekarang!"
+        ]);
 
         return response()->json([
             'error' => false,

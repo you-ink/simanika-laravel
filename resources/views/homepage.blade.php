@@ -133,13 +133,13 @@
               <span>MISI</span>
              <ul>
                 <li><i class="ri-check-line"></i> Mengadakan pelatihan yang mendukung peningkatan pengetahuan dan skill dari setiap mahasiswa</li>
-                
+
                 <li><i class="ri-check-line"></i> Mewadahi kreativitas mahasiswa untuk mengembangkan suatu kemampuan yang dimiliki</li>
-                
+
                 <li><i class="ri-check-line"></i> Mengembangkan branding media sosial guna meningkatkan informasi dan komunikasi</li>
-                
+
                 <li><i class="ri-check-line"></i> Mengaktifkan fungsi media sosial sebagai sarana pembelajaran berbasis online untuk kemajuan mahasiswa</li>
-                
+
                 <li><i class="ri-check-line"></i> Melakukan kegiatan sharing bersama antara dosen, alumni, dan mahasiswa aktif untuk menciptakan inovasi baru</li>
               </ul>
             </div>
@@ -658,7 +658,21 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+  <script>
 
+    // Enable pusher logging - don't include this in production
+    Pusher.logToConsole = true;
+
+    var pusher = new Pusher('5d8e462327809b06a3fe', {
+      cluster: 'ap1'
+    });
+
+    var channel = pusher.subscribe('simanika-channel');
+    channel.bind('simanika-event', function(data) {
+      alert(JSON.stringify(data));
+    });
+  </script>
 </body>
 
 </html>
