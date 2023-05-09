@@ -9,16 +9,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="icon" href="<?php echo url('assets/img/logo2-himanika.png') ?>" type="image/icon type">
 
-    <?= stylesheet([
-      '',
-      'plugin/fontawesome/css/all.min.css',
-      'plugin/bootstrap/css/bootstrap.min.css',
-      'template/shards-dashboard/styles/extras.1.1.0.min.css',
-      'plugin/DataTables/datatables.min.css',
-      'plugin/select2/css/select2.min.css',
-      'plugin/fancy-file-uploader/fancy_fileupload.css',
-    ]); ?>
     <link href="assets/css/main.css" rel="stylesheet">
+    <link href="assets/plugin/fontawesome/css/all.min.css" rel="stylesheet">
+    <link href="assets/plugin/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/template/shards-dashboard/styles/extras.1.1.0.min.css" rel="stylesheet">
+    <link href="assets/plugin/DataTables/datatables.min.css" rel="stylesheet">
+    <link href="assets/plugin/select2/css/select2.min.css" rel="stylesheet">
+    <link href="assets/plugin/fancy-file-uploader/fancy_fileupload.css" rel="stylesheet">
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" id="main-stylesheet" data-version="1.1.0"
@@ -36,7 +33,7 @@
                             style="line-height: 25px;">
                             <div class="d-table m-auto">
                                 <img id="main-logo" class="d-inline-block align-top mr-1" style="max-width: 25px;"
-                                    src="<?php echo url() ?>assets/img/logo2-himanika.png" alt="simanika">
+                                    src="<?php echo url('assets/img/logo2-himanika.png') ?>assets/img/logo2-himanika.png" alt="simanika">
                                 <span class="d-none d-md-inline ml-1">SIMANIKA</span>
                             </div>
                         </a>
@@ -59,53 +56,53 @@
                 <div class="nav-wrapper">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link <?php echo ($this->uri->segment(2) == 'index' || empty($this->uri->segment(2)))?'active':'' ?>"
+                            <a class="nav-link <?php echo ( request()->segment(2) == 'index' || empty( request()->segment(2)) == 'index')?'active':'' ?>"
                                 href="<?php echo url('dashboard') ?>">
                                 <i class="material-icons">home</i>
                                 <span>Dashboard</span>
                             </a>
                         </li>
-                        <?php if ($user['status'] == 1): ?>
+                        <--?php if ($user['status'] == 1): ?-->
                         <li class="nav-item">
-                            <a class="nav-link <?php echo ($this->uri->segment(2) == 'meeting')?'active':'' ?>"
+                            <a class="nav-link <?php echo (request()->segment(2) == 'meeting')?'active':'' ?>"
                                 href="<?php echo url('dashboard/meeting') ?>">
                                 <i class="material-icons">groups</i>
                                 <span>Rapat</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link <?php echo ($this->uri->segment(2) == 'program')?'active':'' ?>"
+                            <a class="nav-link <?php echo (request()->segment(2) == 'program')?'active':'' ?>"
                                 href="<?php echo url('dashboard/program') ?>">
                                 <i class="material-icons">analytics</i>
                                 <span>Program Kerja</span>
                             </a>
                         </li>
-                        <?php if ($user['level_id'] == 1): ?>
+                        <--?php if ($user['level_id'] == 1): ?>
                         <li class="nav-item">
-                            <a class="nav-link <?php echo ($this->uri->segment(2) == 'division')?'active':'' ?>"
+                            <a class="nav-link <?php echo (request()->segment(2) == 'division')?'active':'' ?>"
                                 href="<?php echo url('dashboard/division') ?>">
                                 <i class="material-icons">toc</i>
                                 <span>Data Divisi</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link <?php echo ($this->uri->segment(2) == 'position')?'active':'' ?>"
+                            <a class="nav-link <?php echo (request()->segment(2) == 'position')?'active':'' ?>"
                                 href="<?php echo url('dashboard/position') ?>">
                                 <i class="material-icons">toc</i>
                                 <span>Data Jabatan</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link <?php echo ($this->uri->segment(2) == 'member')?'active':'' ?>"
+                            <a class="nav-link <?php echo (request()->segment(2) == 'member')?'active':'' ?>"
                                 href="<?php echo url('dashboard/member') ?>">
                                 <i class="material-icons">table_chart</i>
                                 <span>Data Anggota</span>
                             </a>
                         </li>
-                        <?php endif ?>
-                        <?php endif ?>
+                        <--?php endif ?-->
+                        <--?php endif ?-->
                         <li class="nav-item">
-                            <a class="nav-link <?php echo ($this->uri->segment(2) == 'profile')?'active':'' ?>"
+                            <a class="nav-link <?php echo (request()->segment(2) == 'profile')?'active':'' ?>"
                                 href="<?php echo url('dashboard/profile') ?>">
                                 <i class="material-icons">person</i>
                                 <span>User Profile</span>
@@ -169,9 +166,9 @@
                                 <a class="nav-link dropdown-toggle text-nowrap px-3" data-toggle="dropdown" href="#"
                                     role="button" aria-haspopup="true" aria-expanded="false">
                                     <img class="user-avatar rounded-circle mr-2"
-                                        src="<?php echo url().$user_profile['foto'] ?>" alt="User Avatar"
+                                        src="<?php echo url('assets/img/logo2-himanika.png')?>" alt="User Avatar"
                                         style="width: 2.5rem !important; height: 2.5rem !important;">
-                                    <span class="d-none d-md-inline-block"><?php echo $user_profile['nama'] ?></span>
+                                    <span class="d-none d-md-inline-block"><?php echo "budi" ?></span>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-small">
                                     <a class="dropdown-item" href="<?php echo url('dashboard/profile') ?>">
@@ -197,8 +194,7 @@
                 <!-- / .main-navbar -->
 
                 <!-- ISI -->
-                @yield('content') {{-- Pemanggilan -> @section --}}
-
+                @yield('content')
 
                 <footer class="main-footer d-flex p-2 px-3 bg-white border-top">
                     <span class="copyright ml-auto my-auto mr-2">Copyright &copy; 2023
@@ -208,24 +204,23 @@
             </main>
         </div>
     </div>
-
-    <?= script([
-      'js/jquery-3.6.1.min.js',
-      'plugin/bootstrap/js/bootstrap.bundle.min.js',
-      'plugin/chartjs/Chart.min.js',
-      'plugin/shards-ui/js/shards.min.js',
-      'template/shards-dashboard/scripts/shards-dashboards.1.1.0.min.js',
-      'plugin/DataTables/datatables.min.js',
-      'plugin/sweetalert2/sweetalert2.all.min.js',
-      'plugin/select2/js/select2.min.js',
-      'plugin/fancy-file-uploader/jquery.ui.widget.js',
-      'plugin/fancy-file-uploader/jquery.fileupload.js',
-      'plugin/fancy-file-uploader/jquery.iframe-transport.js',
-      'plugin/fancy-file-uploader/jquery.fancy-fileupload.js',
-      'js/main.js',
-    ]); ?>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sharrre/2.0.1/jquery.sharrre.min.js"></script>
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/Sharrre/2.0.1/jquery.sharrre.min.js"></script>
+      <script src="assets/js/jquery-3.6.1.min.js"></script>
+      <script src="assets/plugin/bootstrap/js/bootstrap.bundle.min.js"></script>
+      <script src="assets/plugin/chartjs/Chart.min.js"></script>
+      <script src="assets/plugin/shards-ui/js/shards.min.js"></script>
+      <script src="assets/template/shards-dashboard/scripts/shards-dashboards.1.1.0.min.js"></script>
+      <script src="assets/plugin/DataTables/datatables.min.js"></script>
+      <script src="assets/plugin/sweetalert2/sweetalert2.all.min.js"></script>
+      <script src="assets/plugin/select2/js/select2.min.js"></script>
+      <script src="assets/plugin/fancy-file-uploader/jquery.ui.widget.js"></script>
+      <script src="assets/plugin/fancy-file-uploader/jquery.fileupload.js"></script>
+      <script src="assets/plugin/fancy-file-uploader/jquery.iframe-transport.js"></script>
+      <script src="assets/plugin/fancy-file-uploader/jquery.fancy-fileupload.js"></script>
+      <script src="assets/js/main.js"></script>
+    
+   
 
     @stack('script') {{-- Pemanggilan -> @push --}}
 
