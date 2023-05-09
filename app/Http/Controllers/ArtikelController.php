@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use App\Events\ContentNotification;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\ArtikelResource;
 use Illuminate\Support\Facades\Storage;
@@ -108,9 +109,11 @@ class ArtikelController extends Controller
 
         // Tambahkan Notifikasi
         $notifikasi = Notification::create([
-            'judul' => "Artikel Baru!",
-            'isi' => "Terdapat arikel yang baru ditambahkan. Cek sekarang!"
+            'judul' => "Artikel Baru",
+            'isi' => "Terdapat arikel yang baru ditambahkan. Baca sekarang!"
         ]);
+
+        event(new ContentNotification("Terdapat arikel yang baru ditambahkan. Baca sekarang!"));
 
         return response()->json([
             'error' => false,
