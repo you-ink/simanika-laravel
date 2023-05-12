@@ -2,9 +2,7 @@
 @section('title', 'User_Profile')
 @section('content')
 
-<?php 
-	$data_user = $this->Func->get_profile();
-?>
+
 <div class="main-content-container container-fluid px-4">
 	<div class="page-header row no-gutters py-4">
 		<div class="col-12 col-sm-4 text-center text-sm-left mb-0">
@@ -18,10 +16,10 @@
 				<div class="card-header border-bottom text-center">
 					<div class="mb-3 mx-auto">
 						<img class="user-avatar rounded-circle mr-2"
-							src="<?php echo base_url().$data_user['foto'] ?>" alt="User Avatar" width="150" height="150">
+						src="<?php echo url('assets/img/user.png')?>" alt="User Avatar" width="150" height="150">
 					</div>
-					<h4 class="mb-0"><?php echo $data_user['nama'] ?></h4>
-					<span class="text-muted d-block mb-2"><?php echo $data_user['jabatan']." • ".$data_user['divisi'] ?></span>
+					<h4 class="mb-0"><?php echo "bubu" ?></h4>
+					<span class="text-muted d-block mb-2"></span>
 					<button type="button" class="mb-2 btn btn-sm btn-pill btn-outline-primary mr-2" data-toggle="modal"
 						data-target="#crudModal"><i class="fas fa-pen mr-1"></i>Edit</button>
 				</div>
@@ -40,33 +38,33 @@
 									<div class="form-row">
 										<div class="form-group col-md-12">
 											<label for="nama">Nama Lengkap</label>
-											<input type="text" class="form-control" id="nama" placeholder="Nama lengkap" value="<?php echo $data_user['nama'] ?>"> 
+											<input type="text" class="form-control" id="nama" placeholder="Nama lengkap" value="<?php echo "bubu" ?>"> 
 										</div>
 									</div>
 									<div class="form-row">
 										<div class="form-group col-md-6">
 											<label for="nim">NIM</label>
-											<input type="text" class="form-control" id="nim" placeholder="NIM" value="<?php echo $data_user['nim'] ?>" readonly> 
+											<input type="text" class="form-control" id="nim" placeholder="NIM" value="<?php echo "E31234567" ?>" readonly> 
 										</div>
 										<div class="form-group col-md-6">
 											<label for="angkatan">Angkatan</label>
-											<input type="text" class="form-control" id="angkatan" placeholder="Angkatan" value="<?php echo $data_user['angkatan'] ?>"> 
+											<input type="text" class="form-control" id="angkatan" placeholder="Angkatan" value="<?php echo "21" ?>"> 
 										</div>
 									</div>
 									<div class="form-row">
 										<div class="form-group col-md-6">
 											<label for="email">Email</label>
-											<input type="email" class="form-control" id="email" placeholder="Email" value="<?php echo $data_user['email'] ?>" readonly> 
+											<input type="email" class="form-control" id="email" placeholder="Email" value="<?php echo "bubu@gmail.com" ?>" readonly> 
 										</div>
 										<div class="form-group col-md-6">
 											<label for="telp">No Telepon</label>
-											<input type="text" class="form-control" id="telp" placeholder="No. Hanphone" value="<?php echo $data_user['telp'] ?>"> 
+											<input type="text" class="form-control" id="telp" placeholder="No. Hanphone" value="<?php echo "0888888888" ?>"> 
 										</div>
 									</div>
 									<div class="form-row">
 										<div class="form-group col-md-12">
 											<label for="alamat">Alamat</label>
-											<textarea class="form-control" id="alamat" rows="3"><?php echo $data_user['alamat'] ?></textarea>
+											<textarea class="form-control" id="alamat" rows="3"><?php echo "jonggol" ?></textarea>
 										</div>
 									</div>
 									<div class="form-row">
@@ -82,7 +80,7 @@
 																Bukti Kesanggupan
 															</div>
 															<div class="ff_fileupload_fileinfo" id="buktiMahasiswaInfo">
-																<a href="<?php echo base_url($data_user['bukti_kesanggupan']) ?>">Lihat File</a>
+																
 															</div>
 														</td>
 													</tr>
@@ -101,7 +99,7 @@
 																Bukti Mahasiswa
 															</div>
 															<div class="ff_fileupload_fileinfo" id="buktiMahasiswaInfo">
-																<a href="<?php echo base_url($data_user['bukti_mahasiswa']) ?>">Lihat File</a>
+																Lihat File</a>
 															</div>
 														</td>
 													</tr>

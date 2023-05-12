@@ -2,9 +2,7 @@
 @section('title', 'Main')
 @section('content')
 
-<?php 
-	$data_user = $this->Func->get_profile();
-?>
+
 <div class="main-content-container container-fluid px-4">
 	<!-- Page Header -->
 	<div class="page-header row no-gutters py-4">
@@ -14,7 +12,7 @@
 		</div>
 	</div>
 
-	<?php if ($data_user['status'] != 1): ?>
+	
 		<div class="alert alert-warning d-flex align-items-center" role="alert">
 		  	<svg width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
 		    	<path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
@@ -23,7 +21,7 @@
 		    	Anda belum resmi menjadi pengurus Himanika. Selalu pantau kotak masuk dan spam pada email anda untuk mengetahui tanggal wawancara.
 		  	</div>
 		</div>
-	<?php endif ?>
+	
 
 
 	<!-- End Page Header -->
@@ -92,7 +90,7 @@
 	</div>
 
 
-	<?php if ($data_user['level_id'] == 1): ?>
+	
 		<div class="row">
 			<!-- Users Stats -->
 			<div class="col-lg-12 col-md-12 col-sm-12 mb-4">
@@ -125,7 +123,7 @@
 			</div>
 			<!-- End Users Stats -->
 		</div>
-	<?php endif ?>
+	
 
 
 	<!-- End Small Stats Blocks -->

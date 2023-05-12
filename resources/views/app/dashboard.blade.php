@@ -4,22 +4,20 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Dashboard - @yield('title')title>
+    <title>Dashboard - @yield('title')</title>
     <meta name="description" content="Official website Himpunan Mahasiswa Teknik Informatika (Himanika) POLIJE.">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" href="<?php echo url('assets/img/logo2-himanika.png') ?>" type="image/icon type">
+    <link rel="icon" href="'assets/img/logo2-himanika.png'" type="image/icon type">
 
-    <link href="assets/css/main.css" rel="stylesheet">
-    <link href="assets/plugin/fontawesome/css/all.min.css" rel="stylesheet">
-    <link href="assets/plugin/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/template/shards-dashboard/styles/extras.1.1.0.min.css" rel="stylesheet">
-    <link href="assets/plugin/DataTables/datatables.min.css" rel="stylesheet">
-    <link href="assets/plugin/select2/css/select2.min.css" rel="stylesheet">
-    <link href="assets/plugin/fancy-file-uploader/fancy_fileupload.css" rel="stylesheet">
-
+    <link href="<?= url('/assets/css/main.css') ?>" rel="stylesheet">
+    <link href="<?= url('/assets/plugin/fontawesome/css/all.min.css') ?>" rel="stylesheet">
+    <link href="<?= url('/assets/plugin/bootstrap/css/bootstrap.min.css') ?>" rel="stylesheet">
+    <link href="<?= url('/assets/template/shards-dashboard/styles/extras.1.1.0.min.css') ?>" rel="stylesheet">
+    <link href="<?= url('/assets/plugin/DataTables/datatables.min.css') ?>" rel="stylesheet">
+    <link href="<?= url('/assets/plugin/select2/css/select2.min.css') ?>" rel="stylesheet">
+    <link href="<?= url('/assets/plugin/fancy-file-uploader/fancy_fileupload.css') ?>" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" id="main-stylesheet" data-version="1.1.0"
-        href="<?php echo url('assets/template/shards-dashboard/') ?>styles/shards-dashboards.1.1.0.min.css">
+    <link rel="stylesheet" id="main-stylesheet" data-version="1.1.0" href="<?php echo url('assets/template/shards-dashboard/styles/shards-dashboards.1.1.0.min.css') ?>">
 </head>
 
 <body class="h-100">
@@ -33,7 +31,7 @@
                             style="line-height: 25px;">
                             <div class="d-table m-auto">
                                 <img id="main-logo" class="d-inline-block align-top mr-1" style="max-width: 25px;"
-                                    src="<?php echo url('assets/img/logo2-himanika.png') ?>assets/img/logo2-himanika.png" alt="simanika">
+                                    src="<?php echo url('assets/img/logo.png') ?>" alt="simanika">
                                 <span class="d-none d-md-inline ml-1">SIMANIKA</span>
                             </div>
                         </a>
@@ -62,7 +60,7 @@
                                 <span>Dashboard</span>
                             </a>
                         </li>
-                        <--?php if ($user['status'] == 1): ?-->
+                        
                         <li class="nav-item">
                             <a class="nav-link <?php echo (request()->segment(2) == 'meeting')?'active':'' ?>"
                                 href="<?php echo url('dashboard/meeting') ?>">
@@ -72,12 +70,12 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link <?php echo (request()->segment(2) == 'program')?'active':'' ?>"
-                                href="<?php echo url('dashboard/program') ?>">
+                                href="<?php echo url('dashboard/work_program') ?>">
                                 <i class="material-icons">analytics</i>
                                 <span>Program Kerja</span>
                             </a>
                         </li>
-                        <--?php if ($user['level_id'] == 1): ?>
+                    
                         <li class="nav-item">
                             <a class="nav-link <?php echo (request()->segment(2) == 'division')?'active':'' ?>"
                                 href="<?php echo url('dashboard/division') ?>">
@@ -99,11 +97,10 @@
                                 <span>Data Anggota</span>
                             </a>
                         </li>
-                        <--?php endif ?-->
-                        <--?php endif ?-->
+
                         <li class="nav-item">
                             <a class="nav-link <?php echo (request()->segment(2) == 'profile')?'active':'' ?>"
-                                href="<?php echo url('dashboard/profile') ?>">
+                                href="<?php echo url('dashboard/user_profile') ?>">
                                 <i class="material-icons">person</i>
                                 <span>User Profile</span>
                             </a>
@@ -166,7 +163,7 @@
                                 <a class="nav-link dropdown-toggle text-nowrap px-3" data-toggle="dropdown" href="#"
                                     role="button" aria-haspopup="true" aria-expanded="false">
                                     <img class="user-avatar rounded-circle mr-2"
-                                        src="<?php echo url('assets/img/logo2-himanika.png')?>" alt="User Avatar"
+                                        src="<?php echo url('assets/img/user.png')?>" alt="User Avatar"
                                         style="width: 2.5rem !important; height: 2.5rem !important;">
                                     <span class="d-none d-md-inline-block"><?php echo "budi" ?></span>
                                 </a>
@@ -175,7 +172,7 @@
                                         <i class="material-icons">&#xE7FD;</i> Profile
                                     </a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item text-danger btn-logout" href="javascript:void(0)">
+                                    <a class="dropdown-item text-danger btn-logout" href="<?php echo url('/') ?>">
                                         <i class="material-icons text-danger">&#xE879;</i> Logout
                                     </a>
                                 </div>
@@ -206,19 +203,19 @@
     </div>
     
       <script src="https://cdnjs.cloudflare.com/ajax/libs/Sharrre/2.0.1/jquery.sharrre.min.js"></script>
-      <script src="assets/js/jquery-3.6.1.min.js"></script>
-      <script src="assets/plugin/bootstrap/js/bootstrap.bundle.min.js"></script>
-      <script src="assets/plugin/chartjs/Chart.min.js"></script>
-      <script src="assets/plugin/shards-ui/js/shards.min.js"></script>
-      <script src="assets/template/shards-dashboard/scripts/shards-dashboards.1.1.0.min.js"></script>
-      <script src="assets/plugin/DataTables/datatables.min.js"></script>
-      <script src="assets/plugin/sweetalert2/sweetalert2.all.min.js"></script>
-      <script src="assets/plugin/select2/js/select2.min.js"></script>
-      <script src="assets/plugin/fancy-file-uploader/jquery.ui.widget.js"></script>
-      <script src="assets/plugin/fancy-file-uploader/jquery.fileupload.js"></script>
-      <script src="assets/plugin/fancy-file-uploader/jquery.iframe-transport.js"></script>
-      <script src="assets/plugin/fancy-file-uploader/jquery.fancy-fileupload.js"></script>
-      <script src="assets/js/main.js"></script>
+      <script src="<?= url('assets/js/jquery-3.6.1.min.js') ?>"></script>
+      <script src="<?= url('assets/plugin/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
+      <script src="<?= url('assets/plugin/chartjs/Chart.min.js') ?>"></script>
+      <script src="<?= url('assets/plugin/shards-ui/js/shards.min.js') ?>"></script>
+      <script src="<?= url('assets/template/shards-dashboard/scripts/shards-dashboards.1.1.0.min.js') ?>"></script>
+      <script src="<?= url('assets/plugin/DataTables/datatables.min.js') ?>"></script>
+      <script src="<?= url('assets/plugin/sweetalert2/sweetalert2.all.min.js') ?>"></script>
+      <script src="<?= url('assets/plugin/select2/js/select2.min.js') ?>"></script>
+      <script src="<?= url('assets/plugin/fancy-file-uploader/jquery.ui.widget.js') ?>"></script>
+      <script src="<?= url('assets/plugin/fancy-file-uploader/jquery.fileupload.js') ?>"></script>
+      <script src="<?= url('assets/plugin/fancy-file-uploader/jquery.iframe-transport.js') ?>"></script>
+      <script src="<?= url('assets/plugin/fancy-file-uploader/jquery.fancy-fileupload.js') ?>"></script>
+      <script src="<?= url('assets/js/dashboard-main.js') ?>"></script>
     
    
 
