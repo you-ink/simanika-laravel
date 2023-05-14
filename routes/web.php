@@ -19,6 +19,13 @@ Route::get('/', function () {
     return view('homepage');
 });
 
+Route::get('/login', function () {
+    return view('auth.login');
+});
+Route::get('/register', function () {
+    return view('auth.register');
+});
+
 Route::prefix('dashboard')->group(function () {
     // Rute untuk halaman utama dashboard
     Route::get('/', function () {

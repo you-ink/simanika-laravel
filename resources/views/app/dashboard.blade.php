@@ -17,7 +17,8 @@
     <link href="<?= url('/assets/plugin/select2/css/select2.min.css') ?>" rel="stylesheet">
     <link href="<?= url('/assets/plugin/fancy-file-uploader/fancy_fileupload.css') ?>" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" id="main-stylesheet" data-version="1.1.0" href="<?php echo url('assets/template/shards-dashboard/styles/shards-dashboards.1.1.0.min.css') ?>">
+    <link rel="stylesheet" id="main-stylesheet" data-version="1.1.0"
+        href="<?php echo url('assets/template/shards-dashboard/styles/shards-dashboards.1.1.0.min.css') ?>">
 </head>
 
 <body class="h-100">
@@ -60,12 +61,19 @@
                                 <span>Dashboard</span>
                             </a>
                         </li>
-                        
+
                         <li class="nav-item">
                             <a class="nav-link <?php echo (request()->segment(2) == 'meeting')?'active':'' ?>"
                                 href="<?php echo url('dashboard/meeting') ?>">
                                 <i class="material-icons">groups</i>
                                 <span>Rapat</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link <?php echo (request()->segment(2) == 'division')?'active':'' ?>"
+                                href="<?php echo url('dashboard/artikel') ?>">
+                                <i class="material-icons">toc</i>
+                                <span>Artikel</span>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -75,7 +83,7 @@
                                 <span>Program Kerja</span>
                             </a>
                         </li>
-                    
+
                         <li class="nav-item">
                             <a class="nav-link <?php echo (request()->segment(2) == 'division')?'active':'' ?>"
                                 href="<?php echo url('dashboard/division') ?>">
@@ -124,41 +132,49 @@
                             </div>
                         </form>
                         <ul class="navbar-nav border-left flex-row ">
-                            <!-- <li class="nav-item border-right dropdown notifications">
-          <a class="nav-link nav-link-icon text-center" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <div class="nav-link-icon__wrapper">
-              <i class="material-icons">&#xE7F4;</i>
-              <span class="badge badge-pill badge-danger">2</span>
-            </div>
-          </a>
-          <div class="dropdown-menu dropdown-menu-small" aria-labelledby="dropdownMenuLink">
-            <a class="dropdown-item" href="#">
-              <div class="notification__icon-wrapper">
-                <div class="notification__icon">
-                  <i class="material-icons">&#xE6E1;</i>
-                </div>
-              </div>
-              <div class="notification__content">
-                <span class="notification__category">Analytics</span>
-                <p>Your website’s active users count increased by
-                  <span class="text-success text-semibold">28%</span> in the last week. Great job!</p>
-              </div>
-            </a>
-            <a class="dropdown-item" href="#">
-              <div class="notification__icon-wrapper">
-                <div class="notification__icon">
-                  <i class="material-icons">&#xE8D1;</i>
-                </div>
-              </div>
-              <div class="notification__content">
-                <span class="notification__category">Sales</span>
-                <p>Last week your store’s sales count decreased by
-                  <span class="text-danger text-semibold">5.52%</span>. It could have been worse!</p>
-              </div>
-            </a>
-            <a class="dropdown-item notification__all text-center" href="#"> View all Notifications </a>
-          </div>
-        </li> -->
+
+
+                            <li class="nav-item border-right dropdown notifications">
+                                <a class="nav-link nav-link-icon text-center" href="#" role="button"
+                                    id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+                                    <div class="nav-link-icon__wrapper">
+                                        <i class="material-icons">&#xE7F4;</i>
+                                        <span class="badge badge-pill badge-danger">2</span>
+                                    </div>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-small" aria-labelledby="dropdownMenuLink">
+                                    <a class="dropdown-item" href="#">
+                                        <div class="notification__icon-wrapper">
+                                            <div class="notification__icon">
+                                                <i class="material-icons">&#xE6E1;</i>
+                                            </div>
+                                        </div>
+                                        <div class="notification__content">
+                                            <span class="notification__category">Rapat Proker</span>
+                                            <p>Rapat Disnat ke 3</p>
+                                                <p><span class="text-danger text-semibold">12/06/2023</span></p>
+                                        </div>
+                                    </a>
+                                    <a class="dropdown-item" href="#">
+                                        <div class="notification__icon-wrapper">
+                                            <div class="notification__icon">
+                                                <i class="material-icons">&#xE8D1;</i>
+                                            </div>
+                                        </div>
+                                        <div class="notification__content">
+                                            <span class="notification__category">Rapat Resmi</span>
+                                            <p>Rapat Penerimaan anggota baru</p>
+                                                <p> <span class="text-success text-semibold">12/05/2023</span></p>
+                                        </div>
+                                    </a>
+                                    <a class="dropdown-item notification__all text-center"  href="<?php echo url('dashboard/notifikasi') ?>"> View all
+                                        Notifications </a>
+                                </div>
+                            </li>
+
+
+
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle text-nowrap px-3" data-toggle="dropdown" href="#"
                                     role="button" aria-haspopup="true" aria-expanded="false">
@@ -172,7 +188,7 @@
                                         <i class="material-icons">&#xE7FD;</i> Profile
                                     </a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item text-danger btn-logout" href="<?php echo url('/') ?>">
+                                    <a class="dropdown-item text-danger btn-logout" href="<?php echo url('/login') ?>">
                                         <i class="material-icons text-danger">&#xE879;</i> Logout
                                     </a>
                                 </div>
@@ -201,23 +217,23 @@
             </main>
         </div>
     </div>
-    
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/Sharrre/2.0.1/jquery.sharrre.min.js"></script>
-      <script src="<?= url('assets/js/jquery-3.6.1.min.js') ?>"></script>
-      <script src="<?= url('assets/plugin/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
-      <script src="<?= url('assets/plugin/chartjs/Chart.min.js') ?>"></script>
-      <script src="<?= url('assets/plugin/shards-ui/js/shards.min.js') ?>"></script>
-      <script src="<?= url('assets/template/shards-dashboard/scripts/shards-dashboards.1.1.0.min.js') ?>"></script>
-      <script src="<?= url('assets/plugin/DataTables/datatables.min.js') ?>"></script>
-      <script src="<?= url('assets/plugin/sweetalert2/sweetalert2.all.min.js') ?>"></script>
-      <script src="<?= url('assets/plugin/select2/js/select2.min.js') ?>"></script>
-      <script src="<?= url('assets/plugin/fancy-file-uploader/jquery.ui.widget.js') ?>"></script>
-      <script src="<?= url('assets/plugin/fancy-file-uploader/jquery.fileupload.js') ?>"></script>
-      <script src="<?= url('assets/plugin/fancy-file-uploader/jquery.iframe-transport.js') ?>"></script>
-      <script src="<?= url('assets/plugin/fancy-file-uploader/jquery.fancy-fileupload.js') ?>"></script>
-      <script src="<?= url('assets/js/dashboard-main.js') ?>"></script>
-    
-   
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sharrre/2.0.1/jquery.sharrre.min.js"></script>
+    <script src="<?= url('assets/js/jquery-3.6.1.min.js') ?>"></script>
+    <script src="<?= url('assets/plugin/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
+    <script src="<?= url('assets/plugin/chartjs/Chart.min.js') ?>"></script>
+    <script src="<?= url('assets/plugin/shards-ui/js/shards.min.js') ?>"></script>
+    <script src="<?= url('assets/template/shards-dashboard/scripts/shards-dashboards.1.1.0.min.js') ?>"></script>
+    <script src="<?= url('assets/plugin/DataTables/datatables.min.js') ?>"></script>
+    <script src="<?= url('assets/plugin/sweetalert2/sweetalert2.all.min.js') ?>"></script>
+    <script src="<?= url('assets/plugin/select2/js/select2.min.js') ?>"></script>
+    <script src="<?= url('assets/plugin/fancy-file-uploader/jquery.ui.widget.js') ?>"></script>
+    <script src="<?= url('assets/plugin/fancy-file-uploader/jquery.fileupload.js') ?>"></script>
+    <script src="<?= url('assets/plugin/fancy-file-uploader/jquery.iframe-transport.js') ?>"></script>
+    <script src="<?= url('assets/plugin/fancy-file-uploader/jquery.fancy-fileupload.js') ?>"></script>
+    <script src="<?= url('assets/js/dashboard-main.js') ?>"></script>
+
+
 
     @stack('script') {{-- Pemanggilan -> @push --}}
 

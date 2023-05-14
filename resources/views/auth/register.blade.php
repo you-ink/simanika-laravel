@@ -128,7 +128,7 @@
 								</form>
 								<hr>
 								<div class="text-center">
-									<a class="small" href="<?php echo url('login') ?>" style="color:white;">Already
+									<a class="small" href="<?php echo url('/login') ?>" style="color:white;">Already
 										have an account? Login!</a>
 								</div>
 							</div>

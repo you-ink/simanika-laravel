@@ -59,7 +59,7 @@
 									</form>
 									<div class="row">
 									    <div class="text-left col-6">
-										    <a class="small text-white mb-4" href="<?php echo url('register') ?>">Create an Account!</a>
+										    <a class="small text-white mb-4" href="<?php echo url('/register') ?>">Create an Account!</a>
                                         </div>
                                         <div class="text-right col-6">
 											<a class="small text-white mb-4" href="<?php echo url('forgotpassword') ?>">Forgot Your Password?</a>
