@@ -27,7 +27,7 @@ class ArtikelController extends Controller
         return response()->json([
             'error' => false,
             'message' => 'Berhasil mengambil data.',
-            'data' => ArtikelResource::collection($artikel)
+            'data' => ArtikelResource::collection($artikel->loadMissing(['penulis:id,nim,nama,angkatan', 'divisi:id,nama']))
         ], 200);
     }
 
@@ -36,7 +36,7 @@ class ArtikelController extends Controller
      */
     public function show($id)
     {
-        $artikel = Artikel::with(['penulis:id,nim,nama,angkatan', 'divisi:id,nama'])->findOrFail($id);
+        $artikel = Artikel::with(['penulis:id,nim,nama,angkatan', 'divisi:id,nama', 'file'])->findOrFail($id);
         return response()->json([
             'error' => false,
             'message' => 'Berhasil mengambil data.',
@@ -73,7 +73,7 @@ class ArtikelController extends Controller
         }
 
         // Upload File
-        $namaSampul = $this->generateRandomString(33);
+        $namaSampul = $this->generateRandomString(33).time();
         $ekstensiSampul = $request->sampul->extension();
 
         $path = Storage::putFileAs('public/images/artikel/sampul', $request->sampul, $namaSampul.".".$ekstensiSampul);
@@ -92,7 +92,7 @@ class ArtikelController extends Controller
         $fileArray = [];
         foreach ($request->file as $file) {
             // Upload File
-            $namaFile = $this->generateRandomString(33);
+            $namaFile = $this->generateRandomString(33).time();
             $ekstensiFile = $file->extension();
 
             $path = Storage::putFileAs('public/images/artikel/file', $file, $namaFile.".".$ekstensiFile);

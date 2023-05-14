@@ -28,7 +28,9 @@ class ArtikelResource extends JsonResource
             'konten' => $this->konten,
             'sampul' => $this->sampul,
             'tanggal' => date_format($this->created_at, "Y-m-d h:i:s"),
-            'file' => $this->file->pluck('file')->toArray(),
+            'file' => $this->whenLoaded('file', function () {
+                return $this->file->pluck('file')->toArray();
+            }),
             'penulis' => $this->whenLoaded('penulis'),
             'divisi' => $this->whenLoaded('divisi'),
         ];

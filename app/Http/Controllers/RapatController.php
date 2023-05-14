@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 
-class MeetingController extends Controller
+class RapatController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -26,7 +26,7 @@ class MeetingController extends Controller
         return response()->json([
             'error' => false,
             'message' => 'Berhasil mengambil data.',
-            'data' => RapatResource::collection($rapat)
+            'data' => RapatResource::collection($rapat->loadMissing(['divisi:id,nama']))
         ], 200);
     }
 
@@ -35,7 +35,7 @@ class MeetingController extends Controller
      */
     public function show($id)
     {
-        $rapat = Rapat::with(['divisi:id,nama'])->findOrFail($id);
+        $rapat = Rapat::with(['divisi:id,nama', 'presensi:id,waktu_hadir,foto,rapat_id,user_id,peran'])->findOrFail($id);
         return response()->json([
             'error' => false,
             'message' => 'Berhasil mengambil data.',
@@ -55,7 +55,6 @@ class MeetingController extends Controller
         ], [
             'required' => ':attribute harus diisi.',
             'date' => ':attribute harus berupa tanggal.',
-            'time' => ':attribute harus berupa waktu.',
         ]);
 
         if ($validator->fails()) {

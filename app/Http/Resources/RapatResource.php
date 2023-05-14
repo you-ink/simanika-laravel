@@ -24,6 +24,13 @@ class RapatResource extends JsonResource
             'nama' => $this->nama,
             'tipe' => $this->tipe,
             'divisi' => $this->whenLoaded('divisi'),
+            'presensi' => $this->whenLoaded('presensi', function(){
+                return collect($this->presensi)->each(function ($presensiItem) {
+                    $presensiItem->detail_user = collect($presensiItem->user)->only(['id', 'nama'])->toArray();
+                    unset($presensiItem->user);
+                    return $presensiItem;
+                });
+            }),
         ];
     }
 }

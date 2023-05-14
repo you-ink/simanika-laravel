@@ -3,9 +3,10 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\MeetingController;
+use App\Http\Controllers\RapatController;
 use App\Http\Controllers\ArtikelController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\PresensiRapatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,10 +26,13 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::delete('artikel/{id}', [ArtikelController::class, 'destroy'])->middleware('artikel-owner');
 
     // Rapat
-    Route::post('rapat', [MeetingController::class, 'store']);
-    Route::put('rapat/{id}', [MeetingController::class, 'update']);
-    Route::delete('rapat/{id}', [MeetingController::class, 'destroy']);
-    Route::post('rapat/upload_notulensi', [MeetingController::class, 'upload_notulensi']);
+    Route::post('rapat', [RapatController::class, 'store']);
+    Route::put('rapat/{id}', [RapatController::class, 'update']);
+    Route::delete('rapat/{id}', [RapatController::class, 'destroy']);
+    Route::post('rapat/upload_notulensi', [RapatController::class, 'upload_notulensi']);
+
+    // Presensi Rapat
+    Route::post('presensi', [PresensiRapatController::class, 'store']);
 
     // Notifikasi
     Route::post('notifikasi', [NotificationController::class, 'store']);
@@ -42,10 +46,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
 Route::get('artikel', [ArtikelController::class, 'index']);
 Route::get('artikel/{id}', [ArtikelController::class, 'show']);
 
-Route::get('rapat', [MeetingController::class, 'index']);
-Route::get('rapat/{id}', [MeetingController::class, 'show']);
+Route::get('rapat', [RapatController::class, 'index']);
+Route::get('rapat/{id}', [RapatController::class, 'show']);
 
 Route::get('notifikasi', [NotificationController::class, 'index']);
 Route::get('notifikasi/{id}', [NotificationController::class, 'show']);
 
 Route::post('login', [AuthController::class, 'login']);
+Route::post('register', [AuthController::class, 'register']);
+Route::post('lengkapi-profil', [AuthController::class, 'complete_profile']);
