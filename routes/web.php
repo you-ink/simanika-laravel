@@ -25,6 +25,9 @@ Route::get('/login', function () {
 Route::get('/register', function () {
     return view('auth.register');
 });
+Route::get('/forgotpassword', function () {
+    return view('auth.forgotpassword');
+});
 
 Route::prefix('dashboard')->group(function () {
     // Rute untuk halaman utama dashboard
