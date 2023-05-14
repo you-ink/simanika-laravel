@@ -94,6 +94,7 @@ class AuthController extends Controller
 
         $detailuser = DetailUser::create([
             'user_id' => $user_id,
+            'foto' =>  '/assets/img/user.png',
             'jabatan_id' => 6
         ]);
 
