@@ -77,6 +77,13 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link <?php echo (request()->segment(2) == 'division')?'active':'' ?>"
+                                href="<?php echo url('dashboard/notifikasi') ?>">
+                                <i class="material-icons">toc</i>
+                                <span>Artikel</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link <?php echo (request()->segment(2) == 'member')?'active':'' ?>"
                                 href="<?php echo url('dashboard/member') ?>">
                                 <i class="material-icons">table_chart</i>
