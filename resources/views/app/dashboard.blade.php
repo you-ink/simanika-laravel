@@ -69,6 +69,7 @@
                                 <span>Rapat</span>
                             </a>
                         </li>
+
                         <li class="nav-item">
                             <a class="nav-link <?php echo (request()->segment(2) == 'division')?'active':'' ?>"
                                 href="<?php echo url('dashboard/artikel') ?>">
@@ -76,13 +77,15 @@
                                 <span>Artikel</span>
                             </a>
                         </li>
+
                         <li class="nav-item">
                             <a class="nav-link <?php echo (request()->segment(2) == 'division')?'active':'' ?>"
                                 href="<?php echo url('dashboard/notifikasi') ?>">
-                                <i class="material-icons">toc</i>
-                                <span>Artikel</span>
+                                <i class="material-icons">&#xE7F4;</i>
+                                <span>Notifikasi</span>
                             </a>
                         </li>
+
                         <li class="nav-item">
                             <a class="nav-link <?php echo (request()->segment(2) == 'member')?'active':'' ?>"
                                 href="<?php echo url('dashboard/member') ?>">
