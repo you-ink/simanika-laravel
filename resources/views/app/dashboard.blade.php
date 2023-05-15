@@ -71,7 +71,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link <?php echo (request()->segment(2) == 'division')?'active':'' ?>"
+                            <a class="nav-link <?php echo (request()->segment(2) == 'artikel')?'active':'' ?>"
                                 href="<?php echo url('dashboard/artikel') ?>">
                                 <i class="material-icons">toc</i>
                                 <span>Artikel</span>
@@ -79,7 +79,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link <?php echo (request()->segment(2) == 'division')?'active':'' ?>"
+                            <a class="nav-link <?php echo (request()->segment(2) == 'notifikasi')?'active':'' ?>"
                                 href="<?php echo url('dashboard/notifikasi') ?>">
                                 <i class="material-icons">&#xE7F4;</i>
                                 <span>Notifikasi</span>

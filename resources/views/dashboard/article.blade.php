@@ -1,5 +1,8 @@
 @extends('app.dashboard')
 @section('title', 'Article')
+
+@include('dashboard.js.article')
+
 @section('content')
 
 <div class="main-content-container container-fluid px-4">

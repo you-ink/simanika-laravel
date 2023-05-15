@@ -29,7 +29,7 @@
                         <div class="row" style="background-color:black;">
                             <div class="col-lg-5 d-none d-lg-block bg-login-image pt-5">
                                 <div class="col-md-2">
-                                    <img src="<?php echo url('assets/img/logo.png') ?>" alt="simanika">
+                                    <img src="<?php echo url('assets/img/img/logo.png') ?>" alt="simanika">
                                 </div>
 
                             </div>

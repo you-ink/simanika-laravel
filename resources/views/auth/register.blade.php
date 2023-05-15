@@ -39,7 +39,7 @@
                         <div class="row">
                             <div class="col-lg-5 d-none d-lg-block bg-login-image">
                                 <div class="col-12 pt-5">
-                                    <img src="<?php echo url('assets/img/logo.png') ?>" alt="simanika"
+                                    <img src="<?php echo url('assets/img/img/logo.png') ?>" alt="simanika"
                                         style="width:400px;height:400px;">
                                 </div>
                             </div>

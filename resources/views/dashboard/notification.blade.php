@@ -1,5 +1,8 @@
 @extends('app.dashboard')
 @section('title', 'notification')
+
+@include('dashboard.js.notifikasi')
+
 @section('content')
 
 <div class="main-content-container container-fluid px-4">

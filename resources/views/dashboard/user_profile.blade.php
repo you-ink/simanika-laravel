@@ -1,5 +1,8 @@
 @extends('app.dashboard')
 @section('title', 'User_Profile')
+
+@include('dashboard.js.User_Profile')
+
 @section('content')
 
 
