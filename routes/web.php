@@ -59,4 +59,9 @@ Route::prefix('dashboard')->group(function () {
     Route::get('/user_profile', function () {
         return view('dashboard.user_profile');
     })->name('dashboard.user_profile');
+
+     // Rute untuk halaman artikel di dashboard
+     Route::get('/presensi', function () {
+        return view('dashboard.presensi');
+    })->name('dashboard.presensi');
 });
