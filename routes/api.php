@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\RapatController;
 use App\Http\Controllers\ArtikelController;
 use App\Http\Controllers\NotificationController;
@@ -40,6 +41,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     // Auth
     Route::post('akun', [AuthController::class, 'akun']);
     Route::post('logout', [AuthController::class, 'logout']);
+    Route::post('lengkapi_profil', [AuthController::class, 'complete_profile']);
+    Route::post('edit_profil', [AuthController::class, 'update_profile']);
+    Route::post('ubah_password', [AuthController::class, 'update_password']);
 });
 
 // Hanya untuk testing, nanti ditaruh di group sanctum lagi
@@ -52,6 +56,7 @@ Route::get('rapat/{id}', [RapatController::class, 'show']);
 Route::get('notifikasi', [NotificationController::class, 'index']);
 Route::get('notifikasi/{id}', [NotificationController::class, 'show']);
 
+Route::get('user', [UserController::class, 'index']);
+
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
-Route::post('lengkapi-profil', [AuthController::class, 'complete_profile']);
