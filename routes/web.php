@@ -47,7 +47,7 @@ Route::prefix('dashboard')->group(function () {
 
     // Rute untuk halaman rapat di dashboard
     Route::get('/notifikasi', function () {
-        return "view('dashboard.notification')";
+        return view('dashboard.notification');
     })->name('dashboard.notifikasi');
 
     // Rute untuk halaman rapat di dashboard
