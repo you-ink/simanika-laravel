@@ -40,16 +40,6 @@ Route::prefix('dashboard')->group(function () {
         return view('dashboard.article');
     })->name('dashboard.artikel');
 
-     // Rute untuk halaman artikel di dashboard
-     Route::get('/budget', function () {
-        return view('dashboard.budget');
-    })->name('dashboard.budget');
-
-     // Rute untuk halaman artikel di dashboard
-     Route::get('/division', function () {
-        return view('dashboard.division');
-    })->name('dashboard.artikel');
-
     // Rute untuk halaman rapat di dashboard
     Route::get('/meeting', function () {
         return view('dashboard.meeting');
@@ -66,17 +56,7 @@ Route::prefix('dashboard')->group(function () {
     })->name('dashboard.member');
 
     // Rute untuk halaman rapat di dashboard
-    Route::get('/position', function () {
-        return view('dashboard.position');
-    })->name('dashboard.position');
-
-    // Rute untuk halaman rapat di dashboard
     Route::get('/user_profile', function () {
         return view('dashboard.user_profile');
     })->name('dashboard.user_profile');
-    
-    // Rute untuk halaman rapat di dashboard
-    Route::get('/work_program', function () {
-        return view('dashboard.work_program');
-    })->name('dashboard.work_program');
 });

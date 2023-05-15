@@ -77,28 +77,6 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link <?php echo (request()->segment(2) == 'program')?'active':'' ?>"
-                                href="<?php echo url('dashboard/work_program') ?>">
-                                <i class="material-icons">analytics</i>
-                                <span>Program Kerja</span>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link <?php echo (request()->segment(2) == 'division')?'active':'' ?>"
-                                href="<?php echo url('dashboard/division') ?>">
-                                <i class="material-icons">toc</i>
-                                <span>Data Divisi</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link <?php echo (request()->segment(2) == 'position')?'active':'' ?>"
-                                href="<?php echo url('dashboard/position') ?>">
-                                <i class="material-icons">toc</i>
-                                <span>Data Jabatan</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link <?php echo (request()->segment(2) == 'member')?'active':'' ?>"
                                 href="<?php echo url('dashboard/member') ?>">
                                 <i class="material-icons">table_chart</i>
@@ -211,7 +189,7 @@
 
                 <footer class="main-footer d-flex p-2 px-3 bg-white border-top">
                     <span class="copyright ml-auto my-auto mr-2">Copyright &copy; 2023
-                        <a href="<?php echo url('home/') ?>" rel="nofollow">Simanika</a>
+                        <a href="<?php echo url('/') ?>" rel="nofollow">Simanika</a>
                     </span>
                 </footer>
             </main>
