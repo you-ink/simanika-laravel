@@ -19,7 +19,7 @@ class PresensiRapatController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'waktu_hadir' => 'required|date',
-            'foto' => 'required|file',
+            'foto' => 'required|file|mimes:jpg,png,jpeg|max:5048',
             'peran' => 'required|in:ketua,sekretaris,bendahara,sie humas,sie pdd,sie perkab,sie konsumsi',
             'rapat_id' => 'required',
         ], [
@@ -27,6 +27,8 @@ class PresensiRapatController extends Controller
             'date' => ':attribute harus berupa tanggal.',
             'file' => ':attribute harus berupa file.',
             'in' => ':attribute harus salah satu dari: :values.',
+            'mimes' => 'File :attribute harus berformat jpg, jpeg, atau png.',
+            'max' => 'File :attribute tidak boleh lebih dari :max KB.',
         ]);
 
         if ($validator->fails()) {

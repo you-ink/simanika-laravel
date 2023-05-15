@@ -23,11 +23,32 @@ class ArtikelController extends Controller
      */
     public function index()
     {
-        $artikel = Artikel::all();
+        $artikel = Notification::query();
+
+        $search = isset($request->search['value']) ? $request->search['value'] : '';
+        if (!empty($search)) {
+            $artikel->where(function ($query) use ($search) {
+                $query->where('judul', 'like', '%'.$search.'%');
+            });
+        }
+
+        $total_data = $artikel->count();
+        $length = intval(isset($request->length) ? $request->length : 0);
+        $start = intval(isset($request->start) ? $request->start : 0);
+
+        if (!isset($request->length) || !isset($request->start)) {
+            $artikel = $artikel->get();
+        } else {
+            $artikel = $artikel->skip($start)->take($length)->get();
+        }
+
         return response()->json([
             'error' => false,
             'message' => 'Berhasil mengambil data.',
-            'data' => ArtikelResource::collection($artikel->loadMissing(['penulis:id,nim,nama,angkatan', 'divisi:id,nama']))
+            'data' => ArtikelResource::collection($artikel->loadMissing(['penulis:id,nim,nama,angkatan', 'divisi:id,nama'])),
+            'draw' => $request->draw,
+            'recordsTotal' => $total_data,
+            'recordsFiltered' => $total_data,
         ], 200);
     }
 

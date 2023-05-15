@@ -1,5 +1,8 @@
 @extends('app.dashboard')
 @section('title', 'Meeting')
+
+@include('dashboard.js.meeting')
+
 @section('content')
 
 
@@ -32,12 +35,13 @@
 									<th scope="col" class="border-0">Tipe Agenda Rapat</th>
 									<th scope="col" class="border-0">Nama Agenda Rapat</th>
 									<th scope="col" class="border-0">Waktu</th>
-									<th scope="col" class="border-0">Dokumen</th>
+									<th scope="col" class="border-0">Notulensi</th>
+									<th scope="col" class="border-0">Presensi</th>
 									<th scope="col" class="border-0">Aksi</th>
 								</tr>
 							</thead>
 							<tbody>
-								
+
 							</tbody>
 						</table>
 					</div>
@@ -81,6 +85,12 @@
 							<input type="date" class="form-control" id="meetingDate" placeholder="Tanggal">
 						</div>
 					</div>
+					<div class="form-row">
+						<div class="form-group col-12">
+							<label for="meetingTime">Waktu Meeting</label>
+							<input type="time" class="form-control" id="meetingTime" placeholder="Waktu">
+						</div>
+					</div>
 				</form>
 			</div>
 			<div class="modal-footer">
@@ -113,15 +123,6 @@
 						</div>
 						<div class="form-group col-12 text-right btn--upload-file d-none">
 							<button type="button" class="btn btn-sm btn-secondary btn--upload-notulensi">Upload</button>
-						</div>
-					</div>
-					<div class="form-row upload--daftarhadir">
-						<div class="form-group col-12">
-							<label>Daftar Hadir</label>
-							<input id="daftarhadir" type="file" accept=".pdf, .docx, .doc">
-						</div>
-						<div class="form-group col-12 text-right btn--upload-file d-none">
-							<button type="button" class="btn btn-sm btn-secondary btn--upload-daftarhadir">Upload</button>
 						</div>
 					</div>
 				</form>

@@ -231,12 +231,87 @@
     <script src="<?= url('assets/plugin/fancy-file-uploader/jquery.fileupload.js') ?>"></script>
     <script src="<?= url('assets/plugin/fancy-file-uploader/jquery.iframe-transport.js') ?>"></script>
     <script src="<?= url('assets/plugin/fancy-file-uploader/jquery.fancy-fileupload.js') ?>"></script>
+    <script src="<?= url('assets/js/jquery-cookie.min.js') ?>"></script>
+
+    <script>
+        $(document).load(function(){
+            cookie.set('access_token', "3|02DGul4umvMN3lA93mkU20O7WVGSdBd4DwY25jy4")
+            sessionStorage.setItem('access_token_v1', '3|02DGul4umvMN3lA93mkU20O7WVGSdBd4DwY25jy4');
+        });
+
+        function getAuthorization() {
+            var accessToken = sessionStorage.getItem('access_token_v1');
+            console.log(accessToken);
+            return "Bearer 3|02DGul4umvMN3lA93mkU20O7WVGSdBd4DwY25jy4";
+        }
+    </script>
+
     <script src="<?= url('assets/js/dashboard-main.js') ?>"></script>
 
+    <script>
+        var cookie = {
+            set: function (key, value) { $.cookie(key, value, {path: '/'}) },
+            get: function (key) { return $.cookie(key) },
+            remove: function (key) { $.removeCookie(key, {path: '/' }) }
+        }
 
+        var getUploadedFile = {};
+        // Function For Upload File
+        function upload(name, maxFiles = 1) {
+            getUploadedFile[name] = null;
 
-    @stack('script') {{-- Pemanggilan -> @push --}}
+            $(`#${name}`).FancyFileUpload({
+            params : {
+                action : 'fileuploader'
+            },
+            edit: false,
+            maxfilesize : 10000000,
+            added: function (e, data) {
+                if (data.ff_info.errors.length > 0) {
+                Swal.fire(
+                    'Gagal Ditambahkan!',
+                    'Error: '+data.ff_info.errors,
+                    'error'
+                    )
+                    $(this).remove()
+                    delete data.ff_info
+                    return;
+                }
 
+                if ($(`.upload--${name}`).find('.ff_fileupload_queued').length > maxFiles) {
+                Swal.fire(
+                    'Gagal Ditambahkan!',
+                    `Maksimal upload hanya ${maxFiles} file`,
+                    'error'
+                    )
+                $(this).remove()
+                delete data.ff_info
+                return;
+                }
+
+                $(`.upload--${name}`).find('.btn--upload-file').removeClass('d-none');
+                $(`.upload--${name}`).find('.ff_fileupload_remove_file').attr('data-doc', name);
+
+                getUploadedFile[name] = data.files[0];
+
+                $(this).find('.ff_fileupload_start_upload').remove()
+            }
+            });
+        }
+    </script>
+
+    @stack('script')
+
+    <script>
+        // Change Datatable Button
+      function change_datatable_button() {
+        $('.dt-button').removeClass("dt-button");
+      }
+
+      $(document).ready(function() {
+        change_datatable_button();
+      })
+    </script>
 
 </body>
 

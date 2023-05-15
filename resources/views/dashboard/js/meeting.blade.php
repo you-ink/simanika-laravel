@@ -1,320 +1,286 @@
-<?php 
-	$user = $this->Func->get_profile();
-?>
-<script>
-	$(document).ready(function () {
+@push('script')
+    <script>
+        $(document).ready(function () {
 
-		sessionStorage.clear();
-		
-		function load_meeting(params = []) {
-			$("table.table").DataTable().destroy()
-			$("table.table").DataTable({
-				"deferRender": true,
-				"responsive": true,
-				'serverSide': true,
-				'processing': true,
-				"ordering": false,
-				"ajax": {
-					"url": get_api_url()+"meeting",
-					"type": "GET",
-					"data": {
-						"SIMANIKA-API-KEY": get_api_login_value(),
-						"sort": "ASC"
-					},
-					"headers": {
-						"Authorization" : get_api_key()
-					},
-					"dataSrc": "data"
-				},
-				"columns": [
-					{
-						data: null,
-						render: function (data, type, row, meta) {
-							return meta.row + meta.settings._iDisplayStart + 1 + '.';
-						}
-					},
-					{
-						data: 'deskripsi_tipe'
-					},
-					{
-						data: 'nama'
-					},
-					{
-						data: 'tanggal'
-					},
-					{
-						data: null,
-						render: res => {
-							let button = ''
-							let notulensi = ''
-							let daftar_hadir = ''
-							if (res.notulensi) {
-								notulensi = `<p class="my-1"><a href="<?php echo base_url() ?>${res.notulensi}" taget="_blank" class="text-primary">Lihat Notulensi</a></p>`
-							} else {
-								notulensi = '<p class="my-1">-</p>'
-							}
+            sessionStorage.clear();
 
-							if (res.daftar_hadir) {
-								daftar_hadir = `<p class="my-1"><a href="<?php echo base_url() ?>${res.daftar_hadir}" taget="_blank" class="text-primary">Lihat Daftar Hadir</a></p>`
-							} else {
-								daftar_hadir = '<p class="my-1">-</p>'
-							}
+            function load_meeting(params = []) {
+                $("table.table").DataTable().destroy()
+                $("table.table").DataTable({
+                    "deferRender": true,
+                    "responsive": true,
+                    'serverSide': true,
+                    'processing': true,
+                    "ordering": false,
+                    "ajax": {
+                        "url": "{{ route('api.rapat.index') }}",
+                        "type": "GET",
+                        "data": {
+                            "sort": "ASC"
+                        },
+                        "headers": {
+                            "Authorization" : getAuthorization()
+                        },
+                        "dataSrc": "data"
+                    },
+                    "columns": [
+                        {
+                            data: null,
+                            render: function (data, type, row, meta) {
+                                return meta.row + meta.settings._iDisplayStart + 1 + '.';
+                            }
+                        },
+                        {
+                            data: 'deskripsi_tipe'
+                        },
+                        {
+                            data: 'nama'
+                        },
+                        {
+                            data: null,
+                            render: res => {
+                                return `${res.tanggal} ${res.waktu_mulai}`
+                            }
+                        },
+                        {
+                            data: null,
+                            render: res => {
+                                let button = ''
+                                let notulensi = ''
+                                if (res.notulensi) {
+                                    notulensi = `<p class="my-1"><a href="{{ url('/') }}${res.notulensi}" taget="_blank" class="text-primary">Lihat Notulensi</a></p>`
+                                } else {
+                                    notulensi = '<p class="my-1">-</p>'
+                                }
 
-							<?php if ($user['level_id'] == 1): ?>
-								button = `<button type="button" class="btn btn-sm btn-secondary btn-upload-document" data-id="${res.id}" data-name="${res.nama}" data-toggle="modal" data-target="#crudModalDoc" ><i class="fas fa-upload"></i></button>`
-							<?php endif ?>
+                                button = `<button type="button" class="btn btn-sm btn-secondary btn-upload-document" data-id="${res.id}" data-name="${res.nama}" data-toggle="modal" data-target="#crudModalDoc" ><i class="fas fa-upload"></i></button>`
 
-							return `
-								${button}${notulensi}${daftar_hadir}
-							`;
-						}
-					},
-					{
-						data: null,
-						render: res => {
-							let btn_edit = ''
-							let btn_delete = ''
 
-							btn_edit = `<button type="button" class="btn btn-sm mb-1 btn-primary btn-update-meeting" data-id="${res.id}" data-name="${res.nama}" data-date="${res.tanggal}" data-tipe="${res.tipe}" data-toggle="modal" data-target="#crudModal"><i class="fas fa-pen"></i></button>`
+                                return `
+                                    ${button}${notulensi}
+                                `;
+                            }
+                        },{
+                            data: null,
+                            render: res => {
+                                return `
+                                <a href="#"><button type="button" class="btn btn-sm mb-1 btn-warning" data-id="${res.id}"><i class="fas fa-eye"></i> Lihat Presensi</button></a>
+                                `;
+                            }
+                        },
+                        {
+                            data: null,
+                            render: res => {
+                                let btn_edit = ''
+                                let btn_delete = ''
 
-							<?php if ($user['level_id'] == 1): ?>
-								btn_delete = `<button type="button" class="btn btn-sm mb-1 btn-danger btn-delete-meeting" data-id="${res.id}" data-name="${res.nama}"><i class="fas fa-trash"></i></button>`
-							<?php endif ?>
+                                btn_edit = `<button type="button" class="btn btn-sm mb-1 btn-primary btn-update-meeting" data-id="${res.id}" data-name="${res.nama}" data-date="${res.tanggal}" data-tipe="${res.tipe}" data-time="${res.waktu_mulai}" data-toggle="modal" data-target="#crudModal"><i class="fas fa-pen"></i></button>`
 
-								return `
-									${btn_edit}
-									${btn_delete}
-								`;
-						}
-					}
-				],
-				dom: "<'row'<'col-sm-12 mb-2'B>>lfrtip",
-                lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-                buttons: [
-			        { 
-			         	extend: 'excel', 
-			         	text: '<i class="fas fa-download"></i> Download Excel',
-			         	filename: 'Data Agenda Rapat Himanika',
-			         	title: null,
-			         	className: 'btn btn-sm btn-success',
-			         	exportOptions: {
-		                    columns: [ 0, 1, 2, 3 ]
-		                }
-			        },
-			        { 
-			         	extend: 'print', 
-			         	text: '<i class="fas fa-print"></i> Print',
-			         	title: 'Data Agenda Rapat Himanika',
-			         	className: 'btn btn-sm btn-success',
-			         	exportOptions: {
-		                    columns: [ 0, 1, 2, 3 ]
-		                }
-			        },
-			    ]
-            });
-		}
 
-		load_meeting();
+                                btn_delete = `<button type="button" class="btn btn-sm mb-1 btn-danger btn-delete-meeting" data-id="${res.id}" data-name="${res.nama}"><i class="fas fa-trash"></i></button>`
 
-		$(document).on('click', '.btn-add-meeting', function () {
-			$('.title-meeting-modal').html('Tambah')
-			$('.btn-confirm-add-meeting').removeClass('d-none')
-			$('.btn-confirm-update-meeting').addClass('d-none')
-			$('#crudModal .meeting-name').html('')
 
-			$('#crudModal #meetingName').val('')
-			$('#crudModal #meetingDate').val('')
-		})
+                                    return `
+                                        ${btn_edit}
+                                        ${btn_delete}
+                                    `;
+                            }
+                        }
+                    ],
+                    dom: "<'row'<'col-sm-12 mb-2'B>>lfrtip",
+                    lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                    buttons: [
+                        {
+                            extend: 'excel',
+                            text: '<i class="fas fa-download"></i> Download Excel',
+                            filename: 'Data Agenda Rapat Himanika',
+                            title: null,
+                            className: 'btn btn-sm btn-success',
+                            exportOptions: {
+                                columns: [ 0, 1, 2, 3 ]
+                            }
+                        },
+                        {
+                            extend: 'print',
+                            text: '<i class="fas fa-print"></i> Print',
+                            title: 'Data Agenda Rapat Himanika',
+                            className: 'btn btn-sm btn-success',
+                            exportOptions: {
+                                columns: [ 0, 1, 2, 3 ]
+                            }
+                        },
+                    ]
+                });
+            }
 
-		$(document).on('click', '.btn-confirm-add-meeting', function () {
-			data = {
-				tipe: $("select#meetingTipe option:selected").val(),
-				nama: $("input#meetingName").val(),
-				tanggal: $("input#meetingDate").val()
-			}
+            load_meeting();
 
-			data[get_api_login_global()['key']] = get_api_login_value();
+            $(document).on('click', '.btn-add-meeting', function () {
+                $('.title-meeting-modal').html('Tambah')
+                $('.btn-confirm-add-meeting').removeClass('d-none')
+                $('.btn-confirm-update-meeting').addClass('d-none')
+                $('#crudModal .meeting-name').html('')
 
-			callApi("POST", "meeting", data, function (req) {
-				pesan = req.message;
-				if (req.error == true) {
-					Swal.fire(
-				      'Gagal ditambahkan!',
-				      pesan,
-				      'error'
-				    )
-				}else{
-					Swal.fire(
-				      'Ditambahkan!',
-				      pesan,
-				      'success'
-				    )
-				    $("#crudModal").modal("hide")
-					load_meeting();
-					change_datatable_button();
-				}
-			})
-		})
+                $('#crudModal #meetingName').val('')
+                $('#crudModal #meetingDate').val('')
+                $('#crudModal #meetingTime').val('')
+            })
 
-		$(document).on('click', ".btn-update-meeting", function () {
-			$('.title-meeting-modal').html('Edit')
-			$('.btn-confirm-update-meeting').removeClass('d-none')
-			$('.btn-confirm-add-meeting').addClass('d-none')
-			$('#crudModal .meeting-name').html($(this).attr('data-name'))
+            $(document).on('click', '.btn-confirm-add-meeting', function () {
+                data = {
+                    tipe: $("select#meetingTipe option:selected").val(),
+                    nama: $("input#meetingName").val(),
+                    tanggal: $("input#meetingDate").val(),
+                    waktu_mulai: $("input#meetingTime").val()
+                }
 
-			$('#crudModal #meetingTipe').val($(this).attr('data-tipe'))
-			$('#crudModal #meetingName').val($(this).attr('data-name'))
-			$('#crudModal #meetingDate').val($(this).attr('data-date'))
+                callApi("POST", "{{ route('api.rapat.store') }}", data, function (req) {
+                    pesan = req.message;
+                    if (req.error == true) {
+                        Swal.fire(
+                        'Gagal ditambahkan!',
+                        pesan,
+                        'error'
+                        )
+                    }else{
+                        Swal.fire(
+                        'Ditambahkan!',
+                        pesan,
+                        'success'
+                        )
+                        $("#crudModal").modal("hide")
+                        load_meeting();
+                        change_datatable_button();
+                    }
+                })
+            })
 
-			$('.btn-confirm-update-meeting').attr('data-id', $(this).attr('data-id'))
-		})
+            $(document).on('click', ".btn-update-meeting", function () {
+                $('.title-meeting-modal').html('Edit')
+                $('.btn-confirm-update-meeting').removeClass('d-none')
+                $('.btn-confirm-add-meeting').addClass('d-none')
+                $('#crudModal .meeting-name').html($(this).attr('data-name'))
 
-		$(document).on('click', '.btn-confirm-update-meeting', function () {
-			data = {
-				id: $(this).attr('data-id'),
-				tipe: $("select#meetingTipe option:selected").val(),
-				nama: $("input#meetingName").val(),
-				tanggal: $("input#meetingDate").val()
-			}
+                $('#crudModal #meetingTipe').val($(this).attr('data-tipe'))
+                $('#crudModal #meetingName').val($(this).attr('data-name'))
+                $('#crudModal #meetingDate').val($(this).attr('data-date'))
+                $('#crudModal #meetingTime').val($(this).attr('data-time'))
 
-			data[get_api_login_global()['key']] = get_api_login_value();
+                $('.btn-confirm-update-meeting').attr('data-id', $(this).attr('data-id'))
+            })
 
-			callApi("PUT", "meeting", data, function (req) {
-				pesan = req.message;
-				if (req.error == true) {
-					Swal.fire(
-				      'Gagal diupdate!',
-				      pesan,
-				      'error'
-				    )
-				}else{
-					Swal.fire(
-				      'Diupdate!',
-				      pesan,
-				      'success'
-				    )
-				    $("#crudModal").modal("hide")
-					load_meeting();
-					change_datatable_button();
-				}
-			})
-		})
+            $(document).on('click', '.btn-confirm-update-meeting', function () {
+                data = {
+                    tipe: $("select#meetingTipe option:selected").val(),
+                    nama: $("input#meetingName").val(),
+                    tanggal: $("input#meetingDate").val(),
+                    waktu_mulai: $("input#meetingTime").val()
+                }
 
-		$(document).on('click', ".btn-delete-meeting", function () {
-			let id = $(this).attr('data-id')
-			let name = $(this).attr('data-name')
+                let id = $(this).attr('data-id');
 
-			Swal.fire({
-			  title: 'Apakah anda yakin?',
-			  text: `Anda ingin menghapus data ${name}!`,
-			  icon: 'warning',
-			  showCancelButton: true,
-			  confirmButtonColor: '#3085d6',
-			  cancelButtonColor: '#d33',
-			  confirmButtonText: 'Ya, hapus!'
-			}).then((result) => {
-			  if (result.isConfirmed) {
-			    data = {
-					id: $(this).attr('data-id')
-				}
-			    data[get_api_login_global()['key']] = get_api_login_value();
-			  	callApi("DELETE", "meeting", data, function (req) {
-					pesan = req.message;
-					if (req.error == true) {
-						Swal.fire(
-					      'Gagal Dihapus!',
-					      pesan,
-					      'error'
-					    )
-					}else{
-						Swal.fire(
-					      'Dihapus!',
-					      pesan,
-					      'success'
-					    )
-						load_meeting();
-						change_datatable_button();
-					}
-				})
+                let url = "{{ route('api.rapat.update', ':id') }}";
+                url = url.replace(':id', id);
 
-			  }
-			})
-		})
+                callApi("PUT", url, data, function (req) {
+                    pesan = req.message;
+                    if (req.error == true) {
+                        Swal.fire(
+                        'Gagal diupdate!',
+                        pesan,
+                        'error'
+                        )
+                    }else{
+                        Swal.fire(
+                        'Diupdate!',
+                        pesan,
+                        'success'
+                        )
+                        $("#crudModal").modal("hide")
+                        load_meeting();
+                        change_datatable_button();
+                    }
+                })
+            })
 
-		$(document).on('click', '.btn-upload-document', function (e) {
-			$('#crudModalDoc .document-meeting-name').html($(this).attr('data-name'))
-			$('#crudModalDoc .btn--upload-notulensi').attr('data-id', $(this).attr('data-id'))
-			$('#crudModalDoc .btn--upload-daftarhadir').attr('data-id', $(this).attr('data-id'))
-		})
+            $(document).on('click', ".btn-delete-meeting", function () {
+                let id = $(this).attr('data-id')
+                let name = $(this).attr('data-name')
 
-		// Upload Noteluensi
-		upload('notulensi')
-		$(document).on('click', '#crudModalDoc .btn--upload-notulensi', function (e) {
-			let data = {
-				id: $(this).attr('data-id'),
-				notulensi: sessionStorage.getItem('notulensi')
-			}
+                Swal.fire({
+                title: 'Apakah anda yakin?',
+                text: `Anda ingin menghapus data ${name}!`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, hapus!'
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    let url = "{{ route('api.rapat.delete', ':id') }}";
+                    url = url.replace(':id', id);
+                    callApi("DELETE", url, [], function (req) {
+                        pesan = req.message;
+                        if (req.error == true) {
+                            Swal.fire(
+                            'Gagal Dihapus!',
+                            pesan,
+                            'error'
+                            )
+                        }else{
+                            Swal.fire(
+                            'Dihapus!',
+                            pesan,
+                            'success'
+                            )
+                            load_meeting();
+                            change_datatable_button();
+                        }
+                    })
 
-			data[get_api_login_global()['key']] = get_api_login_value();
+                }
+                })
+            })
 
-			callApi("POST", "meeting/uploadnotulensi", data, function (req) {
-				pesan = req.message;
-				if (req.error == true) {
-					Swal.fire(
-				      	'Gagal diupdate!',
-				      	pesan,
-				      	'error'
-				    )
-				}else{
-					Swal.fire(
-				      	'Diupdate!',
-				      	pesan,
-				      	'success'
-				    ).then((result) => {
-				    	$('#crudModalDoc').remove()
-						window.location.reload()
-					})
+            $(document).on('click', '.btn-upload-document', function (e) {
+                $('#crudModalDoc .document-meeting-name').html($(this).attr('data-name'))
+                $('#crudModalDoc .btn--upload-notulensi').attr('data-id', $(this).attr('data-id'))
+            })
 
-					load_meeting();
-					change_datatable_button();
-				}
-			})
-		})
+            // Upload Noteluensi
+            upload('notulensi')
+            $(document).on('click', '#crudModalDoc .btn--upload-notulensi', function (e) {
+                console.log(getUploadedFile['notulensi']);
+                let data = {
+                    id: $(this).attr('data-id'),
+                    notulensi: getUploadedFile['notulensi']
+                }
 
-		// Upload Daftar Hadir
-		upload('daftarhadir')
-		$(document).on('click', '#crudModalDoc .btn--upload-daftarhadir', function (e) {
-			let data = {
-				id: $(this).attr('data-id'),
-				daftar_hadir: sessionStorage.getItem('daftarhadir')
-			}
+                callApi("POST", "{{ route('api.rapat.upload_notulensi') }}", data, function (req) {
+                    pesan = req.message;
+                    if (req.error == true) {
+                        Swal.fire(
+                            'Gagal diupdate!',
+                            pesan,
+                            'error'
+                        )
+                    }else{
+                        Swal.fire(
+                            'Diupdate!',
+                            pesan,
+                            'success'
+                        ).then((result) => {
+                            $('#crudModalDoc').remove()
+                            window.location.reload()
+                        })
 
-			data[get_api_login_global()['key']] = get_api_login_value();
+                        load_meeting();
+                        change_datatable_button();
+                    }
+                })
+            })
 
-			callApi("POST", "meeting/uploaddaftarhadir", data, function (req) {
-				pesan = req.message;
-				if (req.error == true) {
-					Swal.fire(
-				      	'Gagal diupdate!',
-				      	pesan,
-				      	'error'
-				    )
-				}else{
-					Swal.fire(
-				      	'Diupdate!',
-				      	pesan,
-				      	'success'
-				    ).then((result) => {
-				    	$('#crudModalDoc').remove()
-						window.location.reload()
-					})
+        })
 
-					load_meeting();
-					change_datatable_button();
-				}
-			})
-		})
-
-	})
-
-</script>
+    </script>
+@endpush

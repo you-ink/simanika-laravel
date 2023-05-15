@@ -20,13 +20,35 @@ class RapatController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $rapat = Rapat::all();
+        $rapat = Rapat::query();
+
+        $search = isset($request->search['value']) ? $request->search['value'] : '';
+        if (!empty($search)) {
+            $rapat->where(function ($query) use ($search) {
+                $query->where('nama', 'like', '%'.$search.'%')
+                    ->orWhereRaw('IF(tipe = 1, "Rapat Resmi", "Rapat Program Kerja") like ?', ['%'.$search.'%']);
+            });
+        }
+
+        $total_data = $rapat->count();
+        $length = intval(isset($request->length) ? $request->length : 0);
+        $start = intval(isset($request->start) ? $request->start : 0);
+
+        if (!isset($request->length) || !isset($request->start)) {
+            $rapat = $rapat->get();
+        } else {
+            $rapat = $rapat->skip($start)->take($length)->get();
+        }
+
         return response()->json([
             'error' => false,
             'message' => 'Berhasil mengambil data.',
-            'data' => RapatResource::collection($rapat->loadMissing(['divisi:id,nama']))
+            'data' => RapatResource::collection($rapat->loadMissing(['divisi:id,nama'])),
+            'draw' => $request->draw,
+            'recordsTotal' => $total_data,
+            'recordsFiltered' => $total_data,
         ], 200);
     }
 
@@ -35,7 +57,7 @@ class RapatController extends Controller
      */
     public function show($id)
     {
-        $rapat = Rapat::with(['divisi:id,nama', 'presensi:id,waktu_hadir,foto,rapat_id,user_id,peran'])->findOrFail($id);
+        $rapat = Rapat::with(['divisi:id,nama', 'presensi:id,waktu_hadir,Notulensi,rapat_id,user_id,peran'])->findOrFail($id);
         return response()->json([
             'error' => false,
             'message' => 'Berhasil mengambil data.',
@@ -158,6 +180,44 @@ class RapatController extends Controller
         return response()->json([
             'error' => false,
             'message' => 'Rapat berhasil dihapus.',
+            'data' => []
+        ]);
+    }
+
+    public function upload_notulensi(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'id' => 'required',
+            'notulensi' => 'required|file|mimes:doc,docx,pdf|max:10048',
+        ], [
+            'required' => ':attribute harus diisi.',
+            'file' => ':attribute harus berupa file.',
+            'mimes' => 'File :attribute harus berformat doc, docx, atau pdf.',
+            'max' => 'File :attribute tidak boleh lebih dari :max KB.',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'error' => true,
+                'message' => Str::ucfirst($validator->errors()->first()),
+                'data' => []
+            ]);
+        }
+
+        // Upload File
+        $namaNotulensi = $this->generateRandomString(33).time();
+        $ekstensiNotulensi = $request->notulensi->extension();
+
+        $path = Storage::putFileAs('public/document/rapat/'.$request->id, $request->notulensi, $namaNotulensi.".".$ekstensiNotulensi);
+        // End Upload File
+
+        $rapat = Rapat::findOrFail($request->id)->update([
+            'notulensi' => Storage::url($path),
+        ]);
+
+        return response()->json([
+            'error' => false,
+            'message' => 'Notulensi berhasil ditambahkan.',
             'data' => []
         ]);
     }

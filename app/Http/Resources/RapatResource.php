@@ -23,6 +23,7 @@ class RapatResource extends JsonResource
             'notulensi' => $this->notulensi,
             'nama' => $this->nama,
             'tipe' => $this->tipe,
+            'deskripsi_tipe' => ($this->tipe == 1) ? 'Rapat Resmi' : 'Rapat Program Kerja',
             'divisi' => $this->whenLoaded('divisi'),
             'presensi' => $this->whenLoaded('presensi', function(){
                 return collect($this->presensi)->each(function ($presensiItem) {
