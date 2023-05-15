@@ -34,6 +34,7 @@
 									<th scope="col" class="border-0">No</th>
 									<th scope="col" class="border-0">Tipe Agenda Rapat</th>
 									<th scope="col" class="border-0">Nama Agenda Rapat</th>
+									<th scope="col" class="border-0">Divisi</th>
 									<th scope="col" class="border-0">Waktu</th>
 									<th scope="col" class="border-0">Notulensi</th>
 									<th scope="col" class="border-0">Presensi</th>

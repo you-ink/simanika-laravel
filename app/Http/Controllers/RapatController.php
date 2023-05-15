@@ -57,7 +57,7 @@ class RapatController extends Controller
      */
     public function show($id)
     {
-        $rapat = Rapat::with(['divisi:id,nama', 'presensi:id,waktu_hadir,Notulensi,rapat_id,user_id,peran'])->findOrFail($id);
+        $rapat = Rapat::with(['divisi:id,nama', 'presensi:id,waktu_hadir,foto,rapat_id,user_id,peran'])->findOrFail($id);
         return response()->json([
             'error' => false,
             'message' => 'Berhasil mengambil data.',

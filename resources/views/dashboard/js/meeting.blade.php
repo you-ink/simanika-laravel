@@ -39,6 +39,12 @@
                         {
                             data: null,
                             render: res => {
+                                return `${res.divisi.nama}`
+                            }
+                        },
+                        {
+                            data: null,
+                            render: res => {
                                 return `${res.tanggal} ${res.waktu_mulai}`
                             }
                         },
@@ -63,8 +69,11 @@
                         },{
                             data: null,
                             render: res => {
+                                let url = "{{ route('dashboard.presensi', ':id') }}";
+                                url = url.replace(':id', res.id);
+
                                 return `
-                                <a href="#"><button type="button" class="btn btn-sm mb-1 btn-warning" data-id="${res.id}"><i class="fas fa-eye"></i> Lihat Presensi</button></a>
+                                <a href="${url}"><button type="button" class="btn btn-sm mb-1 btn-warning" data-id="${res.id}"><i class="fas fa-eye"></i> Lihat Presensi</button></a>
                                 `;
                             }
                         },
@@ -97,7 +106,7 @@
                             title: null,
                             className: 'btn btn-sm btn-success',
                             exportOptions: {
-                                columns: [ 0, 1, 2, 3 ]
+                                columns: [ 0, 1, 2, 3, 4 ]
                             }
                         },
                         {
@@ -106,7 +115,7 @@
                             title: 'Data Agenda Rapat Himanika',
                             className: 'btn btn-sm btn-success',
                             exportOptions: {
-                                columns: [ 0, 1, 2, 3 ]
+                                columns: [ 0, 1, 2, 3, 4 ]
                             }
                         },
                     ]

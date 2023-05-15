@@ -51,7 +51,7 @@ Route::get('artikel', [ArtikelController::class, 'index']);
 Route::get('artikel/{id}', [ArtikelController::class, 'show']);
 
 Route::get('rapat', [RapatController::class, 'index'])->name('api.rapat.index');
-Route::get('rapat/{id}', [RapatController::class, 'show']);
+Route::get('rapat/{id}', [RapatController::class, 'show'])->name('api.rapat.detail');
 
 Route::get('notifikasi', [NotificationController::class, 'index']);
 Route::get('notifikasi/{id}', [NotificationController::class, 'show']);
