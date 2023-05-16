@@ -1,7 +1,7 @@
 @extends('app.dashboard')
 @section('title', 'notification')
 
-@include('dashboard.js.notifikasi')
+@include('dashboard.js.notification')
 
 @section('content')
 

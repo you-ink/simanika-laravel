@@ -22,9 +22,10 @@ use App\Http\Controllers\PresensiRapatController;
 
 Route::middleware(['auth:sanctum'])->group(function () {
     // Artikel
-    Route::post('artikel', [ArtikelController::class, 'store']);
-    Route::put('artikel/{id}', [ArtikelController::class, 'update'])->middleware('artikel-owner');
-    Route::delete('artikel/{id}', [ArtikelController::class, 'destroy'])->middleware('artikel-owner');
+    Route::post('artikel', [ArtikelController::class, 'store'])->name('api.artikel.store');
+    Route::put('artikel/{id}', [ArtikelController::class, 'update'])->name('api.artikel.update');
+    Route::delete('artikel/{id}', [ArtikelController::class, 'destroy'])->name('api.artikel.delete');
+    Route::post('rapat/upload_file', [RapatController::class, 'upload_file'])->name('api.artikel.upload_file');
 
     // Rapat
     Route::post('rapat', [RapatController::class, 'store'])->name('api.rapat.store');
@@ -47,8 +48,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
 });
 
 // Hanya untuk testing, nanti ditaruh di group sanctum lagi
-Route::get('artikel', [ArtikelController::class, 'index']);
-Route::get('artikel/{id}', [ArtikelController::class, 'show']);
+Route::get('artikel', [ArtikelController::class, 'index'])->name('api.artikel.index');
+Route::get('artikel/{id}', [ArtikelController::class, 'show'])->name('api.artikel.detail');
 
 Route::get('rapat', [RapatController::class, 'index'])->name('api.rapat.index');
 Route::get('rapat/{id}', [RapatController::class, 'show'])->name('api.rapat.detail');
