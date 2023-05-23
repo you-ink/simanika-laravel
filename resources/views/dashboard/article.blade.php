@@ -22,7 +22,7 @@
                         </div>
                         <div class="col-6 text-right">
                             <button class="btn btn-sm btn-success btn-add-article" data-toggle="modal"
-                                data-target="#crudModal"><i class="fas fa-plus"></i> Tambah Artikel </button>
+                                data-target="#crudModalArticle"><i class="fas fa-plus"></i> Tambah Artikel </button>
                         </div>
                     </div>
                 </div>
@@ -52,7 +52,7 @@
 
 
 <!-- CRUD Modal -->
-<div class="modal fade" id="crudModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade" id="crudModalArticle" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
     aria-hidden="true" data-backdrop="false">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -96,7 +96,7 @@
 
 
 <!-- CRUD Modal Dokumen -->
-<div class="modal fade" id="crudModalDoc" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade" id="crudModalDocArticle" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
     aria-hidden="true" data-backdrop="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">

@@ -1,3 +1,4 @@
+@push('script')
 <script>
 	$(document).ready(function() {
 
@@ -127,9 +128,9 @@
 			$('#crudModal #tanggalWawancara').val($(this).attr('data-tanggalWawancara'))
 			$('#crudModal #alamatMember').val($(this).attr('data-alamat'))
 			$('#crudModal #buktiKesanggupanNama').html($(this).attr('data-fileBuktiKesanggupan'))
-			$('#crudModal #buktiKesanggupanInfo').html(`<a href="<?php echo base_url() ?>`+$(this).attr('data-buktiKesanggupan')+`">Lihat File</a>`)
+			$('#crudModal #buktiKesanggupanInfo').html(`<a href="<?php echo url() ?>`+$(this).attr('data-buktiKesanggupan')+`">Lihat File</a>`)
 			$('#crudModal #buktiMahasiswaNama').html($(this).attr('data-fileBuktiMahasiswa'))
-			$('#crudModal #buktiMahasiswaInfo').html(`<a href="<?php echo base_url() ?>`+$(this).attr('data-buktiMahasiswa')+`">Lihat File</a>`)
+			$('#crudModal #buktiMahasiswaInfo').html(`<a href="<?php echo url() ?>`+$(this).attr('data-buktiMahasiswa')+`">Lihat File</a>`)
 		})
 
 		$(document).on('click', ".btn-delete-member", function () {
@@ -212,3 +213,4 @@
 
 	})
 </script>
+@endpush

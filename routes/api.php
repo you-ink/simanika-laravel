@@ -58,8 +58,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
 });
 
 // Hanya untuk testing, nanti ditaruh di group sanctum lagi
-Route::get('artikel', [ArtikelController::class, 'index']);
-Route::get('artikel/{id}', [ArtikelController::class, 'show']);
+Route::get('artikel', [ArtikelController::class, 'index'])->name('api.artikel.index');
+Route::get('artikel/{id}', [ArtikelController::class, 'show'])->name('api.artikel.detail');
 
 Route::get('rapat', [RapatController::class, 'index'])->name('api.rapat.index');
 Route::get('rapat/{id}', [RapatController::class, 'show'])->name('api.rapat.detail');
