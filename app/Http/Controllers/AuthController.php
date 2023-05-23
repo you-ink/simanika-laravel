@@ -6,10 +6,12 @@ use App\Models\User;
 use App\Models\DetailUser;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Events\ContentNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
@@ -34,15 +36,24 @@ class AuthController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
-        if (! $user || ! Hash::check($request->password, $user->password)) {
+        // if (! $user || ! Hash::check($request->password, $user->password)) {
+        //     return response()->json([
+        //         'error' => true,
+        //         'message' => 'Pastikan email dan password anda benar.',
+        //         'data' => []
+        //     ]);
+        // }
+
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+            $token = $user->createToken("auth-token")->plainTextToken;
+            Auth::login($user);
+        } else {
             return response()->json([
                 'error' => true,
                 'message' => 'Pastikan email dan password anda benar.',
                 'data' => []
             ]);
         }
-
-        $token = $user->createToken("auth-token")->plainTextToken;
 
         return response()->json([
             'error' => false,
@@ -77,7 +88,7 @@ class AuthController extends Controller
         ], [
             'required' => ':attribute harus diisi.',
             'email' => ':attribute harus berupa email yang valid.',
-            'min' => 'panjang :attribute minimal :value karakter.',
+            'min' => 'panjang :attribute minimal :min karakter.',
             'regex' => ':attribute harus mengandung minimal satu huruf kecil, satu huruf besar, dan satu angka.',
             'confirmed' => 'Password dan konfirmasi password tidak sama.'
         ]);
@@ -90,6 +101,15 @@ class AuthController extends Controller
             ]);
         }
 
+        $cek_nim_email = User::where('email', $request->email)->orWhere('nim', $request->nim)->get()->count();
+        if ($cek_nim_email > 0) {
+            return response()->json([
+                'error' => true,
+                'message' => "Email atau NIM telah terpakai. Silahkan hubungi CS untuk konfirmasi.",
+                'data' => []
+            ]);
+        }
+
         $user = User::create([
             'nama' => $request->nama,
             'email' => $request->email,
@@ -97,6 +117,8 @@ class AuthController extends Controller
             'angkatan' => $request->angkatan,
             'telp' => $request->telp,
             'password' => Hash::make($request->password),
+            'status' => '2',
+            'level_id' => '3'
         ]);
 
         $user_id = $user->id;
@@ -186,100 +208,6 @@ class AuthController extends Controller
         return response()->json([
             'error' => false,
             'message' => 'Berhasil melengkapi profil.',
-            'data' => []
-        ]);
-    }
-
-    public function update_profile(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'nama' => 'required',
-            'telp' => 'required',
-            'angkatan' => 'required',
-            'foto' => 'file|mimes:jpg,png,jpeg|max:5048',
-        ], [
-            'required' => ':attribute harus diisi.',
-            'file' => ':attribute harus berupa file.',
-            'mimes' => 'File :attribute harus berformat jpg, jpeg, atau png.',
-            'max' => 'File :attribute tidak boleh lebih dari :max KB.',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'error' => true,
-                'message' => Str::ucfirst($validator->errors()->first()),
-                'data' => []
-            ]);
-        }
-
-        $user = User::findOrFail(Auth::user()->id);
-        $user->update([
-            'nama' => $request->nama,
-            'telp' => $request->telp,
-            'angkatan' => $request->angkatan,
-        ]);
-
-        $detailuser = DetailUser::where('user_id', Auth::user()->id)->firstOrFail();
-        if (!empty($request->foto)) {
-            if (!strpos($detailuser->foto, "user.png")) {
-                Storage::delete(str_replace('/storage', 'public', $detailuser->foto));
-            }
-
-            // Upload File
-            $namaFoto = $this->generateRandomString(33).time();
-            $ekstensiFoto = $request->foto->extension();
-
-            $pathFoto = Storage::putFileAs('public/images/user/profile', $request->foto, $namaFoto.".".$ekstensiFoto);
-            // End Upload File
-
-            $detailuser->update([
-                'foto' => Storage::url($pathFoto),
-            ]);
-        }
-
-        return response()->json([
-            'error' => false,
-            'message' => 'Berhasil mengubah profil.',
-            'data' => []
-        ]);
-    }
-
-    public function update_password(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'password_lama' => 'required',
-            'password' => 'required|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/|confirmed',
-            'password_confirmation' => 'required',
-        ], [
-            'required' => ':attribute harus diisi.',
-            'min' => 'panjang :attribute minimal :value karakter.',
-            'regex' => ':attribute harus mengandung minimal satu huruf kecil, satu huruf besar, dan satu angka.',
-            'confirmed' => 'Password dan konfirmasi password tidak sama.'
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'error' => true,
-                'message' => Str::ucfirst($validator->errors()->first()),
-                'data' => []
-            ]);
-        }
-
-        $user = User::findOrFail(Auth::user()->id);
-
-        if (!Hash::check($request->password_lama, $user->password)) {
-            return response()->json([
-                'error' => true,
-                'message' => 'Password lama tidak sesuai dengan password saat ini.',
-                'data' => []
-            ]);
-        }
-
-        $user->update(['password'=>Hash::make($request->password)]);
-
-        return response()->json([
-            'error' => false,
-            'message' => 'Berhasil mengubah password.',
             'data' => []
         ]);
     }

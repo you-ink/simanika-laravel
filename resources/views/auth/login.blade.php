@@ -54,7 +54,7 @@
                                                 placeholder="password" required>
                                         </div>
                                         <div>
-                                            <input class="btn btn-primary btn-user btn-block btn-login" name="button"
+                                            <input type="button" class="btn btn-primary btn-user btn-block btn-login" name="button"
                                                 value="Login">
                                         </div>
                                     </form>
@@ -62,10 +62,6 @@
                                         <div class="text-left col-6">
                                             <a class="small text-white mb-4"
                                                 href="<?php echo url('/register') ?>">Create an Account!</a>
-                                        </div>
-                                        <div class="text-right col-6">
-                                            <a class="small text-white mb-4"
-                                                href="<?php echo url('/forgotpassword') ?>">Forgot Your Password?</a>
                                         </div>
                                     </div>
                                 </div>
@@ -87,6 +83,7 @@
     <script src="<?= url('assets/js/jquery-3.6.1.min.js') ?>"></script>
     <script src="<?= url('assets/plugin/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
     <script src="<?= url('assets/plugin/sweetalert2/sweetalert2.all.min.js') ?>"></script>
+    <script src="<?= url('assets/js/jquery-cookie.min.js') ?>"></script>
     <script src="<?= url('assets/js/dashboard-main.js') ?>"></script>
 
     <script>
@@ -98,7 +95,7 @@
                 password: $("input#txt_pass").val()
             }
 
-            callApi("POST", "auth/login", data, function (req) {
+            callApi("POST", "{{ route('api.login') }}", data, function (req) {
                 pesan = req.message;
                 if (req.error == true) {
                     Swal.fire(
@@ -112,8 +109,7 @@
                         pesan,
                         'success'
                     ).then((result) => {
-                        cookie.set('uid', req.data.token);
-                        cookie.set('sesid', req.data.sesID);
+                        cookie.set('token', req.data.token);
                         window.location.href = "<?php echo url('dashboard') ?>"
                     })
                 }

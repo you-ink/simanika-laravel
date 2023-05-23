@@ -7,6 +7,7 @@
     <title>Dashboard - @yield('title')</title>
     <meta name="description" content="Official website Himpunan Mahasiswa Teknik Informatika (Himanika) POLIJE.">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="Authorization" content="Bearer {{ $_COOKIE['token'] }}">
     <link rel="icon" href="'assets/img/logo2-himanika.png'" type="image/icon type">
 
     <link href="<?= url('/assets/css/main.css') ?>" rel="stylesheet">
@@ -176,7 +177,7 @@
                                         <i class="material-icons">&#xE7FD;</i> Profile
                                     </a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item text-danger btn-logout" href="<?php echo url('/login') ?>">
+                                    <a class="dropdown-item text-danger btn-logout" href="void(0):javascript;">
                                         <i class="material-icons text-danger">&#xE879;</i> Logout
                                     </a>
                                 </div>
@@ -222,27 +223,14 @@
     <script src="<?= url('assets/js/jquery-cookie.min.js') ?>"></script>
 
     <script>
-        $(document).load(function(){
-            cookie.set('access_token', "3|02DGul4umvMN3lA93mkU20O7WVGSdBd4DwY25jy4")
-            sessionStorage.setItem('access_token_v1', '3|02DGul4umvMN3lA93mkU20O7WVGSdBd4DwY25jy4');
-        });
-
         function getAuthorization() {
-            var accessToken = sessionStorage.getItem('access_token_v1');
-            console.log(accessToken);
-            return "Bearer 3|02DGul4umvMN3lA93mkU20O7WVGSdBd4DwY25jy4";
+            return "Bearer "+cookie.get("token");
         }
     </script>
 
     <script src="<?= url('assets/js/dashboard-main.js') ?>"></script>
 
     <script>
-        var cookie = {
-            set: function (key, value) { $.cookie(key, value, {path: '/'}) },
-            get: function (key) { return $.cookie(key) },
-            remove: function (key) { $.removeCookie(key, {path: '/' }) }
-        }
-
         var getUploadedFile = {};
         // Function For Upload File
         function upload(name, maxFiles = 1) {
@@ -299,6 +287,38 @@
       $(document).ready(function() {
         change_datatable_button();
       })
+
+      $(document).on('click', '.btn-logout', function(e) {
+        e.preventDefault();
+
+        Swal.fire({
+          title: 'Logout?',
+          text: `Anda ingin melakukan logout!`,
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Ya, logout!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+
+            callApi("POST", "{{ route('api.logout') }}", {}, function (req) {
+                pesan = req.message;
+                if (req.error == true) {
+                    Swal.fire(
+                        'Gagal melakukan logout!',
+                        pesan,
+                        'error'
+                    )
+                } else {
+                    cookie.remove('token')
+                    window.location.href = "{{ route('login') }}"
+                }
+            })
+
+          }
+        })
+      });
     </script>
 
 </body>

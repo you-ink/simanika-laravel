@@ -23,7 +23,7 @@ class ArtikelController extends Controller
      */
     public function index()
     {
-        $artikel = Notification::query();
+        $artikel = Artikel::query();
 
         $search = isset($request->search['value']) ? $request->search['value'] : '';
         if (!empty($search)) {
@@ -40,6 +40,37 @@ class ArtikelController extends Controller
             $artikel = $artikel->get();
         } else {
             $artikel = $artikel->skip($start)->take($length)->get();
+        }
+
+        return response()->json([
+            'error' => false,
+            'message' => 'Berhasil mengambil data.',
+            'data' => ArtikelResource::collection($artikel->loadMissing(['penulis:id,nim,nama,angkatan', 'divisi:id,nama'])),
+            'draw' => $request->draw,
+            'recordsTotal' => $total_data,
+            'recordsFiltered' => $total_data,
+        ], 200);
+    }
+
+    public function new_article(Request $request)
+    {
+        $artikel = Artikel::query();
+
+        $search = isset($request->search['value']) ? $request->search['value'] : '';
+        if (!empty($search)) {
+            $artikel->where(function ($query) use ($search) {
+                $query->where('judul', 'like', '%'.$search.'%');
+            });
+        }
+
+        $total_data = $artikel->count();
+        $length = intval(isset($request->length) ? $request->length : 0);
+        $start = intval(isset($request->start) ? $request->start : 0);
+
+        if (!isset($request->length) || !isset($request->start)) {
+            $artikel = $artikel->orderby('created_at', 'DESC')->get();
+        } else {
+            $artikel = $artikel->skip($start)->take($length)->orderby('created_at', 'DESC')->get();
         }
 
         return response()->json([

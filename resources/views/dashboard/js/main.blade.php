@@ -154,7 +154,8 @@
                         "url": "{{ route('api.rapat.index') }}",
                         "type": "GET",
                         "data": {
-                            "sort": "ASC"
+                            "sort": "ASC",
+                            "this_month": true
                         },
                         "headers": {
                             "Authorization" : getAuthorization()
@@ -241,11 +242,152 @@
 
         load_meeting_this_month()
 
+
+        function load_new_article(params = []) {
+            $("table.table-new-article").DataTable().destroy()
+            $("table.table-new-article").DataTable({
+                "deferRender": true,
+                    "responsive": true,
+                    'serverSide': true,
+                    'processing': true,
+                    "ordering": false,
+                    "ajax": {
+                        "url": "{{ route('api.artikel.baru') }}",
+                        "type": "GET",
+                        "data": {
+                            "sort": "DESC",
+                            "length": 5
+                        },
+                        "headers": {
+                            "Authorization" : getAuthorization()
+                        },
+                        "dataSrc": "data"
+                    },
+                    "columns": [
+                        {
+                            data: null,
+                            render: function (data, type, row, meta) {
+                                return meta.row + meta.settings._iDisplayStart + 1 + '.';
+                            }
+                        },
+                        {
+                            data: 'judul'
+                        },
+                        {
+                            data: null,
+                            render: res => {
+                                return `<img src="{{ url('/') }}${res.sampul}" alt="Foto ${res.judul}" width="125px" height="125px">`;
+                            }
+                        },
+                    ],
+                    dom: "<'row'<'col-sm-12 mb-2'B>>lfrtip",
+                    lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                    buttons: [
+                        {
+                            extend: 'excel',
+                            text: '<i class="fas fa-download"></i> Download Excel',
+                            filename: 'Data Agenda Rapat Himanika',
+                            title: null,
+                            className: 'btn btn-sm btn-success',
+                            exportOptions: {
+                                columns: [ 0, 1, 2, 3, 4 ]
+                            }
+                        },
+                        {
+                            extend: 'print',
+                            text: '<i class="fas fa-print"></i> Print',
+                            title: 'Data Agenda Rapat Himanika',
+                            className: 'btn btn-sm btn-success',
+                            exportOptions: {
+                                columns: [ 0, 1, 2, 3, 4 ]
+                            }
+                        },
+                    ]
+            });
+        }
+
+        load_new_article()
+
+
+        @if($user->level_id == 1)
+
+        function load_member(params = []) {
+            $("table.table-member").DataTable().destroy()
+            $("table.table-member").DataTable({
+                "deferRender": true,
+                "responsive": true,
+                'serverSide': true,
+                'processing': true,
+                "ordering": false,
+                "ajax": {
+                    "url": "{{ route('api.user.index') }}",
+                    "type": "GET",
+                    "data": {
+                        "sort": "ASC",
+                        "status": "2"
+                    },
+                    "headers": {
+                        "Authorization" : getAuthorization()
+                    },
+                    "dataSrc": "data"
+                },
+                "columns": [
+                    {
+                        data: null,
+                        render: function (data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1 + '.';
+                        }
+                    },
+                    {
+                        data: 'nama'
+                    },
+                    {
+                        data: 'nim'
+                    },
+                    {
+                        data: 'angkatan'
+                    },
+                    {
+                        data: 'email'
+                    },
+                    {
+                        data: 'telp'
+                    },
+                    {
+                        data: null,
+                        render: res => {
+                            if (res.detail_user.waktu_wawancara) {
+                                return res.detail_user.tanggal_wawancara+" "+res.detail_user.waktu_wawancara
+                            }
+                            return "-"
+                        }
+                    },
+                    {
+                        data: null,
+                        render: res => {
+                            let wawancara = `<button type="button" class="btn btn-sm mb-1 btn-warning btn-set-wawancara" data-id="${res.id}" data-name="${res.nama}" data-toggle="modal" data-target="#wawancaraModal">Set Wawancara</button> <br>`
+                            if (res.detail_user.waktu_wawancara) {
+                                wawancara = ''
+                            }
+                            return `
+                                ${wawancara}
+                                <button type="button" class="btn btn-sm mb-1 btn-success btn-setujui" data-id="${res.id}" data-name="${res.nama}" data-toggle="modal" data-target="#setujuiModal"><i class="fas fa-check"></i></button>
+                                <button type="button" class="btn btn-sm mb-1 btn-danger btn-delete-member" data-id="${res.id}" data-name="${res.nama}"><i class="fas fa-trash"></i></button>
+                            `;
+                        }
+                    }
+                ],
+                lengthMenu: [[5, 10, 25, 50, 100, -1], [5, 10, 25, 50, 100, "All"]]
+            });
+        }
+
+        load_member()
+
         get_division();
 
         function get_division() {
             param = {}
-            callApi("POST", "division/getAll", param, function (req) {
+            callApi("GET", "{{ route('api.divisi') }}", param, function (req) {
                 $("select#division").select2({
                     dropdownParent: $('#setujuiModal')
                 });
@@ -262,7 +404,7 @@
         function get_position() {
             param = {}
 
-            callApi("POST", "position/getAll", param, function (req) {
+            callApi("GET", "{{ route('api.jabatan') }}", param, function (req) {
                 $("select#position").select2({
                     dropdownParent: $('#setujuiModal')
                 });
@@ -289,10 +431,10 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     data = {
-                        id: $(this).attr('data-id')
+                        user_id: $(this).attr('data-id')
                     }
 
-                    callApi("DELETE", "member", data, function (req) {
+                    callApi("POST", "{{ route('api.user.tolak') }}", data, function (req) {
                         pesan = req.message;
                         if (req.error == true) {
                             Swal.fire(
@@ -326,13 +468,13 @@
 
             data = {
                 user_id: $(this).attr('data-id'),
-                tanggal: $("input#tanggalWawancara").val(),
-                waktu: $("input#waktuWawancara").val()
+                tanggal_wawancara: $("input#tanggalWawancara").val(),
+                waktu_wawancara: $("input#waktuWawancara").val()
             }
 
 
 
-            callApi("POST", "member/set_interview", data, function (req) {
+            callApi("POST", "{{ route('api.user.atur_wawancara') }}", data, function (req) {
                 pesan = req.message;
                 if (req.error == true) {
                     Swal.fire(
@@ -369,13 +511,13 @@
         $(document).on('click', '.btn-confirm-setujui', function () {
             data = {
                 user_id: $(this).attr('data-id'),
-                divisi: $("select#division").val(),
-                jabatan: $("select#position").val(),
+                divisi_id: $("select#division").val(),
+                jabatan_id: $("select#position").val(),
             }
 
 
 
-            callApi("POST", "member/set_member", data, function (req) {
+            callApi("POST", "{{ route('api.user.terima') }}", data, function (req) {
                 pesan = req.message;
                 if (req.error == true) {
                     Swal.fire(
@@ -397,6 +539,7 @@
             })
         })
 
+        @endif
 
     })
 

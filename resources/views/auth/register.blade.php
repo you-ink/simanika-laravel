@@ -37,7 +37,7 @@
                     <div class="card-body p-0" style="background-color:Black;">
                         <!-- Nested Row within Card Body -->
                         <div class="row">
-                            <div class="col-lg-5 d-none d-lg-block bg-login-image">
+                            <div class="col-lg-5 d-none d-lg-block h-100 bg-login-image" style="vertical-align: center">
                                 <div class="col-12 pt-5">
                                     <img src="<?php echo url('assets/img/img/logo.png') ?>" alt="simanika"
                                         style="width:400px;height:400px;">
@@ -55,7 +55,7 @@
 										<h1 class="h3 mb-4" style="color:white;"><span>REGISTER</h1>
 										<h6 class="h6 mb-4" style="color:white;">Thank You for joining us. Please
 											register by completing the information below. </h6> <br> -->
-                                    <form style="max-height: 400px !important; overflow-y: scroll; overflow-x: hidden;"
+                                    <form style="max-height: 450px !important; overflow-x: hidden;"
                                         class="p-2">
                                         <div class="form-row">
                                             <div class="form-group col-md-12">
@@ -86,12 +86,6 @@
                                             </div>
                                         </div>
                                         <div class="form-row">
-                                            <div class="form-group col-md-12">
-                                                <label style="color:white;">Alamat</label>
-                                                <textarea name="" id="alamat" rows="3" class="form-control"></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 <label for="feEmailAddress" style="color:white;">Password</label>
                                                 <input type="password" class="form-control" id="password"
@@ -100,26 +94,6 @@
                                                 <label for="fePassword" style="color:white;">Konfirmasi Password</label>
                                                 <input type="password" class="form-control" id="confirm_password"
                                                     placeholder="Konfirmasi Password"> </div>
-                                        </div>
-                                        <div class="form-row upload--foto text-white">
-                                            <div class="form-group col-12">
-                                                <label class="text-white">Foto Profile (.jpg, .jpeg, .png)</label>
-                                                <input id="foto" type="file" accept=".jpg, .jpeg, .png">
-                                            </div>
-                                        </div>
-                                        <div class="form-row upload--bukti_kesanggupan text-white">
-                                            <div class="form-group col-12">
-                                                <label class="text-white">Bukti Kesanggupan (.pdf, .docx, .doc)</label>
-                                                <input id="bukti_kesanggupan" type="file" accept=".pdf, .docx, .doc">
-                                            </div>
-                                        </div>
-                                        <div class="form-row upload--bukti_mahasiswa text-white">
-                                            <div class="form-group col-12">
-                                                <label class="text-white">Bukti Mahasiswa (.pdf, .png, .jpeg,
-                                                    .jpg)</label>
-                                                <input id="bukti_mahasiswa" type="file"
-                                                    accept=".pdf, .png, .jpeg, .jpg">
-                                            </div>
                                         </div>
                                         <div class="form-row mt-3">
                                             <div class="form-group col-md-12">
@@ -161,12 +135,6 @@
     <script>
         $(document).ready(function () {
 
-            sessionStorage.clear();
-
-            upload('foto');
-            upload('bukti_kesanggupan');
-            upload('bukti_mahasiswa');
-
             $(document).on('click', '.btn-register', function (e) {
                 e.preventDefault()
 
@@ -176,15 +144,11 @@
                     nim: $("input#nim").val(),
                     angkatan: $("input#angkatan").val(),
                     telp: $("input#telp").val(),
-                    alamat: $("textarea#alamat").val(),
                     password: $("input#password").val(),
-                    confirm_password: $("input#confirm_password").val(),
-                    foto: sessionStorage.getItem('foto'),
-                    bukti_kesanggupan: sessionStorage.getItem('bukti_kesanggupan'),
-                    bukti_mahasiswa: sessionStorage.getItem('bukti_mahasiswa'),
+                    password_confirmation: $("input#confirm_password").val(),
                 }
 
-                callApi("POST", "auth/register", data, function (req) {
+                callApi("POST", "{{ route('api.register') }}", data, function (req) {
                     pesan = req.message;
                     if (req.error == true) {
                         Swal.fire(
@@ -198,7 +162,7 @@
                             pesan,
                             'success'
                         ).then((result) => {
-                            window.location.href = "<?php echo url('login') ?>"
+                            window.location.href = "<?php echo route('login') ?>"
                         })
                     }
                 })

@@ -21,7 +21,7 @@ class NotificationController extends Controller
         if (!empty($search)) {
             $notification->where(function ($query) use ($search) {
                 $query->where('judul', 'like', '%'.$search.'%')
-                    ->where('isi', 'like', '%'.$search.'%');
+                    ->orWhere('isi', 'like', '%'.$search.'%');
             });
         }
 

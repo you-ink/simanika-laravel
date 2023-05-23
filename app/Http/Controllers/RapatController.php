@@ -32,6 +32,10 @@ class RapatController extends Controller
             });
         }
 
+        if (isset($request->this_month) && $request->this_month == true) {
+            $rapat->orWhereRaw("(YEAR(tanggal) = YEAR(now()) AND MONTH(tanggal) = MONTH(now()))");
+        }
+
         $total_data = $rapat->count();
         $length = intval(isset($request->length) ? $request->length : 0);
         $start = intval(isset($request->start) ? $request->start : 0);

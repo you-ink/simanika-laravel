@@ -1,8 +1,11 @@
 <?php
 
-use Illuminate\Support\Facades\Event;
+use Illuminate\Http\Response;
 use App\Events\ContentNotification;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FuncController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,48 +23,54 @@ Route::get('/', function () {
 });
 
 Route::get('/login', function () {
+    FuncController::cek_user();
     return view('auth.login');
-});
+})->name('login');
 Route::get('/register', function () {
+    FuncController::cek_user();
     return view('auth.register');
-});
-Route::get('/forgotpassword', function () {
-    return view('auth.forgotpassword');
-});
+})->name('register');
 
 Route::prefix('dashboard')->group(function () {
     // Rute untuk halaman utama dashboard
     Route::get('/', function () {
-        return view('dashboard.main');
+        $user = FuncController::get_profile();
+        return view('dashboard.main')->with('user', $user);
     })->name('dashboard.index');
 
      // Rute untuk halaman artikel di dashboard
     Route::get('/artikel', function () {
-        return view('dashboard.article');
+        $user = FuncController::get_profile();
+        return view('dashboard.article')->with('user', $user);
     })->name('dashboard.artikel');
 
     // Rute untuk halaman rapat di dashboard
     Route::get('/meeting', function () {
-        return view('dashboard.meeting');
+        $user = FuncController::get_profile();
+        return view('dashboard.meeting')->with('user', $user);
     })->name('dashboard.meeting');
 
     // Rute untuk halaman rapat di dashboard
     Route::get('/notifikasi', function () {
-        return view('dashboard.notification');
+        $user = FuncController::get_profile();
+        return view('dashboard.notification')->with('user', $user);
     })->name('dashboard.notifikasi');
 
     // Rute untuk halaman rapat di dashboard
     Route::get('/member', function () {
-        return view('dashboard.member');
+        $user = FuncController::get_profile();
+        return view('dashboard.member')->with('user', $user);
     })->name('dashboard.member');
 
     // Rute untuk halaman rapat di dashboard
     Route::get('/user_profile', function () {
-        return view('dashboard.user_profile');
+        $user = FuncController::get_profile();
+        return view('dashboard.user_profile')->with('user', $user);
     })->name('dashboard.user_profile');
 
      // Rute untuk halaman artikel di dashboard
      Route::get('/presensi/{id}', function () {
-        return view('dashboard.presensi');
+        $user = FuncController::get_profile();
+        return view('dashboard.presensi')->with('user', $user);
     })->name('dashboard.presensi');
 });

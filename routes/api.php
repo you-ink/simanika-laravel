@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\OtherController;
 use App\Http\Controllers\RapatController;
 use App\Http\Controllers\ArtikelController;
 use App\Http\Controllers\NotificationController;
@@ -22,6 +23,7 @@ use App\Http\Controllers\PresensiRapatController;
 
 Route::middleware(['auth:sanctum'])->group(function () {
     // Artikel
+    Route::get('artikel_baru', [ArtikelController::class, 'new_article'])->name('api.artikel.baru');
     Route::post('artikel', [ArtikelController::class, 'store']);
     Route::put('artikel/{id}', [ArtikelController::class, 'update'])->middleware('artikel-owner');
     Route::delete('artikel/{id}', [ArtikelController::class, 'destroy'])->middleware('artikel-owner');
@@ -39,11 +41,20 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('notifikasi', [NotificationController::class, 'store']);
 
     // Auth
-    Route::post('akun', [AuthController::class, 'akun']);
-    Route::post('logout', [AuthController::class, 'logout']);
-    Route::post('lengkapi_profil', [AuthController::class, 'complete_profile']);
-    Route::post('edit_profil', [AuthController::class, 'update_profile']);
-    Route::post('ubah_password', [AuthController::class, 'update_password']);
+    Route::post('akun', [AuthController::class, 'akun'])->name('api.akun');
+    Route::post('logout', [AuthController::class, 'logout'])->name('api.logout');
+    Route::post('lengkapi_profil', [AuthController::class, 'complete_profile'])->name('api.lengkapi_profile');
+
+    // User
+    Route::post('edit_profil', [UserController::class, 'update_profile'])->name('api.user.edit_profile');
+    Route::post('ubah_password', [UserController::class, 'update_password'])->name('api.user.ubah_password');
+    Route::post('atur_wawancara', [UserController::class, 'set_interview'])->name('api.user.atur_wawancara');
+    Route::post('terima', [UserController::class, 'accept_applicant'])->name('api.user.terima');
+    Route::post('tolak', [UserController::class, 'decline_applicant'])->name('api.user.tolak');
+
+    // Lain-lain
+    Route::get('divisi', [OtherController::class, 'get_divisi'])->name('api.divisi');
+    Route::get('jabatan', [OtherController::class, 'get_jabatan'])->name('api.jabatan');
 });
 
 // Hanya untuk testing, nanti ditaruh di group sanctum lagi
@@ -56,7 +67,7 @@ Route::get('rapat/{id}', [RapatController::class, 'show'])->name('api.rapat.deta
 Route::get('notifikasi', [NotificationController::class, 'index']);
 Route::get('notifikasi/{id}', [NotificationController::class, 'show']);
 
-Route::get('user', [UserController::class, 'index']);
+Route::get('user', [UserController::class, 'index'])->name('api.user.index');
 
-Route::post('login', [AuthController::class, 'login']);
-Route::post('register', [AuthController::class, 'register']);
+Route::post('login', [AuthController::class, 'login'])->name('api.login');
+Route::post('register', [AuthController::class, 'register'])->name('api.register');
