@@ -24,9 +24,9 @@ use App\Http\Controllers\PresensiRapatController;
 Route::middleware(['auth:sanctum'])->group(function () {
     // Artikel
     Route::get('artikel_baru', [ArtikelController::class, 'new_article'])->name('api.artikel.baru');
-    Route::post('artikel', [ArtikelController::class, 'store']);
-    Route::put('artikel/{id}', [ArtikelController::class, 'update'])->middleware('artikel-owner');
-    Route::delete('artikel/{id}', [ArtikelController::class, 'destroy'])->middleware('artikel-owner');
+    Route::post('artikel', [ArtikelController::class, 'store'])->name('api.artikel.store');
+    Route::put('artikel/{id}', [ArtikelController::class, 'update'])->middleware('artikel-owner')->name('api.artikel.update');
+    Route::delete('artikel/{id}', [ArtikelController::class, 'destroy'])->middleware('artikel-owner')->name('api.artikel.delete');
 
     // Rapat
     Route::post('rapat', [RapatController::class, 'store'])->name('api.rapat.store');
@@ -38,7 +38,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('presensi', [PresensiRapatController::class, 'store']);
 
     // Notifikasi
-    Route::post('notifikasi', [NotificationController::class, 'store']);
+    Route::post('notifikasi', [NotificationController::class, 'store'])->name('api.notifikasi.store');
+    Route::put('notifikasi/{id}', [RapatController::class, 'update'])->name('api.notifikasi.update');
+    Route::delete('notifikasi/{id}', [RapatController::class, 'destroy'])->name('api.notifikasi.delete');
 
     // Auth
     Route::post('akun', [AuthController::class, 'akun'])->name('api.akun');
@@ -64,8 +66,8 @@ Route::get('artikel/{id}', [ArtikelController::class, 'show'])->name('api.artike
 Route::get('rapat', [RapatController::class, 'index'])->name('api.rapat.index');
 Route::get('rapat/{id}', [RapatController::class, 'show'])->name('api.rapat.detail');
 
-Route::get('notifikasi', [NotificationController::class, 'index']);
-Route::get('notifikasi/{id}', [NotificationController::class, 'show']);
+Route::get('notifikasi', [NotificationController::class, 'index'])->name('api.notifikasi.index');
+Route::get('notifikasi/{id}', [NotificationController::class, 'show'])->name('api.notifikasi.detail');
 
 Route::get('user', [UserController::class, 'index'])->name('api.user.index');
 

@@ -1,4 +1,3 @@
-@extends('app.template')
 @push('script')
 <script>
     $(document).ready(function () {
@@ -24,7 +23,8 @@
                     },
                     "dataSrc": "data"
                 },
-                "columns": [{
+                "columns": [
+                    {
                         data: null,
                         render: function (data, type, row, meta) {
                             return meta.row + meta.settings._iDisplayStart + 1 + '.';
@@ -34,31 +34,14 @@
                         data: 'judul'
                     },
                     {
-                        data: 'konten'
-                    }, 
-                    {
                         data: 'sampul'
                     }, 
                     {
-                        data: null,
-                        render: res => {
-                            let button = ''
-                            let file = ''
-                            if (res.file) {
-                                file =
-                                    `<p class="my-1"><a href="{{ url('/') }}${res.file}" taget="_blank" class="text-primary">Lihat file</a></p>`
-                            } else {
-                                file = '<p class="my-1">-</p>'
-                            }
-
-                            button =
-                                `<button type="button" class="btn btn-sm btn-secondary btn-upload-document" data-id="${res.id}" data-name="${res.file}" data-toggle="modal" data-target="#crudModalDocArticle" ><i class="fas fa-upload"></i></button>`
-
-
-                            return `
-                                    ${button}${file}
-                                `;
-                        }
+                        data: 'konten'
+                    }, 
+                    
+                    {
+                        data: null
                     }, 
                     {
                         data: null,
@@ -66,12 +49,11 @@
                             let btn_edit = ''
                             let btn_delete = ''
 
-                            btn_edit =
-                                `<button type="button" class="btn btn-sm mb-1 btn-primary btn-update-Article" data-id="${res.id}" data-name="${res.judul}" data-text="${res.deskripsi_konten}" data-toggle="modal" data-target="#crudModalArticle"><i class="fas fa-pen"></i></button>`
+                            btn_edit = `<button type="button" class="btn btn-sm mb-1 btn-primary btn-update-Article" data-id="${res.id}" data-judul="${res.judul}" data-text="${res.konten}" data-toggle="modal" data-target="#crudModalArticle"><i class="fas fa-pen"></i></button>`
 
 
                             btn_delete =
-                                `<button type="button" class="btn btn-sm mb-1 btn-danger btn-delete-Article" data-id="${res.id}" data-name="${res.nama}"><i class="fas fa-trash"></i></button>`
+                                `<button type="button" class="btn btn-sm mb-1 btn-danger btn-delete-Article" data-id="${res.id}" data-judul="${res.judul}"><i class="fas fa-trash"></i></button>`
 
 
                             return `
@@ -81,7 +63,8 @@
                         }
                     }
                 ],
-                
+            });
+        }
 
         load_article();
 
@@ -166,7 +149,7 @@
             })
         })
 
-        $(document).on('click', ".btn-delete-meeting", function () {
+        $(document).on('click', ".btn-delete-article", function () {
             let id = $(this).attr('data-id')
             let name = $(this).attr('data-name')
 
@@ -180,7 +163,7 @@
                 confirmButtonText: 'Ya, hapus!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    let url = "{{ route('api.rapat.delete', ':id') }}";
+                    let url = "{{ route('api.artikel.delete', ':id') }}";
                     url = url.replace(':id', id);
                     callApi("DELETE", url, [], function (req) {
                         pesan = req.message;
@@ -212,35 +195,14 @@
 
         // Upload Noteluensi
         upload('file')
-        $(document).on('click', '#crudModalDoc .btn--upload-file', function (e) {
+        $(document).on('click', '#crudModalDocArticle .btn--upload-file', function (e) {
             console.log(getUploadedFile['file']);
             let data = {
                 id: $(this).attr('data-id'),
                 notulensi: getUploadedFile['file']
             }
 
-            callApi("POST", "{{ route('api.artikel.upload_file') }}", data, function (req) {
-                pesan = req.message;
-                if (req.error == true) {
-                    Swal.fire(
-                        'Gagal diupdate!',
-                        pesan,
-                        'error'
-                    )
-                } else {
-                    Swal.fire(
-                        'Diupdate!',
-                        pesan,
-                        'success'
-                    ).then((result) => {
-                        $('#crudModalDoc').remove()
-                        window.location.reload()
-                    })
 
-                    load_article();
-                    change_datatable_button();
-                }
-            })
         })
 
     })
