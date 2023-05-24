@@ -20,6 +20,12 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" id="main-stylesheet" data-version="1.1.0"
         href="<?php echo url('assets/template/shards-dashboard/styles/shards-dashboards.1.1.0.min.css') ?>">
+
+    <style>
+        .modal {
+            background-color: rgba(0, 0, 0, .3);
+        }
+    </style>
 </head>
 
 <body class="h-100">
@@ -204,7 +210,7 @@
                 @yield('content')
 
                 @if (empty($user->detailUser->bukti_mahasiswa) || empty($user->detailUser->bukti_kesanggupan))
-                <div class="modal fade" style="background-color: rgba(0, 0, 0, .7)" id="lengkapiProfileModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+                <div class="modal fade" style="background-color: rgba(0, 0, 0, .7) !important" id="lengkapiProfileModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
                 aria-hidden="true" data-backdrop="false">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
@@ -264,6 +270,7 @@
     <script src="<?= url('assets/plugin/fancy-file-uploader/jquery.iframe-transport.js') ?>"></script>
     <script src="<?= url('assets/plugin/fancy-file-uploader/jquery.fancy-fileupload.js') ?>"></script>
     <script src="<?= url('assets/js/jquery-cookie.min.js') ?>"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/38.0.1/classic/ckeditor.js"></script>
 
     <script>
         function getAuthorization() {
@@ -277,7 +284,7 @@
         var getUploadedFile = {};
         // Function For Upload File
         function upload(name, maxFiles = 1) {
-            getUploadedFile[name] = null;
+            getUploadedFile[name] = [];
 
             $(`#${name}`).FancyFileUpload({
             params : {
@@ -298,20 +305,28 @@
                 }
 
                 if ($(`.upload--${name}`).find('.ff_fileupload_queued').length > maxFiles) {
-                Swal.fire(
-                    'Gagal Ditambahkan!',
-                    `Maksimal upload hanya ${maxFiles} file`,
-                    'error'
-                    )
-                $(this).remove()
-                delete data.ff_info
-                return;
+                    Swal.fire(
+                        'Gagal Ditambahkan!',
+                        `Maksimal upload hanya ${maxFiles} file`,
+                        'error'
+                        )
+                    $(this).remove()
+                    delete data.ff_info
+                    return;
                 }
 
                 $(`.upload--${name}`).find('.btn--upload-file').removeClass('d-none');
                 $(`.upload--${name}`).find('.ff_fileupload_remove_file').attr('data-doc', name);
 
-                getUploadedFile[name] = data.files[0];
+                if (maxFiles === 1) {
+                    getUploadedFile[name] = data.files[0];
+                } else {
+                    for (var i = 0; i < maxFiles; i++) {
+                        if (($(`.upload--${name}`).find('.ff_fileupload_queued').length-1) == i) {
+                            getUploadedFile[name][i] = data.files[0];
+                        }
+                    }
+                }
 
                 $(this).find('.ff_fileupload_start_upload').remove()
             }

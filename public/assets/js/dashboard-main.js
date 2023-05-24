@@ -4,9 +4,19 @@ function callApi(t, n, a, e) {
     // Memproses data sebelum mengirimnya
     for (let key in a) {
         if (a.hasOwnProperty(key)) {
-            formData.append(key, a[key]);
+            if (Array.isArray(a[key])) {
+                // Jika nilai adalah array
+                for (let i = 0; i < a[key].length; i++) {
+                    formData.append(key+"["+[i]+"]", a[key][i]);
+                }
+            } else {
+                // Jika nilai bukan array
+                formData.append(key, a[key]);
+            }
         }
     }
+
+    // console.log(formData);
 
     let setAuthorization = {};
 
@@ -21,7 +31,15 @@ function callApi(t, n, a, e) {
         formData = new URLSearchParams();
         for (let key in a) {
             if (a.hasOwnProperty(key)) {
-                formData.append(key, a[key]);
+                if (Array.isArray(a[key])) {
+                    // Jika nilai adalah array
+                    for (let i = 0; i < a[key].length; i++) {
+                        formData.append(key+"["+[i]+"]", a[key][i]);
+                    }
+                } else {
+                    // Jika nilai bukan array
+                    formData.append(key, a[key]);
+                }
             }
         }
         formData = formData.toString();

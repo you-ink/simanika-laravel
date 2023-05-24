@@ -34,26 +34,44 @@
                         data: 'judul'
                     },
                     {
-                        data: 'sampul'
-                    }, 
+                        data: null,
+                        render: res => {
+                            return `<img src="{{ url('/') }}${res.sampul}" alt="Foto ${res.judul}" width="125px" height="125px">`;
+                        }
+                    },
                     {
-                        data: 'konten'
-                    }, 
-                    
+                        data: null,
+                        render: res => {
+                            return `${res.divisi.nama} ● ${res.penulis.nama}`;
+                        }
+                    },
                     {
-                        data: null
-                    }, 
+                        data: "tanggal"
+                    },
+                    {
+                        data: null,
+                        render: res => {
+                            let btn_deskripsi = ''
+
+                            btn_deskripsi =
+                                `<a href="{{ url('artikel') }}/${res.id}"><button type="button" class="btn btn-sm mb-1 btn-info" data-id="${res.id}" data-judul="${res.judul}"><i class="fas fa-info"></i> Deskripsi</button></a>`
+
+                            return `
+                                        ${btn_deskripsi}
+                                    `;
+                        }
+                    },
                     {
                         data: null,
                         render: res => {
                             let btn_edit = ''
                             let btn_delete = ''
 
-                            btn_edit = `<button type="button" class="btn btn-sm mb-1 btn-primary btn-update-Article" data-id="${res.id}" data-judul="${res.judul}" data-text="${res.konten}" data-toggle="modal" data-target="#crudModalArticle"><i class="fas fa-pen"></i></button>`
+                            btn_edit = `<button type="button" class="btn btn-sm mb-1 btn-primary btn-update-article" data-id="${res.id}" data-judul="${res.judul}" data-konten="${$(res.konten).text()}" data-toggle="modal" data-target="#crudModal"><i class="fas fa-pen"></i></button>`
 
 
                             btn_delete =
-                                `<button type="button" class="btn btn-sm mb-1 btn-danger btn-delete-Article" data-id="${res.id}" data-judul="${res.judul}"><i class="fas fa-trash"></i></button>`
+                                `<button type="button" class="btn btn-sm mb-1 btn-danger btn-delete-article" data-id="${res.id}" data-judul="${res.judul}"><i class="fas fa-trash"></i></button>`
 
 
                             return `
@@ -78,10 +96,27 @@
             $('#crudModal #articleContent').val('')
         })
 
-        $(document).on('click', '.btn-confirm-add-artcle', function () {
+        let articleContent;
+        ClassicEditor
+            .create( document.querySelector( '#articleContent' ) )
+            .then( newArticleContent => {
+                articleContent = newArticleContent;
+            } )
+            .catch( error => {
+                console.error( error );
+            });
+
+        upload('cover')
+        upload('files', 5)
+        $(document).on('click', '.btn-confirm-add-article', function () {
+            $(this).html("<i class='fas fa-spinner fa-pulse'></i>")
+            $(this).attr('disabled', true)
+
             data = {
-                nama: $("input#articleName").val(),
-                text: $("input#articleContent").val(),
+                judul: $("input#articleName").val(),
+                konten: articleContent.getData(),
+                sampul: getUploadedFile['cover'],
+                file: getUploadedFile['files'],
             }
 
             callApi("POST", "{{ route('api.artikel.store') }}", data, function (req) {
@@ -91,14 +126,21 @@
                         'Gagal ditambahkan!',
                         pesan,
                         'error'
-                    )
+                    ).then((result) => {
+                        $('.btn-confirm-add-article').html("Tambah")
+                        $('.btn-confirm-add-article').attr('disabled', false)
+                    })
                 } else {
                     Swal.fire(
                         'Ditambahkan!',
                         pesan,
                         'success'
-                    )
+                    ).then((result) => {
+                        $('.btn-confirm-add-article').html("Set Tanggal")
+                        $('.btn-confirm-add-article').attr('disabled', false)
+                    })
                     $("#crudModal").modal("hide")
+                    $('.ff_fileupload_uploads').remove()
                     load_article();
                     change_datatable_button();
                 }
@@ -109,10 +151,10 @@
             $('.title-article-modal').html('Edit')
             $('.btn-confirm-update-article').removeClass('d-none')
             $('.btn-confirm-add-article').addClass('d-none')
-            $('#crudModal .article-name').html($(this).attr('data-name'))
+            $('#crudModal .article-name').html($(this).attr('data-judul'))
 
-            $('#crudModal #articleName').val($(this).attr('data-name'))
-            $('#crudModal #articleContent').val($(this).attr('data-text'))
+            $('#crudModal #articleName').val($(this).attr('data-judul'))
+            $('#crudModal #articleContent').val($(this).attr('data-konten'))
 
             $('.btn-confirm-update-article').attr('data-id', $(this).attr('data-id'))
         })
@@ -186,23 +228,6 @@
 
                 }
             })
-        })
-
-        $(document).on('click', '.btn-upload-file', function (e) {
-            $('#crudModalDoc .document-article-name').html($(this).attr('data-name'))
-            $('#crudModalDoc .btn--upload-file').attr('data-id', $(this).attr('data-id'))
-        })
-
-        // Upload Noteluensi
-        upload('file')
-        $(document).on('click', '#crudModalDocArticle .btn--upload-file', function (e) {
-            console.log(getUploadedFile['file']);
-            let data = {
-                id: $(this).attr('data-id'),
-                notulensi: getUploadedFile['file']
-            }
-
-
         })
 
     })

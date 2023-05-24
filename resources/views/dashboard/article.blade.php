@@ -22,7 +22,7 @@
                         </div>
                         <div class="col-6 text-right">
                             <button class="btn btn-sm btn-success btn-add-article" data-toggle="modal"
-                                data-target="#crudModalArticle"><i class="fas fa-plus"></i> Tambah Artikel </button>
+                                data-target="#crudModal"><i class="fas fa-plus"></i> Tambah Artikel </button>
                         </div>
                     </div>
                 </div>
@@ -33,9 +33,10 @@
                                 <tr>
                                     <th scope="col" class="border-0">No</th>
                                     <th scope="col" class="border-0">Judul</th>
-                                    <th scope="col" class="border-0">Konten</th>
                                     <th scope="col" class="border-0">Sampul</th>
-                                    <th scope="col" class="border-0">file</th>
+                                    <th scope="col" class="border-0">Penulis</th>
+                                    <th scope="col" class="border-0">Tanggal Dibuat</th>
+                                    <th scope="col" class="border-0">Deskripsi</th>
                                     <th scope="col" class="border-0">Aksi</th>
                                 </tr>
                             </thead>
@@ -52,9 +53,9 @@
 
 
 <!-- CRUD Modal -->
-<div class="modal fade" id="crudModalArticle" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade" id="crudModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
     aria-hidden="true" data-backdrop="false">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLongTitle"><span class="title-article-modal"></span> Artikel
@@ -67,20 +68,26 @@
                 <form>
                     <div class="form-row">
                         <div class="form-group col-12">
-                            <label for="articleName">Judul Artikel</label>
-                            <input type="text" class="form-control" id="articleName" placeholder="Judul Article">
+                            <label for="articleName">Judul</label>
+                            <input type="text" class="form-control" id="articleName" placeholder="Judul Artikel">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-12">
                             <label for="articleContent">Konten</label>
-                            <input type="text" class="form-control" id="articleContent" placeholder="Konten Artikel">
+                            <div id="articleContent"></div>
                         </div>
                     </div>
-                    <div class="form-row">
+                    <div class="form-row upload--cover">
                         <div class="form-group col-12">
-                            <label for="articleCover">Sampul</label>
-                            <input type="image" class="form-control" id="articleCover" placeholder="sampul">
+                            <label for="cover">Sampul</label>
+                            <input id="cover" type="file" accept=".jpg, .jpeg, .png">
+                        </div>
+                    </div>
+                    <div class="form-row upload--files">
+                        <div class="form-group col-12">
+                            <label for="files">File <i class="fas fa-info-circle"></i></label>
+                            <input id="files" type="file" accept=".jpg, .jpeg, .png" multiple>
                         </div>
                     </div>
                 </form>
@@ -93,38 +100,6 @@
         </div>
     </div>
 </div>
-
-
-<!-- CRUD Modal Dokumen -->
-<div class="modal fade" id="crudModalDocArticle" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-    aria-hidden="true" data-backdrop="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Upload Dokumen <span
-                        class="document-article-name"></span></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-row upload--article">
-                        <div class="form-group col-12">
-                            <label>File Artikel</label>
-                            <input id="article" type="file" accept=".pdf, .docx, .doc">
-                        </div>
-                        <div class="form-group col-12 text-right btn--upload-file d-none">
-                            <button type="button" class="btn btn-sm btn-secondary btn--upload-article">Upload</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-
 
 
 @endsection
