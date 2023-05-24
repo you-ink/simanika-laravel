@@ -1,7 +1,7 @@
 @extends('app.dashboard')
 @section('title', 'User_Profile')
 
-@include('dashboard.js.User_Profile')
+@include('dashboard.js.user_profile')
 
 @section('content')
 
@@ -19,12 +19,12 @@
 				<div class="card-header border-bottom text-center">
 					<div class="mb-3 mx-auto">
 						<img class="user-avatar rounded-circle mr-2"
-						src="<?php echo url('assets/img/user.png')?>" alt="User Avatar" width="150" height="150">
+						src="{{ url($user->detailUser->foto) }}" alt="User Avatar" width="150" height="150">
 					</div>
-					<h4 class="mb-0"><?php echo "bubu" ?></h4>
-					<span class="text-muted d-block mb-2"></span>
-					<button type="button" class="mb-2 btn btn-sm btn-pill btn-outline-primary mr-2" data-toggle="modal"
-						data-target="#crudModal"><i class="fas fa-pen mr-1"></i>Edit</button>
+					<h4 class="mb-0">{{ $user->nama }}</h4>
+                    @if ($user->status == 1)
+					    <span class="text-muted d-block mb-2">{{ $user->detailUser->divisi->nama." ● ".$user->detailUser->jabatan->nama }}</span>
+                    @endif
 				</div>
 			</div>
 		</div>
@@ -41,35 +41,42 @@
 									<div class="form-row">
 										<div class="form-group col-md-12">
 											<label for="nama">Nama Lengkap</label>
-											<input type="text" class="form-control" id="nama" placeholder="Nama lengkap" value="<?php echo "bubu" ?>"> 
+											<input type="text" class="form-control" id="nama" placeholder="Nama lengkap" value="{{ $user->nama }}">
 										</div>
 									</div>
 									<div class="form-row">
 										<div class="form-group col-md-6">
 											<label for="nim">NIM</label>
-											<input type="text" class="form-control" id="nim" placeholder="NIM" value="<?php echo "E31234567" ?>" readonly> 
+											<input type="text" class="form-control" id="nim" placeholder="NIM" value="{{ $user->nim }}" readonly>
 										</div>
 										<div class="form-group col-md-6">
 											<label for="angkatan">Angkatan</label>
-											<input type="text" class="form-control" id="angkatan" placeholder="Angkatan" value="<?php echo "21" ?>"> 
+											<input type="text" class="form-control" id="angkatan" placeholder="Angkatan" value="{{ $user->angkatan }}">
 										</div>
 									</div>
 									<div class="form-row">
 										<div class="form-group col-md-6">
 											<label for="email">Email</label>
-											<input type="email" class="form-control" id="email" placeholder="Email" value="<?php echo "bubu@gmail.com" ?>" readonly> 
+											<input type="email" class="form-control" id="email" placeholder="Email" value="{{ $user->email }}" readonly>
 										</div>
 										<div class="form-group col-md-6">
 											<label for="telp">No Telepon</label>
-											<input type="text" class="form-control" id="telp" placeholder="No. Hanphone" value="<?php echo "0888888888" ?>"> 
+											<input type="text" class="form-control" id="telp" placeholder="No. Hanphone" value="{{ $user->telp }}">
 										</div>
 									</div>
 									<div class="form-row">
 										<div class="form-group col-md-12">
 											<label for="alamat">Alamat</label>
-											<textarea class="form-control" id="alamat" rows="3"><?php echo "jonggol" ?></textarea>
+											<textarea class="form-control" id="alamat" rows="3">{{ $user->alamat }}</textarea>
 										</div>
 									</div>
+                                    <div class="form-row upload--foto">
+                                        <div class="form-group col-12">
+                                            <label for="nama">Foto Profile</label>
+                                            <input id="foto" type="file" accept=".png, .jpeg, .jpg">
+                                        </div>
+                                    </div>
+                                    @if (!empty($user->detailUser->bukti_mahasiswa) || !empty($user->detailUser->bukti_kesanggupan))
 									<div class="form-row">
 										<div class="form-group col-md-6">
 											<div class="ff_fileupload_wrap">
@@ -83,7 +90,7 @@
 																Bukti Kesanggupan
 															</div>
 															<div class="ff_fileupload_fileinfo" id="buktiMahasiswaInfo">
-																
+                                                                <a href="{{ url($user->detailUser->bukti_kesanggupan) }}">Lihat File</a>
 															</div>
 														</td>
 													</tr>
@@ -102,7 +109,7 @@
 																Bukti Mahasiswa
 															</div>
 															<div class="ff_fileupload_fileinfo" id="buktiMahasiswaInfo">
-																Lihat File</a>
+																<a href="{{ url($user->detailUser->bukti_mahasiswa) }}">Lihat File</a>
 															</div>
 														</td>
 													</tr>
@@ -110,6 +117,7 @@
 											</div>
 										</div>
 									</div>
+                                    @endif
 									<button type="submit" class="btn btn-accent btn-update-profile">Update Profile</button>
 								</form>
 							</div>
@@ -120,35 +128,5 @@
 		</div>
 	</div>
 </div>
-
-<!-- CRUD Modal -->
-<div class="modal fade" id="crudModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-	aria-hidden="true" data-backdrop="false">
-	<div class="modal-dialog modal-dialog-centered" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLongTitle">Update Foto Profile</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<form>
-					<div class="form-row upload--foto">
-						<div class="form-group col-12">
-							<input id="foto" type="file" accept=".png, .jpeg, .jpg">
-						</div>
-					</div>
-				</form>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-primary btn--upload-foto">Update</button>
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-			</div>
-		</div>
-	</div>
-</div>
-
-
 
 @endsection

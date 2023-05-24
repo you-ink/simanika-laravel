@@ -1,8 +1,8 @@
+@push('script')
 <script>
 	$(document).ready(function() {
 
-		sessionStorage.clear();
-
+		upload('foto');
 		$(document).on('click', '.btn-update-profile', function (e) {
 			e.preventDefault()
 
@@ -13,9 +13,12 @@
 				alamat: $("textarea#alamat").text(),
 			}
 
-			data[get_api_login_global()['key']] = get_api_login_value();
 
-			callApi("POST", "user/update_profile", data, function (req) {
+            if (getUploadedFile['foto']) {
+                data.foto = getUploadedFile['foto'];
+            }
+
+			callApi("POST", "{{ route('api.user.edit_profile') }}", data, function (req) {
 				pesan = req.message;
 				if (req.error == true) {
 					Swal.fire(
@@ -29,35 +32,7 @@
 				      pesan,
 				      'success'
 				    ).then((result) => {
-				    	location.reload()
-					})
-				}
-			})
-		})
-
-		upload('foto');
-		$(document).on('click', '#crudModal .btn--upload-foto', function (e) {
-			let data = {
-				foto: sessionStorage.getItem('foto')
-			}
-
-			data[get_api_login_global()['key']] = get_api_login_value();
-
-			callApi("POST", "user/upload_foto_profile", data, function (req) {
-				pesan = req.message;
-				if (req.error == true) {
-					Swal.fire(
-				      	'Gagal diupdate!',
-				      	pesan,
-				      	'error'
-				    )
-				}else{
-					Swal.fire(
-				      	'Diupdate!',
-				      	pesan,
-				      	'success'
-				    ).then((result) => {
-				    	$('#crudModal').remove()
+                        $('.ff_fileupload_uploads').remove()
 				    	location.reload()
 					})
 				}
@@ -66,3 +41,4 @@
 
 	})
 </script>
+@endpush

@@ -27,4 +27,34 @@ class FuncController extends Controller
             abort(Response::HTTP_NOT_FOUND);
         }
     }
+
+    public static function set_access_status($status)
+    {
+        if (isset($_COOKIE['token']) && !empty($_COOKIE['token'])) {
+            $token = PersonalAccessToken::findToken($_COOKIE['token']);
+
+            $user = $token->tokenable;
+
+            if ($user->status != $status) {
+                abort(Response::HTTP_NOT_FOUND);
+            }
+        } else {
+            abort(Response::HTTP_NOT_FOUND);
+        }
+    }
+
+    public static function set_access_level($level)
+    {
+        if (isset($_COOKIE['token']) && !empty($_COOKIE['token'])) {
+            $token = PersonalAccessToken::findToken($_COOKIE['token']);
+
+            $user = $token->tokenable;
+
+            if ($user->detailUser->divisi_id != $level) {
+                abort(Response::HTTP_NOT_FOUND);
+            }
+        } else {
+            abort(Response::HTTP_NOT_FOUND);
+        }
+    }
 }

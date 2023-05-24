@@ -259,7 +259,6 @@
             // Upload Noteluensi
             upload('notulensi')
             $(document).on('click', '#crudModalDoc .btn--upload-notulensi', function (e) {
-                console.log(getUploadedFile['notulensi']);
                 let data = {
                     id: $(this).attr('data-id'),
                     notulensi: getUploadedFile['notulensi']

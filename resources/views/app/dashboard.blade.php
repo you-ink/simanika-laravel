@@ -63,8 +63,9 @@
                             </a>
                         </li>
 
+                        @if ($user->status == 1)
                         <li class="nav-item">
-                            <a class="nav-link <?php echo (request()->segment(2) == 'meeting')?'active':'' ?>"
+                            <a class="nav-link <?php echo (request()->segment(2) == 'meeting' || request()->segment(2) == 'presensi')?'active':'' ?>"
                                 href="<?php echo url('dashboard/meeting') ?>">
                                 <i class="material-icons">groups</i>
                                 <span>Rapat</span>
@@ -79,6 +80,18 @@
                             </a>
                         </li>
 
+                        @if ($user->level_id == 1)
+                        <li class="nav-item">
+                            <a class="nav-link <?php echo (request()->segment(2) == 'member')?'active':'' ?>"
+                                href="<?php echo url('dashboard/member') ?>">
+                                <i class="material-icons">table_chart</i>
+                                <span>Data Anggota</span>
+                            </a>
+                        </li>
+                        @endif
+                        @endif
+
+
                         <li class="nav-item">
                             <a class="nav-link <?php echo (request()->segment(2) == 'notifikasi')?'active':'' ?>"
                                 href="<?php echo url('dashboard/notifikasi') ?>">
@@ -88,15 +101,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link <?php echo (request()->segment(2) == 'member')?'active':'' ?>"
-                                href="<?php echo url('dashboard/member') ?>">
-                                <i class="material-icons">table_chart</i>
-                                <span>Data Anggota</span>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link <?php echo (request()->segment(2) == 'profile')?'active':'' ?>"
+                            <a class="nav-link <?php echo (request()->segment(2) == 'user_profile')?'active':'' ?>"
                                 href="<?php echo url('dashboard/user_profile') ?>">
                                 <i class="material-icons">person</i>
                                 <span>User Profile</span>
@@ -168,9 +173,9 @@
                                 <a class="nav-link dropdown-toggle text-nowrap px-3" data-toggle="dropdown" href="#"
                                     role="button" aria-haspopup="true" aria-expanded="false">
                                     <img class="user-avatar rounded-circle mr-2"
-                                        src="<?php echo url('assets/img/user.png')?>" alt="User Avatar"
+                                        src="{{ url($user->detailUser->foto) }}" alt="User Avatar"
                                         style="width: 2.5rem !important; height: 2.5rem !important;">
-                                    <span class="d-none d-md-inline-block"><?php echo "budi" ?></span>
+                                    <span class="d-none d-md-inline-block">{{ $user->nama }}</span>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-small">
                                     <a class="dropdown-item" href="<?php echo url('dashboard/profile') ?>">
@@ -197,6 +202,44 @@
 
                 <!-- ISI -->
                 @yield('content')
+
+                @if (empty($user->detailUser->bukti_mahasiswa) || empty($user->detailUser->bukti_kesanggupan))
+                <div class="modal fade" style="background-color: rgba(0, 0, 0, .7)" id="lengkapiProfileModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+                aria-hidden="true" data-backdrop="false">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Lengkapi Data Profile</h5>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+									<div class="form-row">
+										<div class="form-group col-md-12">
+											<label for="alamat">Alamat</label>
+											<textarea class="form-control" id="lengkapi_alamat" rows="3"></textarea>
+										</div>
+									</div>
+                                    <div class="form-row upload--foto">
+                                        <div class="form-group col-12">
+                                            <label for="nama">Bukti Mahasiswa</label>
+                                            <input id="lengkapi_bukti_mahasiswa" type="file" accept=".png, .jpeg, .jpg, .pdf">
+                                        </div>
+                                    </div>
+                                    <div class="form-row upload--foto">
+                                        <div class="form-group col-12">
+                                            <label for="nama">Bukti Kesanggupan</label>
+                                            <input id="lengkapi_bukti_kesanggupan" type="file" accept=".png, .jpeg, .jpg, .pdf">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary btn--lengkapi-profile">Update</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endif
 
                 <footer class="main-footer d-flex p-2 px-3 bg-white border-top">
                     <span class="copyright ml-auto my-auto mr-2">Copyright &copy; 2023
@@ -286,6 +329,43 @@
 
       $(document).ready(function() {
         change_datatable_button();
+
+        @if (empty($user->detailUser->bukti_mahasiswa) || empty($user->detailUser->bukti_kesanggupan))
+            $('#lengkapiProfileModal').modal('show')
+
+            upload('lengkapi_bukti_mahasiswa');
+            upload('lengkapi_bukti_kesanggupan')
+            $(document).on('click', '.btn--lengkapi-profile', function(e){
+                e.preventDefault();
+
+                data = {
+                    bukti_kesanggupan: getUploadedFile['lengkapi_bukti_kesanggupan'],
+                    bukti_mahasiswa: getUploadedFile['lengkapi_bukti_mahasiswa'],
+                    alamat: $("textarea#lengkapi_alamat").val(),
+                }
+                console.log($("textarea#lengkapi_alamat").val());
+                callApi("POST", "{{ route('api.lengkapi_profile') }}", data, function (req) {
+                    pesan = req.message;
+                    if (req.error == true) {
+                        Swal.fire(
+                        'Gagal melengkapi profile!',
+                        pesan,
+                        'error'
+                        )
+                    }else{
+                        Swal.fire(
+                        'Berhasil!',
+                        pesan,
+                        'success'
+                        ).then((result) => {
+                            $('.ff_fileupload_uploads').remove()
+                            location.reload()
+                        })
+                    }
+                })
+            })
+        @endif
+
       })
 
       $(document).on('click', '.btn-logout', function(e) {

@@ -5,13 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\DetailUser;
 use Illuminate\Support\Str;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use App\Events\ContentNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
@@ -147,13 +147,13 @@ class AuthController extends Controller
     public function complete_profile(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'bukti_kesanggupan' => 'file|mimes:jpg,png,jpeg|max:5048',
-            'bukti_mahasiswa' => 'file|mimes:jpg,png,jpeg|max:5048',
-            'alamat' => 'string',
+            'bukti_kesanggupan' => 'required|file|mimes:jpg,png,jpeg,pdf|max:5048',
+            'bukti_mahasiswa' => 'required|file|mimes:jpg,png,jpeg,pdf|max:5048',
+            'alamat' => 'required',
         ], [
             'required' => ':attribute harus diisi.',
             'file' => ':attribute harus berupa file.',
-            'mimes' => 'File :attribute harus berformat jpg, jpeg, atau png.',
+            'mimes' => 'File :attribute harus berformat jpg, jpeg, png, atau pdf.',
             'max' => 'File :attribute tidak boleh lebih dari :max KB.',
         ]);
 
@@ -176,7 +176,7 @@ class AuthController extends Controller
             $namaKesanggupan = $this->generateRandomString(33).time();
             $ekstensiKesanggupan = $request->bukti_kesanggupan->extension();
 
-            $pathKesanggupan = Storage::putFileAs('public/images/user/bukti-kesanggupan', $request->bukti_kesanggupan, $namaKesanggupan.".".$ekstensiKesanggupan);
+            $pathKesanggupan = Storage::putFileAs('public/document/user/bukti-kesanggupan', $request->bukti_kesanggupan, $namaKesanggupan.".".$ekstensiKesanggupan);
             // End Upload File
 
             $detailuser->update([
@@ -193,7 +193,7 @@ class AuthController extends Controller
             $namaBuktiMahasiswa = $this->generateRandomString(33).time();
             $ekstensiBuktiMahasiswa = $request->bukti_mahasiswa->extension();
 
-            $pathBuktiMahasiswa = Storage::putFileAs('public/images/user/bukti-mahasiswa', $request->bukti_mahasiswa, $namaBuktiMahasiswa.".".$ekstensiBuktiMahasiswa);
+            $pathBuktiMahasiswa = Storage::putFileAs('public/document/user/bukti-mahasiswa', $request->bukti_mahasiswa, $namaBuktiMahasiswa.".".$ekstensiBuktiMahasiswa);
             // End Upload File
 
             $detailuser->update([

@@ -41,12 +41,14 @@ Route::prefix('dashboard')->group(function () {
      // Rute untuk halaman artikel di dashboard
     Route::get('/artikel', function () {
         $user = FuncController::get_profile();
+        FuncController::set_access_status(1);
         return view('dashboard.article')->with('user', $user);
     })->name('dashboard.artikel');
 
     // Rute untuk halaman rapat di dashboard
     Route::get('/meeting', function () {
         $user = FuncController::get_profile();
+        FuncController::set_access_status(1);
         return view('dashboard.meeting')->with('user', $user);
     })->name('dashboard.meeting');
 
@@ -59,6 +61,8 @@ Route::prefix('dashboard')->group(function () {
     // Rute untuk halaman rapat di dashboard
     Route::get('/member', function () {
         $user = FuncController::get_profile();
+        FuncController::set_access_status(1);
+        FuncController::set_access_level(1);
         return view('dashboard.member')->with('user', $user);
     })->name('dashboard.member');
 

@@ -9,6 +9,7 @@ use App\Models\Notification;
 use Illuminate\Http\Request;
 use App\Events\ContentNotification;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -79,6 +80,7 @@ class UserController extends Controller
             'nama' => $request->nama,
             'telp' => $request->telp,
             'angkatan' => $request->angkatan,
+            'alamat' => isset($request->alamat) ? $request->alamat : $user->alamat,
         ]);
 
         $detailuser = DetailUser::where('user_id', Auth::user()->id)->firstOrFail();
