@@ -50,7 +50,7 @@ class FuncController extends Controller
 
             $user = $token->tokenable;
 
-            if ($user->detailUser->divisi_id != $level) {
+            if ($user->level_id != $level) {
                 abort(Response::HTTP_NOT_FOUND);
             }
         } else {
