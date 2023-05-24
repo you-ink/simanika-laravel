@@ -22,6 +22,10 @@ Route::get('/', function () {
     return view('homepage');
 });
 
+Route::get('/detail', function () {
+    return view('detail_article');
+});
+
 Route::get('/login', function () {
     FuncController::cek_user();
     return view('auth.login');

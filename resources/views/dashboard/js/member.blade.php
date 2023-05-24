@@ -11,7 +11,7 @@
 				'processing': true,
 				"ordering": false,
 				"ajax": {
-					"url": get_api_url()+"member",
+					"url": "{{ route('api.user.index') }}",
 					"type": "GET",
 					"data": {
 						"SIMANIKA-API-KEY": get_api_login_value(),
@@ -95,7 +95,7 @@
 		function get_division() {
 			param = {}
 			param[get_api_login_global()['key']] = get_api_login_value();
-			callApi("POST", "division/getAll", param, function(req) {
+			callApi("POST", "{{ route('api.divisi') }}", data, function(req) {
 				$("select#division").select2({
 			        dropdownParent: $('#setujuiModal')
 			    });
@@ -112,7 +112,7 @@
 		function get_position() {
 			param = {}
 			param[get_api_login_global()['key']] = get_api_login_value();
-			callApi("POST", "position/getAll", param, function(req) {
+			callApi("POST", "{{ route('api.jabatan') }}", data, function(req) {
 				$("select#position").select2({
 			        dropdownParent: $('#setujuiModal')
 			    });

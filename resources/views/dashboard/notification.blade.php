@@ -19,6 +19,7 @@
                     <div class="row">
                         <div class="col-6">
                             <h6 class="m-0">List notifikasi</h6>
+                            <h6 style="color:grey">notifikasi selama 7 hari terakhir</h6>
                         </div>
                     </div>
                 </div>
@@ -30,6 +31,7 @@
                                     <th scope="col" class="border-0">No</th>
                                     <th scope="col" class="border-0">Judul</th>
                                     <th scope="col" class="border-0">Isi</th>
+                                    <th scope="col" class="border-0">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>

@@ -1,6 +1,7 @@
 @extends('app.dashboard')
 @section('title', 'Member')
 
+@include('dashboard.js.member')
 
 @section('content')
 
