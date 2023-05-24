@@ -63,15 +63,11 @@ class ArtikelController extends Controller
             });
         }
 
-        $total_data = $artikel->count();
-        $length = intval(isset($request->length) ? $request->length : 0);
+        $length = intval(isset($request->length) ? $request->length : 5);
         $start = intval(isset($request->start) ? $request->start : 0);
 
-        if (!isset($request->length) || !isset($request->start)) {
-            $artikel = $artikel->orderby('created_at', 'DESC')->get();
-        } else {
-            $artikel = $artikel->skip($start)->take($length)->orderby('created_at', 'DESC')->get();
-        }
+        $artikel = $artikel->skip($start)->take($length)->orderby('created_at', 'DESC')->get();
+        $total_data = $artikel->count();
 
         return response()->json([
             'error' => false,
@@ -110,7 +106,6 @@ class ArtikelController extends Controller
         ], [
             'required' => ':attribute harus diisi.',
             'array' => ':attribute harus berupa array.',
-            'string' => ':attribute harus berupa string.',
             'file' => ':attribute harus berupa file.',
             'mimes' => 'File :attribute harus berformat jpg, jpeg, atau png.',
             'max' => 'File :attribute tidak boleh lebih dari :max KB.',
@@ -182,8 +177,15 @@ class ArtikelController extends Controller
         $validator = Validator::make($request->all(), [
             'judul' => 'required',
             'konten' => 'required',
+            'sampul' => 'file|mimes:jpg,png,jpeg|max:5048',
+            'file' => 'array',
+            'file.*' => 'file|mimes:jpg,png,jpeg|max:5048',
         ], [
             'required' => ':attribute harus diisi.',
+            'array' => ':attribute harus berupa array.',
+            'file' => ':attribute harus berupa file.',
+            'mimes' => 'File :attribute harus berformat jpg, jpeg, atau png.',
+            'max' => 'File :attribute tidak boleh lebih dari :max KB.',
         ]);
 
         if ($validator->fails()) {
@@ -194,8 +196,23 @@ class ArtikelController extends Controller
             ]);
         }
 
+        $dataArtikel = [
+            'judul' => $request->judul,
+            'konten' => $request->konten,
+        ];
+
+        if (isset($request->sampul) && !empty($request->sampul)) {
+             // Upload File
+            $namaSampul = $this->generateRandomString(33).time();
+            $ekstensiSampul = $request->sampul->extension();
+
+            $path = Storage::putFileAs('public/images/artikel/sampul', $request->sampul, $namaSampul.".".$ekstensiSampul);
+            // End Upload File
+            $dataArtikel['sampul'] = Storage::url($path);
+        }
+
         $artikel = Artikel::findOrFail($id);
-        $artikel->update($request->all());
+        $artikel->update($dataArtikel);
 
         return response()->json([
             'error' => false,
