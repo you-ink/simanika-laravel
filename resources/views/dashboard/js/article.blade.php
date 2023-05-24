@@ -42,13 +42,7 @@
                     {
                         data: null,
                         render: res => {
-                            return `${res.penulis.nama}`;
-                        }
-                    },
-                    {
-                        data: null,
-                        render: res => {
-                            return `${res.divisi.nama}`;
+                            return `${res.divisi.nama} ● ${res.penulis.nama}`;
                         }
                     },
                     {
@@ -73,7 +67,7 @@
                             let btn_edit = ''
                             let btn_delete = ''
 
-                            btn_edit = `<button type="button" class="btn btn-sm mb-1 btn-primary btn-update-article" data-id="${res.id}" data-judul="${res.judul}" data-konten="${res.konten}" data-toggle="modal" data-target="#crudModal"><i class="fas fa-pen"></i></button>`
+                            btn_edit = `<button type="button" class="btn btn-sm mb-1 btn-primary btn-update-article" data-id="${res.id}" data-judul="${res.judul}" data-konten="${$(res.konten).text()}" data-toggle="modal" data-target="#crudModal"><i class="fas fa-pen"></i></button>`
 
 
                             btn_delete =
@@ -146,6 +140,7 @@
                         $('.btn-confirm-add-article').attr('disabled', false)
                     })
                     $("#crudModal").modal("hide")
+                    $('.ff_fileupload_uploads').remove()
                     load_article();
                     change_datatable_button();
                 }
