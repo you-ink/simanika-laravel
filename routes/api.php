@@ -39,8 +39,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     // Notifikasi
     Route::post('notifikasi', [NotificationController::class, 'store'])->name('api.notifikasi.store');
-    Route::put('notifikasi/{id}', [RapatController::class, 'update'])->name('api.notifikasi.update');
-    Route::delete('notifikasi/{id}', [RapatController::class, 'destroy'])->name('api.notifikasi.delete');
+    Route::put('notifikasi/{id}', [NotificationController::class, 'update'])->name('api.notifikasi.update');
+    Route::delete('notifikasi/{id}', [NotificationController::class, 'destroy'])->name('api.notifikasi.delete');
 
     // Auth
     Route::post('akun', [AuthController::class, 'akun'])->name('api.akun');
