@@ -37,9 +37,9 @@ class ArtikelController extends Controller
         $start = intval(isset($request->start) ? $request->start : 0);
 
         if (!isset($request->length) || !isset($request->start)) {
-            $artikel = $artikel->get();
+            $artikel = $artikel->inRandomOrder()->get();
         } else {
-            $artikel = $artikel->skip($start)->take($length)->get();
+            $artikel = $artikel->inRandomOrder()->skip($start)->take($length)->get();
         }
 
         return response()->json([
@@ -201,6 +201,8 @@ class ArtikelController extends Controller
             'konten' => $request->konten,
         ];
 
+        $artikel = Artikel::findOrFail($id);
+
         if (isset($request->sampul) && !empty($request->sampul)) {
              // Upload File
             $namaSampul = $this->generateRandomString(33).time();
@@ -209,9 +211,36 @@ class ArtikelController extends Controller
             $path = Storage::putFileAs('public/images/artikel/sampul', $request->sampul, $namaSampul.".".$ekstensiSampul);
             // End Upload File
             $dataArtikel['sampul'] = Storage::url($path);
+            Storage::delete(str_replace('/storage', 'public', $artikel->sampul));
         }
 
-        $artikel = Artikel::findOrFail($id);
+        if (isset($request->file) && !empty($request->file)) {
+            $artikelData = new ArtikelResource($artikel);
+            // Delete File
+            foreach ($artikelData->file->pluck('file')->toArray() as $path) {
+                Storage::delete(str_replace('/storage', 'public', $path));
+            }
+
+            ArtikelFile::where(['artikel_id'=>$id])->delete();
+            $fileArray = [];
+            foreach ($request->file as $file) {
+                // Upload File
+                $namaFile = $this->generateRandomString(33).time();
+                $ekstensiFile = $file->extension();
+
+                $path = Storage::putFileAs('public/images/artikel/file', $file, $namaFile.".".$ekstensiFile);
+                // End Upload File
+
+                $fileArray[] = [
+                    "file" => Storage::url($path),
+                    "artikel_id" => $id,
+                    "created_at" => Carbon::now()
+                ];
+            }
+
+            $artikelDetail = ArtikelFile::insert($fileArray);
+        }
+
         $artikel->update($dataArtikel);
 
         return response()->json([

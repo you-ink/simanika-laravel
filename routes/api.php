@@ -25,7 +25,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     // Artikel
     Route::get('artikel_baru', [ArtikelController::class, 'new_article'])->name('api.artikel.baru');
     Route::post('artikel', [ArtikelController::class, 'store'])->name('api.artikel.store');
-    Route::put('artikel/{id}', [ArtikelController::class, 'update'])->middleware('artikel-owner')->name('api.artikel.update');
+    Route::post('artikel/{id}', [ArtikelController::class, 'update'])->middleware('artikel-owner')->name('api.artikel.update');
     Route::delete('artikel/{id}', [ArtikelController::class, 'destroy'])->middleware('artikel-owner')->name('api.artikel.delete');
 
     // Rapat
