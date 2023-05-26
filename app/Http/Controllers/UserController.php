@@ -174,6 +174,7 @@ class UserController extends Controller
         }
 
         $user = DetailUser::where('user_id', $request->user_id)->firstOrFail();
+        $infoUser = User::findOrFail($request->user_id);
         $user->update([
             'tanggal_wawancara' => $request->tanggal_wawancara,
             'waktu_wawancara' => $request->waktu_wawancara,
@@ -182,11 +183,11 @@ class UserController extends Controller
         // Tambahkan Notifikasi
         $notifikasi = Notification::create([
             'judul' => "Jadwal Wawancara Baru",
-            'isi' => "Calon pengurus baru \"".$user->nama."\" akan wawancara pada \"".
+            'isi' => "Calon pengurus baru \"".$infoUser->nama."\" akan wawancara pada \"".
                         $request->tanggal_wawancara." ".$request->waktu_wawancara."\"."
         ]);
 
-        event(new ContentNotification("Calon pengurus baru \"".$user->nama."\" akan wawancara pada \"".
+        event(new ContentNotification("Calon pengurus baru \"".$infoUser->nama."\" akan wawancara pada \"".
                 $request->tanggal_wawancara." ".$request->waktu_wawancara."\"."));
 
         return response()->json([
@@ -256,6 +257,7 @@ class UserController extends Controller
         }
 
         $user = DetailUser::where('user_id', $request->user_id)->firstOrFail();
+        $infoUser = User::findOrFail($request->user_id);
         $user->update([
             'divisi_id' => $request->divisi_id,
             'jabatan_id' => $request->jabatan_id,
@@ -264,14 +266,73 @@ class UserController extends Controller
         // Tambahkan Notifikasi
         $notifikasi = Notification::create([
             'judul' => "Pengurus Baru",
-            'isi' => "Pendaftaran pengurus baru \"".$user->nama."\" telah disetujui."
+            'isi' => "Pendaftaran pengurus baru \"".$infoUser->nama."\" telah disetujui."
         ]);
 
-        event(new ContentNotification("Pendaftaran pengurus baru \"".$user->nama."\" telah disetujui."));
+        event(new ContentNotification("Pendaftaran pengurus baru \"".$infoUser->nama."\" telah disetujui."));
 
         return response()->json([
             'error' => false,
             'message' => 'Pendaftaran pengurus baru berhasil diterima.',
+            'data' => []
+        ]);
+    }
+
+    public function set_member(Request $request){
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required',
+            'divisi_id' => 'required',
+            'jabatan_id' => 'required',
+        ], [
+            'required' => ':attribute harus diisi.',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'error' => true,
+                'message' => Str::ucfirst($validator->errors()->first()),
+                'data' => []
+            ]);
+        }
+
+        if(Auth::user()->level_id != 1) {
+            return response()->json([
+                'error' => true,
+                'message' => 'Unauthorized.',
+                'data' => []
+            ]);
+        }
+
+        $user = DetailUser::where('user_id', $request->user_id)->firstOrFail();
+        $infoUser = User::findOrFail($request->user_id);
+        $user->update([
+            'divisi_id' => $request->divisi_id,
+            'jabatan_id' => $request->jabatan_id,
+        ]);
+
+        // Tambahkan Notifikasi
+        $notifikasi = Notification::create([
+            'judul' => "Perubahan Divisi/Jabatan",
+            'isi' => "Terjadi perubahan Divisi/Jabatan pada user \"".$infoUser->nama."\"."
+        ]);
+
+        event(new ContentNotification("Terjadi perubahan Divisi/Jabatan pada user \"".$infoUser->nama."\"."));
+
+        return response()->json([
+            'error' => false,
+            'message' => 'Perubahan berhasil ditetapkan.',
+            'data' => []
+        ]);
+    }
+
+    public function destroy($id)
+    {
+        $user = User::findOrFail($id);
+        $user->softDeletes();
+
+        return response()->json([
+            'error' => false,
+            'message' => 'User berhasil dinonaktifkan.',
             'data' => []
         ]);
     }

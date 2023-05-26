@@ -14,12 +14,11 @@
 					"url": "{{ route('api.user.index') }}",
 					"type": "GET",
 					"data": {
-						"SIMANIKA-API-KEY": get_api_login_value(),
 						"sort": "ASC",
 						"status": "1"
 					},
 					"headers": {
-						"Authorization" : get_api_key()
+						"Authorization" : getAuthorization()
 					},
 					"dataSrc": "data"
 				},
@@ -43,10 +42,16 @@
 						data: 'angkatan'
 					},
 					{
-						data: 'divisi'
+						data: null,
+                        render: res => {
+                            return res.detail_user.divisi.nama;
+                        }
 					},
 					{
-						data: 'jabatan'
+						data: null,
+                        render: res => {
+                            return res.detail_user.jabatan.nama;
+                        }
 					},
 					{
 						data: 'telp'
@@ -56,8 +61,8 @@
 						render: res => {
 							return `
 								<button type="button" class="btn btn-sm mb-1 btn-primary btn-setujui" data-id="${res.id}" data-name="${res.nama}" data-toggle="modal" data-target="#setujuiModal">Ganti Divisi & Jabatan</button><br>
-								<button type="button" class="btn btn-sm mb-1 btn-warning btn-detail-member" data-alamat="${res.alamat}" data-tanggalWawancara="${res.tanggal_wawancara}" data-buktiKesanggupan="${res.bukti_kesanggupan}" data-buktiMahasiswa="${res.bukti_mahasiswa}" data-fileBuktiKesanggupan="${res.file_bukti_kesanggupan}" data-fileBuktiMahasiswa="${res.file_bukti_mahasiswa}" data-toggle="modal" data-target="#crudModal"><i class="fas fa-info"></i></button>
-								<button type="button" class="btn btn-sm mb-1 btn-danger btn-delete-member" data-id="${res.id}" data-name="${res.nama}"><i class="fas fa-trash"></i></button>
+								<button type="button" class="btn btn-sm mb-1 btn-warning btn-detail-member" data-alamat="${res.alamat}" data-tanggalWawancara="${res.tanggal_wawancara}" data-fileBuktiKesanggupan="${res.detail_user.bukti_kesanggupan}" data-fileBuktiMahasiswa="${res.detail_user.bukti_mahasiswa}" data-toggle="modal" data-target="#crudModal"><i class="fas fa-info"></i></button>
+								<button type="button" class="btn btn-sm mb-1 btn-danger btn-delete-member" data-id="${res.id}" data-name="${res.nama}"><i class="fas fa-ban"></i></button>
 							`;
 						}
 					}
@@ -65,8 +70,8 @@
 				dom: "<'row'<'col-sm-12 mb-2'B>>lfrtip",
 			    lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
 				buttons: [
-			         { 
-			         	extend: 'excel', 
+			         {
+			         	extend: 'excel',
 			         	text: '<i class="fas fa-download"></i> Download Excel',
 			         	filename: 'Data Anggota Himanika',
 			         	title: null,
@@ -75,8 +80,8 @@
 		                    columns: [ 0, 1, 2, 3, 4, 5, 6 ]
 		                }
 			         },
-			         { 
-			         	extend: 'print', 
+			         {
+			         	extend: 'print',
 			         	text: '<i class="fas fa-print"></i> Print',
 			         	title: 'Data Anggota Himanika',
 			         	className: 'btn btn-sm btn-success',
@@ -90,47 +95,46 @@
 
 		load_member();
 
-		get_division();
+        get_division();
 
-		function get_division() {
-			param = {}
-			param[get_api_login_global()['key']] = get_api_login_value();
-			callApi("POST", "{{ route('api.divisi') }}", data, function(req) {
-				$("select#division").select2({
-			        dropdownParent: $('#setujuiModal')
-			    });
-				option = '<option value="">-</option>';
-				$.each(req.data, function(index, val) {
-					option += '<option value="' + val.id + '">' + val.nama + '</option>';
-				});
-				$("select#division").html(option);
-			})
-		}
+        function get_division() {
+            param = {}
+            callApi("GET", "{{ route('api.divisi') }}", param, function (req) {
+                $("select#division").select2({
+                    dropdownParent: $('#setujuiModal')
+                });
+                option = '<option value="">-</option>';
+                $.each(req.data, function (index, val) {
+                    option += '<option value="' + val.id + '">' + val.nama + '</option>';
+                });
+                $("select#division").html(option);
+            })
+        }
 
-		get_position();
+        get_position();
 
-		function get_position() {
-			param = {}
-			param[get_api_login_global()['key']] = get_api_login_value();
-			callApi("POST", "{{ route('api.jabatan') }}", data, function(req) {
-				$("select#position").select2({
-			        dropdownParent: $('#setujuiModal')
-			    });
-				option = '<option value="">-</option>';
-				$.each(req.data, function(index, val) {
-					option += '<option value="' + val.id + '">' + val.nama + '</option>';
-				});
-				$("select#position").html(option);
-			})
-		}
+        function get_position() {
+            param = {}
+
+            callApi("GET", "{{ route('api.jabatan') }}", param, function (req) {
+                $("select#position").select2({
+                    dropdownParent: $('#setujuiModal')
+                });
+                option = '<option value="">-</option>';
+                $.each(req.data, function (index, val) {
+                    option += '<option value="' + val.id + '">' + val.nama + '</option>';
+                });
+                $("select#position").html(option);
+            })
+        }
 
 		$(document).on('click', ".btn-detail-member", function () {
 			$('#crudModal #tanggalWawancara').val($(this).attr('data-tanggalWawancara'))
 			$('#crudModal #alamatMember').val($(this).attr('data-alamat'))
-			$('#crudModal #buktiKesanggupanNama').html($(this).attr('data-fileBuktiKesanggupan'))
-			$('#crudModal #buktiKesanggupanInfo').html(`<a href="<?php echo url() ?>`+$(this).attr('data-buktiKesanggupan')+`">Lihat File</a>`)
-			$('#crudModal #buktiMahasiswaNama').html($(this).attr('data-fileBuktiMahasiswa'))
-			$('#crudModal #buktiMahasiswaInfo').html(`<a href="<?php echo url() ?>`+$(this).attr('data-buktiMahasiswa')+`">Lihat File</a>`)
+			$('#crudModal #buktiKesanggupanNama').html('Bukti Kesanggupan')
+			$('#crudModal #buktiKesanggupanInfo').html(`<a href="{{ url('') }}${$(this).attr('data-fileBuktiKesanggupan')}">Lihat File</a>`)
+			$('#crudModal #buktiMahasiswaNama').html('Bukti Mahasiswa')
+			$('#crudModal #buktiMahasiswaInfo').html(`<a href="{{ url('') }}${$(this).attr('data-fileBuktiMahasiswa')}">Lihat File</a>`)
 		})
 
 		$(document).on('click', ".btn-delete-member", function () {
@@ -139,19 +143,18 @@
 
 			Swal.fire({
 			  title: 'Apakah anda yakin?',
-			  text: `Anda ingin menghapus data ${nama}!`,
+			  text: `Anda ingin menonaktifkan akun ${nama}!`,
 			  icon: 'warning',
 			  showCancelButton: true,
 			  confirmButtonColor: '#3085d6',
 			  cancelButtonColor: '#d33',
-			  confirmButtonText: 'Ya, hapus!'
+			  confirmButtonText: 'Ya, nonaktifkan!'
 			}).then((result) => {
 			  if (result.isConfirmed) {
-			    data = {
-					id: $(this).attr('data-id')
-				}
-			    data[get_api_login_global()['key']] = get_api_login_value();
-			  	callApi("DELETE", "member", data, function (req) {
+			    data = {}
+                let url = "{{ route('api.user.delete', ':id') }}";
+                    url = url.replace(':id', id);
+			  	callApi("DELETE", url, data, function (req) {
 					pesan = req.message;
 					if (req.error == true) {
 						Swal.fire(
@@ -183,13 +186,11 @@
 		$(document).on('click', '.btn-confirm-setujui', function () {
 			data = {
 				user_id: $(this).attr('data-id'),
-				divisi: $("select#division").val(),
-				jabatan: $("select#position").val(),
+				divisi_id: $("select#division").val(),
+				jabatan_id: $("select#position").val(),
 			}
 
-			data[get_api_login_global()['key']] = get_api_login_value();
-
-			callApi("POST", "member/set_member", data, function (req) {
+			callApi("POST", "{{ route('api.user.set_member') }}", data, function (req) {
 				pesan = req.message;
 				if (req.error == true) {
 					Swal.fire(

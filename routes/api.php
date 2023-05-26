@@ -53,6 +53,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('atur_wawancara', [UserController::class, 'set_interview'])->name('api.user.atur_wawancara');
     Route::post('terima', [UserController::class, 'accept_applicant'])->name('api.user.terima');
     Route::post('tolak', [UserController::class, 'decline_applicant'])->name('api.user.tolak');
+    Route::post('set_member', [UserController::class, 'set_member'])->name('api.user.set_member');
+    Route::delete('user/{id}', [UserController::class, 'destroy'])->name('api.user.delete');
 
     // Lain-lain
     Route::get('divisi', [OtherController::class, 'get_divisi'])->name('api.divisi');

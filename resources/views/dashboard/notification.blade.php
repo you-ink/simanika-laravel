@@ -31,7 +31,7 @@
                                     <th scope="col" class="border-0">No</th>
                                     <th scope="col" class="border-0">Judul</th>
                                     <th scope="col" class="border-0">Isi</th>
-                                    <th scope="col" class="border-0">Aksi</th>
+                                    <th scope="col" class="border-0">Tanggal</th>
                                 </tr>
                             </thead>
                             <tbody>

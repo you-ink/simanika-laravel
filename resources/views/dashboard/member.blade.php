@@ -39,7 +39,7 @@
 				              </tr>
 							</thead>
 				            <tbody>
-				              
+
 				            </tbody>
 						</table>
 					</div>
@@ -76,7 +76,6 @@
 					</div>
 					<div class="form-row">
 						<div class="form-group col-12">
-							<label class="mb-0">Bukti Kesanggupan</label>
 							<div class="ff_fileupload_wrap">
 								<table class="ff_fileupload_uploads">
 									<tr class="ff_fileupload_queued">
@@ -94,7 +93,6 @@
 					</div>
 					<div class="form-row">
 						<div class="form-group col-12">
-							<label class="mb-0">Bukti Mahasiswa</label>
 							<div class="ff_fileupload_wrap">
 								<table class="ff_fileupload_uploads">
 									<tr class="ff_fileupload_queued">

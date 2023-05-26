@@ -30,9 +30,9 @@ class NotificationController extends Controller
         $start = intval(isset($request->start) ? $request->start : 0);
 
         if (!isset($request->length) || !isset($request->start)) {
-            $notification = $notification->get();
+            $notification = $notification->orderBy('created_at', 'DESC')->get();
         } else {
-            $notification = $notification->skip($start)->take($length)->get();
+            $notification = $notification->orderBy('created_at', 'DESC')->skip($start)->take($length)->get();
         }
 
         return response()->json([

@@ -39,15 +39,10 @@
                     {
                         data: null,
                         render: res => {
-                            let btn_delete = ''
-
-                            btn_delete =
-                                `<button type="button" class="btn btn-sm mb-1 btn-danger btn-delete-Notification" data-id="${res.id}" data-judul="${res.judul}"><i class="fas fa-trash"></i></button>`
-                            return `
-                                        ${btn_delete}
-                                    `;
+                            var tanggal = new Date(res.created_at);
+                            return tanggal.toLocaleString();
                         }
-                    }
+                    },
                 ],
             });
         }
