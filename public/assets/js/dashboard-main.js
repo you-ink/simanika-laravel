@@ -1,4 +1,4 @@
-function callApi(t, n, a, e) {
+function callApi(t, n, a, e, f = function(){}) {
     let formData = new FormData();
 
     // Memproses data sebelum mengirimnya
@@ -48,7 +48,7 @@ function callApi(t, n, a, e) {
 
     $.ajax({ url: n, type: t, headers: setAuthorization, data: formData, processData: false, contentType: setContentType }).done(function (n) {
         e(n);
-    });
+    }).fail(function (a, b, c) { f(a, b, c) });
 }
 
 function getBase64(file, name) {

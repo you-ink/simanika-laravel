@@ -22,9 +22,9 @@ Route::get('/', function () {
     return view('homepage');
 });
 
-Route::get('/detail', function () {
+Route::get('/artikel/{id}', function () {
     return view('detail_article');
-});
+})->name('detail_artikel');
 
 Route::get('/login', function () {
     FuncController::cek_user();

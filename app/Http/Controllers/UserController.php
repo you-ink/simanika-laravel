@@ -263,6 +263,20 @@ class UserController extends Controller
             'jabatan_id' => $request->jabatan_id,
         ]);
 
+        $level_id = "3";
+        if ($request->divisi_id == 1) {
+          $level_id = "1";
+        }
+
+        if ($request->jabatan_id == "5") {
+          $level_id = "2";
+        }
+
+        $infoUser->update([
+            'status' => "1",
+            'level_id' => $level_id
+        ]);
+
         // Tambahkan Notifikasi
         $notifikasi = Notification::create([
             'judul' => "Pengurus Baru",
@@ -310,6 +324,20 @@ class UserController extends Controller
             'jabatan_id' => $request->jabatan_id,
         ]);
 
+        $level_id = "3";
+        if ($request->divisi_id == 1) {
+          $level_id = "1";
+        }
+
+        if ($request->jabatan_id == "5") {
+          $level_id = "2";
+        }
+
+        $infoUser->update([
+            'status' => "1",
+            'level_id' => $level_id
+        ]);
+
         // Tambahkan Notifikasi
         $notifikasi = Notification::create([
             'judul' => "Perubahan Divisi/Jabatan",
@@ -323,6 +351,20 @@ class UserController extends Controller
             'message' => 'Perubahan berhasil ditetapkan.',
             'data' => []
         ]);
+    }
+
+    public function bph(Request $request)
+    {
+        $user = User::query();
+        $user->where('level_id', '=', 1);
+
+        $user = $user->get();
+
+        return response()->json([
+            'error' => false,
+            'message' => 'Berhasil mengambil data.',
+            'data' => $user->load('detailUser:id,foto,bukti_kesanggupan,bukti_mahasiswa,tanggal_wawancara,waktu_wawancara,user_id,divisi_id,jabatan_id', 'detailUser.divisi:id,nama', 'detailUser.jabatan:id,nama'),
+        ], 200);
     }
 
     public function destroy($id)

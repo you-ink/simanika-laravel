@@ -75,3 +75,5 @@ Route::get('user', [UserController::class, 'index'])->name('api.user.index');
 
 Route::post('login', [AuthController::class, 'login'])->name('api.login');
 Route::post('register', [AuthController::class, 'register'])->name('api.register');
+
+Route::post('bph', [UserController::class, 'bph'])->name('api.user.bph');

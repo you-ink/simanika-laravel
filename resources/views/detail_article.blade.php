@@ -10,8 +10,8 @@
     <meta content="" name="keywords">
 
     <!-- Favicons -->
-    <link href="assets/img/logo.png" rel="icon">
-    <link href="assets/img/logo.png" rel="apple-touch-icon">
+    <link href="{{ url('assets/img/logo.png') }}" rel="icon">
+    <link href="{{ url('assets/img/logo.png') }}" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
     <link
@@ -19,15 +19,15 @@
         rel="stylesheet">
 
     <!-- Vendor CSS Files -->
-    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-    <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
-    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <link href="{{url('assets/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{url('assets/vendor/bootstrap-icons/bootstrap-icons.css')}}" rel="stylesheet">
+    <link href="{{url('assets/vendor/boxicons/css/boxicons.min.css')}}" rel="stylesheet">
+    <link href="{{url('assets/vendor/glightbox/css/glightbox.min.css')}}" rel="stylesheet">
+    <link href="{{url('assets/vendor/remixicon/remixicon.css')}}" rel="stylesheet">
+    <link href="{{url('assets/vendor/swiper/swiper-bundle.min.css')}}" rel="stylesheet">
 
     <!-- Template Main CSS File -->
-    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="{{url('assets/css/style.css')}}" rel="stylesheet">
 
     <!-- =======================================================
   * Template Name: Resi
@@ -58,10 +58,10 @@
             <div class="container">
 
                 <div class="d-flex justify-content-between align-items-center">
-                    <h2>artikel Details</h2>
                     <ol>
-                        <li><a href="index.html">Home</a></li>
-                        <li>artikel Details</li>
+                        <li><a href="<?php echo url('/') ?>">Home</a></li>
+                        <li>Artikel</li>
+                        <li><span class="judul-artikel"></span></li>
                     </ol>
                 </div>
 
@@ -73,19 +73,34 @@
             <div class="container">
 
                 <div class="row justify-content-center">
-                    <div class="col-lg-9 pt-4 pt-lg-0">
-                        <h1>halooo ini judulnya halo aja dah</h1>
-                        <div class="col-md-2">
-                            <img src="<?php echo url('assets/img/artikel/artikel-3.jpg') ?>" alt="simanika">
+                    <div class="col-lg-12 pt-2">
+                        <h1 class="judul-artikel"></h1>
+                        <h6 class="penulis-artikel mb-4 bold"></h6>
+                        <div class="col-12 mb-4">
+                            <img src="<?php echo url('assets/img/loading2.gif') ?>" style="object-fit: scale-down" class="w-75 sampul-artikel rounded mx-auto d-block" height="400px" alt="Sampul Artikel">
                         </div>
-                        <p>BPH Merupakan badan pengurus harian Himpunan Mahasiswa Program Studi Manajemen Informatika
-                            yang terdiri dari Ketua Umum, Wakil Ketua Umum, Sekretaris dan Bendahara.</p>
-                        <p>Humas bertugas Menjalin komunikasi dan informasi di lingkungan internal serta menjalin
-                            kerjasama di lingkungan external Himpunan Mahasiswa Program Studi manajemen Informatika.</p>
-                        <p>PSDM Memiliki 2 subdivisi, yaitu Minat Bakat (Akademik & Non Akademik) dan Kewirausahaan.
-                            Mengembangkan softskill & hardskill mahasiswa dalam minat bakat dan kewirausahaan.</p>
-                        <p>Kominfo bertugasMengelola media komunikasi dan informasi untuk mempublikasikan aktivitas
-                            keorganisasian HIMANIKA maupun informasi yang berkaitan dengan TI.</p>
+                        <div class="col-12 konten-artikel" style="text-align: justify">
+                            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fuga deleniti nesciunt adipisci reprehenderit sequi soluta! Mollitia incidunt beatae tempora laudantium vel! Blanditiis animi tempore libero id laudantium culpa minus consectetur!
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row justify-content-center">
+                    <div class="col-lg-12 mt-4">
+                        <h3 class="mb-2">File Artikel:</h3>
+                        <div id="carouselExampleControls" class="carousel carousel-dark slide" data-bs-ride="carousel">
+                            <div class="carousel-inner file-artikel">
+
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                              <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                              <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -153,15 +168,74 @@
             class="bi bi-arrow-up-short"></i></a>
 
     <!-- Vendor JS Files -->
-    <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-    <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-    <script src="assets/vendor/php-email-form/validate.js"></script>
+    <script src="{{url('assets/vendor/purecounter/purecounter_vanilla.js')}}"></script>
+    <script src="{{url('assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{url('assets/vendor/glightbox/js/glightbox.min.js')}}"></script>
+    <script src="{{url('assets/vendor/isotope-layout/isotope.pkgd.min.js')}}"></script>
+    <script src="{{url('assets/vendor/swiper/swiper-bundle.min.js')}}"></script>
+    <script src="{{url('assets/vendor/php-email-form/validate.js')}}"></script>
 
     <!-- Template Main JS File -->
-    <script src="assets/js/main.js"></script>
+    <script src="{{url('assets/js/homepage-main.js')}}"></script>
+    <script src="<?= url('assets/js/jquery-3.6.1.min.js') ?>"></script>
+    <script src="<?= url('assets/js/dashboard-main.js') ?>"></script>
+
+    <script>
+		$(document).ready(function() {
+
+			function getDetailArtikel() {
+                let url = "{{ route('api.artikel.detail', ':id') }}";
+                url = url.replace(':id', "{{ request()->segment(2) }}");
+				callApi("GET", url, null, function(req) {
+                    if(req.error == true) {
+                        window.location.replace("{{ url('/') }}");
+                    } else {
+                        let data = req.data;
+                        $('.judul-artikel').html(data.judul)
+                        $('.konten-artikel').html(data.konten)
+                        $('.penulis-artikel').html(data.penulis.nama+" - "+data.tanggal)
+                        $('.sampul-artikel').attr('src', "{{ url('') }}"+data.sampul)
+
+                        let html = '';
+
+                        data.file.forEach(function(item, index) {
+                            if (index == 0) {
+                                html += `
+                                    <div class="carousel-item active">
+                                        <img src="{{ url('') }}${item}" style="object-fit: scale-down" class="d-block w-100" height="400px" alt="...">
+                                    </div>
+                                `;
+                            } else {
+                                html += `
+                                    <div class="carousel-item">
+                                        <img src="{{ url('') }}${item}" style="object-fit: scale-down" class="d-block w-100" height="400px" alt="...">
+                                    </div>
+                                `;
+                            }
+                        });
+
+                        $('.file-artikel').html(html)
+
+                        setDesign()
+                    }
+				}, function(xhr, status, error){
+                    if (xhr.status === 404) {
+                        // Kode untuk menangani respons 404 (Not Found) di sini
+                        window.location.replace("{{ url('/') }}");
+                    }
+                })
+			}
+
+            function setDesign(){
+                $('table').addClass('table')
+                $('table').addClass('table-responsive')
+                $('table').addClass('table-bordered')
+            }
+
+			getDetailArtikel()
+
+		})
+	</script>
 
 </body>
 

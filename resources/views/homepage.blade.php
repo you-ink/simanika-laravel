@@ -1,4 +1,3 @@
-@@ -1,664 +0,0 @@
 <!DOCTYPE html>
 <html lang="en">
 
@@ -151,49 +150,6 @@
       </div>
     </section><!-- End Visi Misi Section -->
 
-    <!-- ======= Counts Section ======= --> <!-- MUNGKIN DIPAKAI, MENUJUKKAN JUMLAH PROKER DLL  -->
-    <section id="counts" class="counts section-bg">
-      <div class="container">
-
-        <div class="row">
-
-          <div class="col-lg-3 col-md-6">
-            <div class="count-box">
-              <i class="bi bi-emoji-smile"></i>
-              <span data-purecounter-start="0" data-purecounter-end="232" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Pengurus Himanika</p>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6 mt-5 mt-md-0">
-            <div class="count-box">
-              <i class="bi bi-journal-richtext"></i>
-              <span data-purecounter-start="0" data-purecounter-end="521" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Proker</p>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6 mt-5 mt-lg-0">
-            <div class="count-box">
-              <i class="bi bi-headset"></i>
-              <span data-purecounter-start="0" data-purecounter-end="1463" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Rapat</p>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6 mt-5 mt-lg-0">
-            <div class="count-box">
-              <i class="bi bi-people"></i>
-              <span data-purecounter-start="0" data-purecounter-end="15" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Artikel</p>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-    </section><!-- End Counts Section -->
-
     <!-- ======= Divisi Section ======= -->
     <section id="divisi" class="divisi">
       <div class="container">
@@ -252,140 +208,15 @@
           <div class="col-lg-12 d-flex justify-content-center">
             <ul id="artikel-flters">
               <li data-filter="*" class="filter-active">Semua</li>
-              <li data-filter=".filter-app">Humas</li>
-              <li data-filter=".filter-card">PSDM</li>
-              <li data-filter=".filter-web">Kominfo</li>
+              <li data-filter=".filter-bph">BPH</li>
+              <li data-filter=".filter-humas">Humas</li>
+              <li data-filter=".filter-psdm">PSDM</li>
+              <li data-filter=".filter-kominfo">Kominfo</li>
             </ul>
           </div>
         </div>
 
-        <div class="row artikel-container">
-
-          <div class="col-lg-4 col-md-6 artikel-item filter-app">
-            <div class="artikel-wrap">
-              <img src="assets/img/artikel/artikel-1.jpg" class="img-fluid" alt="">
-              <div class="artikel-info">
-                <h4>App 1</h4>
-                <p>App</p>
-                <div class="artikel-links">
-                  <a href="assets/img/artikel/artikel-1.jpg" data-gallery="artikelGallery" class="artikel-lightbox" title="App 1"><i class="bx bx-plus"></i></a>
-                  <a href="artikel-details.html" title="More Details"><i class="bx bx-link"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 artikel-item filter-web">
-            <div class="artikel-wrap">
-              <img src="assets/img/artikel/artikel-2.jpg" class="img-fluid" alt="">
-              <div class="artikel-info">
-                <h4>Web 3</h4>
-                <p>Web</p>
-                <div class="artikel-links">
-                  <a href="assets/img/artikel/artikel-2.jpg" data-gallery="artikelGallery" class="artikel-lightbox" title="Web 3"><i class="bx bx-plus"></i></a>
-                  <a href="artikel-details.html" title="More Details"><i class="bx bx-link"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 artikel-item filter-app">
-            <div class="artikel-wrap">
-              <img src="assets/img/artikel/artikel-3.jpg" class="img-fluid" alt="">
-              <div class="artikel-info">
-                <h4>App 2</h4>
-                <p>App</p>
-                <div class="artikel-links">
-                  <a href="assets/img/artikel/artikel-3.jpg" data-gallery="artikelGallery" class="artikel-lightbox" title="App 2"><i class="bx bx-plus"></i></a>
-                  <a href="artikel-details.html" title="More Details"><i class="bx bx-link"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 artikel-item filter-card">
-            <div class="artikel-wrap">
-              <img src="assets/img/artikel/artikel-4.jpg" class="img-fluid" alt="">
-              <div class="artikel-info">
-                <h4>Card 2</h4>
-                <p>Card</p>
-                <div class="artikel-links">
-                  <a href="assets/img/artikel/artikel-4.jpg" data-gallery="artikelGallery" class="artikel-lightbox" title="Card 2"><i class="bx bx-plus"></i></a>
-                  <a href="artikel-details.html" title="More Details"><i class="bx bx-link"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 artikel-item filter-web">
-            <div class="artikel-wrap">
-              <img src="assets/img/artikel/artikel-5.jpg" class="img-fluid" alt="">
-              <div class="artikel-info">
-                <h4>Web 2</h4>
-                <p>Web</p>
-                <div class="artikel-links">
-                  <a href="assets/img/artikel/artikel-5.jpg" data-gallery="artikelGallery" class="artikel-lightbox" title="Web 2"><i class="bx bx-plus"></i></a>
-                  <a href="artikel-details.html" title="More Details"><i class="bx bx-link"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 artikel-item filter-app">
-            <div class="artikel-wrap">
-              <img src="assets/img/artikel/artikel-6.jpg" class="img-fluid" alt="">
-              <div class="artikel-info">
-                <h4>App 3</h4>
-                <p>App</p>
-                <div class="artikel-links">
-                  <a href="assets/img/artikel/artikel-6.jpg" data-gallery="artikelGallery" class="artikel-lightbox" title="App 3"><i class="bx bx-plus"></i></a>
-                  <a href="artikel-details.html" title="More Details"><i class="bx bx-link"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 artikel-item filter-card">
-            <div class="artikel-wrap">
-              <img src="assets/img/artikel/artikel-7.jpg" class="img-fluid" alt="">
-              <div class="artikel-info">
-                <h4>Card 1</h4>
-                <p>Card</p>
-                <div class="artikel-links">
-                  <a href="assets/img/artikel/artikel-7.jpg" data-gallery="artikelGallery" class="artikel-lightbox" title="Card 1"><i class="bx bx-plus"></i></a>
-                  <a href="artikel-details.html" title="More Details"><i class="bx bx-link"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 artikel-item filter-card">
-            <div class="artikel-wrap">
-              <img src="assets/img/artikel/artikel-8.jpg" class="img-fluid" alt="">
-              <div class="artikel-info">
-                <h4>Card 3</h4>
-                <p>Card</p>
-                <div class="artikel-links">
-                  <a href="assets/img/artikel/artikel-8.jpg" data-gallery="artikelGallery" class="artikel-lightbox" title="Card 3"><i class="bx bx-plus"></i></a>
-                  <a href="artikel-details.html" title="More Details"><i class="bx bx-link"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 artikel-item filter-web">
-            <div class="artikel-wrap">
-              <img src="assets/img/artikel/artikel-9.jpg" class="img-fluid" alt="">
-              <div class="artikel-info">
-                <h4>Web 3</h4>
-                <p>Web</p>
-                <div class="artikel-links">
-                  <a href="assets/img/artikel/artikel-9.jpg" data-gallery="artikelGallery" class="artikel-lightbox" title="Web 3"><i class="bx bx-plus"></i></a>
-                  <a href="artikel-details.html" title="More Details"><i class="bx bx-link"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div class="row artikel-container section-artikel">
 
         </div>
 
@@ -401,79 +232,9 @@
           <p>Badan Pengurus Harian Himpunan Mahasiswa Program Studi Manajemen Informatika Tahun Periode 2021/2022</p>
         </div>
 
-        <div class="row">
+        <div class="row section-bph">
 
-          <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
-            <div class="member">
-              <div class="member-img">
-                <img src="assets/img/team/team-1.jpg" class="img-fluid" alt="">
-                <div class="social">
-                  <a href=""><i class="bi bi-twitter"></i></a>
-                  <a href=""><i class="bi bi-facebook"></i></a>
-                  <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""><i class="bi bi-linkedin"></i></a>
-                </div>
-              </div>
-              <div class="member-info">
-                <h4>Muhammad Rudy Darmawan</h4>
-                <span>Ketua</span>
-              </div>
-            </div>
-          </div>
 
-          <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
-            <div class="member">
-              <div class="member-img">
-                <img src="assets/img/team/team-2.jpg" class="img-fluid" alt="">
-                <div class="social">
-                  <a href=""><i class="bi bi-twitter"></i></a>
-                  <a href=""><i class="bi bi-facebook"></i></a>
-                  <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""><i class="bi bi-linkedin"></i></a>
-                </div>
-              </div>
-              <div class="member-info">
-                <h4>Rahma Romadona Riswanti</h4>
-                <span>Sekretaris</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
-            <div class="member">
-              <div class="member-img">
-                <img src="assets/img/team/team-3.jpg" class="img-fluid" alt="">
-                <div class="social">
-                  <a href=""><i class="bi bi-twitter"></i></a>
-                  <a href=""><i class="bi bi-facebook"></i></a>
-                  <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""><i class="bi bi-linkedin"></i></a>
-                </div>
-              </div>
-              <div class="member-info">
-                <h4>Nurlita Ayu Rakhmawati</h4>
-                <span>Bendahara</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
-            <div class="member">
-              <div class="member-img">
-                <img src="assets/img/team/team-4.jpg" class="img-fluid" alt="">
-                <div class="social">
-                  <a href=""><i class="bi bi-twitter"></i></a>
-                  <a href=""><i class="bi bi-facebook"></i></a>
-                  <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""><i class="bi bi-linkedin"></i></a>
-                </div>
-              </div>
-              <div class="member-info">
-                <h4>ABCD EFGH</h4>
-                <span>Wakil Ketua</span>
-              </div>
-            </div>
-          </div>
 
         </div>
 
@@ -658,10 +419,11 @@
   <script src="assets/vendor/php-email-form/validate.js"></script>
 
   <!-- Template Main JS File -->
-  <script src="assets/js/homepage-main.js"></script>
+  <script src="{{url('assets/js/homepage-main.js')}}"></script>
+  <script src="<?= url('assets/js/jquery-3.6.1.min.js') ?>"></script>
+  <script src="<?= url('assets/js/dashboard-main.js') ?>"></script>
   <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
   <script>
-
     // Enable pusher logging - don't include this in production
     Pusher.logToConsole = true;
 
@@ -674,6 +436,62 @@
       alert(JSON.stringify(data));
     });
   </script>
+    <script>
+        $(document).ready(function() {
+
+            function getBPH() {
+                callApi("POST", "{{ route('api.user.bph') }}", null, function(req) {
+                    member = '';
+                    $.each(req.data, function(index, val) {
+                        member += `<div class="col-lg-3 col-md-6 d-flex align-items-stretch">
+                                    <div class="member">
+                                    <div class="member-img">
+                                        <img src="{{ url('') }}${val.detail_user.foto}" class="img-fluid" alt="">
+                                        <div class="social">
+                                            <a>MIF ${val.angkatan}</a>
+                                        </div>
+                                    </div>
+                                    <div class="member-info">
+                                        <h4>${val.nama}</h4>
+                                        <span>${val.detail_user.jabatan.nama}</span>
+                                    </div>
+                                    </div>
+                                </div>`;
+                    });
+
+                    $(".section-bph").html(member);
+                })
+            }
+
+            getBPH()
+
+        })
+
+        function getArtikel() {
+            callApi("GET", "{{ route('api.artikel.index') }}", null, function(req) {
+                member = '';
+                $.each(req.data, function(index, val) {
+                    member += `<div class="col-lg-4 col-md-6 artikel-item filter-${val.divisi.nama.toLowerCase()}">
+                        <div class="artikel-wrap">
+                        <img src="{{ url('') }}${val.sampul}" class="img-fluid w-100" alt="">
+                        <div class="artikel-info">
+                            <h4>${val.judul}</h4>
+                            <p>${val.divisi.nama}</p>
+                            <div class="artikel-links">
+                            <a href="{{ url('') }}${val.sampul}" data-gallery="artikelGallery" class="artikel-lightbox" title="App 1"><i class="bx bx-plus"></i></a>
+                            <a href="{{ url('') }}/artikel/${val.id}" title="Selengkapnya"><i class="bx bx-link"></i></a>
+                            </div>
+                        </div>
+                        </div>
+                    </div>`;
+                });
+
+                $(".section-artikel").html(member);
+            })
+        }
+
+        getArtikel()
+</script>
 </body>
 
 </html>
