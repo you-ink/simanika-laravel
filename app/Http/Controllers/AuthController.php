@@ -30,7 +30,7 @@ class AuthController extends Controller
             return response()->json([
                 'error' => true,
                 'message' => Str::ucfirst($validator->errors()->first()),
-                'data' => []
+                'data' => null
             ]);
         }
 
@@ -40,7 +40,7 @@ class AuthController extends Controller
         //     return response()->json([
         //         'error' => true,
         //         'message' => 'Pastikan email dan password anda benar.',
-        //         'data' => []
+        //         'data' => null
         //     ]);
         // }
 
@@ -51,7 +51,7 @@ class AuthController extends Controller
             return response()->json([
                 'error' => true,
                 'message' => 'Pastikan email dan password anda benar.',
-                'data' => []
+                'data' => null
             ]);
         }
 
@@ -97,7 +97,7 @@ class AuthController extends Controller
             return response()->json([
                 'error' => true,
                 'message' => Str::ucfirst($validator->errors()->first()),
-                'data' => []
+                'data' => null
             ]);
         }
 
@@ -106,7 +106,7 @@ class AuthController extends Controller
             return response()->json([
                 'error' => true,
                 'message' => "Email atau NIM telah terpakai. Silahkan hubungi CS untuk konfirmasi.",
-                'data' => []
+                'data' => null
             ]);
         }
 
@@ -140,7 +140,7 @@ class AuthController extends Controller
         return response()->json([
             'error' => false,
             'message' => 'Berhasil melakukan registrasi. Silahkan Login.',
-            'data' => []
+            'data' => null
         ]);
     }
 
@@ -161,7 +161,7 @@ class AuthController extends Controller
             return response()->json([
                 'error' => true,
                 'message' => Str::ucfirst($validator->errors()->first()),
-                'data' => []
+                'data' => null
             ]);
         }
 
@@ -208,7 +208,7 @@ class AuthController extends Controller
         return response()->json([
             'error' => false,
             'message' => 'Berhasil melengkapi profil.',
-            'data' => []
+            'data' => null
         ]);
     }
 

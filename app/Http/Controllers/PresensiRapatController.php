@@ -35,7 +35,7 @@ class PresensiRapatController extends Controller
             return response()->json([
                 'error' => true,
                 'message' => Str::ucfirst($validator->errors()->first()),
-                'data' => []
+                'data' => null
             ]);
         }
 
@@ -57,7 +57,7 @@ class PresensiRapatController extends Controller
         return response()->json([
             'error' => false,
             'message' => 'Presensi berhasil dilakukan.',
-            'data' => []
+            'data' => null
         ]);
     }
 

@@ -74,7 +74,7 @@ class NotificationController extends Controller
             return response()->json([
                 'error' => true,
                 'message' => Str::ucfirst($validator->errors()->first()),
-                'data' => []
+                'data' => null
             ]);
         }
 
@@ -83,7 +83,7 @@ class NotificationController extends Controller
         return response()->json([
             'error' => false,
             'message' => 'Notifikasi berhasil ditambahkan.',
-            'data' => []
+            'data' => null
         ]);
     }
 

@@ -71,7 +71,7 @@ class UserController extends Controller
             return response()->json([
                 'error' => true,
                 'message' => Str::ucfirst($validator->errors()->first()),
-                'data' => []
+                'data' => null
             ]);
         }
 
@@ -104,7 +104,7 @@ class UserController extends Controller
         return response()->json([
             'error' => false,
             'message' => 'Berhasil mengubah profil.',
-            'data' => []
+            'data' => null
         ]);
     }
 
@@ -125,7 +125,7 @@ class UserController extends Controller
             return response()->json([
                 'error' => true,
                 'message' => Str::ucfirst($validator->errors()->first()),
-                'data' => []
+                'data' => null
             ]);
         }
 
@@ -135,7 +135,7 @@ class UserController extends Controller
             return response()->json([
                 'error' => true,
                 'message' => 'Password lama tidak sesuai dengan password saat ini.',
-                'data' => []
+                'data' => null
             ]);
         }
 
@@ -144,7 +144,7 @@ class UserController extends Controller
         return response()->json([
             'error' => false,
             'message' => 'Berhasil mengubah password.',
-            'data' => []
+            'data' => null
         ]);
     }
 
@@ -161,7 +161,7 @@ class UserController extends Controller
             return response()->json([
                 'error' => true,
                 'message' => Str::ucfirst($validator->errors()->first()),
-                'data' => []
+                'data' => null
             ]);
         }
 
@@ -169,7 +169,7 @@ class UserController extends Controller
             return response()->json([
                 'error' => true,
                 'message' => 'Unauthorized.',
-                'data' => []
+                'data' => null
             ]);
         }
 
@@ -193,7 +193,7 @@ class UserController extends Controller
         return response()->json([
             'error' => false,
             'message' => 'Tanggal dan waktu wawancara berhasil ditetapkan.',
-            'data' => []
+            'data' => null
         ]);
     }
 
@@ -209,7 +209,7 @@ class UserController extends Controller
             return response()->json([
                 'error' => true,
                 'message' => Str::ucfirst($validator->errors()->first()),
-                'data' => []
+                'data' => null
             ]);
         }
 
@@ -217,7 +217,7 @@ class UserController extends Controller
             return response()->json([
                 'error' => true,
                 'message' => 'Unauthorized.',
-                'data' => []
+                'data' => null
             ]);
         }
 
@@ -227,7 +227,7 @@ class UserController extends Controller
         return response()->json([
             'error' => false,
             'message' => 'Pendaftaran pengurus baru berhasil ditolak, data telah dihapus.',
-            'data' => []
+            'data' => null
         ]);
     }
 
@@ -244,7 +244,7 @@ class UserController extends Controller
             return response()->json([
                 'error' => true,
                 'message' => Str::ucfirst($validator->errors()->first()),
-                'data' => []
+                'data' => null
             ]);
         }
 
@@ -252,7 +252,7 @@ class UserController extends Controller
             return response()->json([
                 'error' => true,
                 'message' => 'Unauthorized.',
-                'data' => []
+                'data' => null
             ]);
         }
 
@@ -288,7 +288,7 @@ class UserController extends Controller
         return response()->json([
             'error' => false,
             'message' => 'Pendaftaran pengurus baru berhasil diterima.',
-            'data' => []
+            'data' => null
         ]);
     }
 
@@ -305,7 +305,7 @@ class UserController extends Controller
             return response()->json([
                 'error' => true,
                 'message' => Str::ucfirst($validator->errors()->first()),
-                'data' => []
+                'data' => null
             ]);
         }
 
@@ -313,7 +313,7 @@ class UserController extends Controller
             return response()->json([
                 'error' => true,
                 'message' => 'Unauthorized.',
-                'data' => []
+                'data' => null
             ]);
         }
 
@@ -349,7 +349,7 @@ class UserController extends Controller
         return response()->json([
             'error' => false,
             'message' => 'Perubahan berhasil ditetapkan.',
-            'data' => []
+            'data' => null
         ]);
     }
 
@@ -375,7 +375,7 @@ class UserController extends Controller
         return response()->json([
             'error' => false,
             'message' => 'User berhasil dinonaktifkan.',
-            'data' => []
+            'data' => null
         ]);
     }
 

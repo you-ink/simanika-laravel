@@ -87,7 +87,7 @@ class RapatController extends Controller
             return response()->json([
                 'error' => true,
                 'message' => Str::ucfirst($validator->errors()->first()),
-                'data' => []
+                'data' => null
             ]);
         }
 
@@ -110,7 +110,7 @@ class RapatController extends Controller
         return response()->json([
             'error' => false,
             'message' => 'Rapat berhasil ditambahkan.',
-            'data' => []
+            'data' => null
         ]);
     }
 
@@ -133,7 +133,7 @@ class RapatController extends Controller
             return response()->json([
                 'error' => true,
                 'message' => Str::ucfirst($validator->errors()->first()),
-                'data' => []
+                'data' => null
             ]);
         }
 
@@ -158,7 +158,7 @@ class RapatController extends Controller
         return response()->json([
             'error' => false,
             'message' => 'Rapat berhasil diubah.',
-            'data' => []
+            'data' => null
         ]);
     }
 
@@ -184,7 +184,7 @@ class RapatController extends Controller
         return response()->json([
             'error' => false,
             'message' => 'Rapat berhasil dihapus.',
-            'data' => []
+            'data' => null
         ]);
     }
 
@@ -204,7 +204,7 @@ class RapatController extends Controller
             return response()->json([
                 'error' => true,
                 'message' => Str::ucfirst($validator->errors()->first()),
-                'data' => []
+                'data' => null
             ]);
         }
 
@@ -222,7 +222,7 @@ class RapatController extends Controller
         return response()->json([
             'error' => false,
             'message' => 'Notulensi berhasil ditambahkan.',
-            'data' => []
+            'data' => null
         ]);
     }
 

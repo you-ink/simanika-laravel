@@ -115,7 +115,7 @@ class ArtikelController extends Controller
             return response()->json([
                 'error' => true,
                 'message' => Str::ucfirst($validator->errors()->first()),
-                'data' => []
+                'data' => null
             ]);
         }
 
@@ -165,7 +165,7 @@ class ArtikelController extends Controller
         return response()->json([
             'error' => false,
             'message' => 'Artikel berhasil ditambahkan.',
-            'data' => []
+            'data' => null
         ]);
     }
 
@@ -192,7 +192,7 @@ class ArtikelController extends Controller
             return response()->json([
                 'error' => true,
                 'message' => Str::ucfirst($validator->errors()->first()),
-                'data' => []
+                'data' => null
             ]);
         }
 
@@ -246,7 +246,7 @@ class ArtikelController extends Controller
         return response()->json([
             'error' => false,
             'message' => 'Artikel berhasil diubah.',
-            'data' => []
+            'data' => null
         ]);
     }
 
@@ -271,7 +271,7 @@ class ArtikelController extends Controller
         return response()->json([
             'error' => false,
             'message' => 'Artikel berhasil dihapus.',
-            'data' => []
+            'data' => null
         ]);
     }
 
