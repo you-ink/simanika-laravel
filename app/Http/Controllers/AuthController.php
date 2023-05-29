@@ -34,7 +34,7 @@ class AuthController extends Controller
             ]);
         }
 
-        $user = User::where('email', $request->email)->first();
+        $user = User::select(['id', 'nama'])->where('email', $request->email)->first();
 
         // if (! $user || ! Hash::check($request->password, $user->password)) {
         //     return response()->json([
@@ -55,11 +55,14 @@ class AuthController extends Controller
             ]);
         }
 
+        $user = $user->load('detailUser:id,foto,user_id,jabatan_id', 'detailUser.jabatan:id,nama');
+
         return response()->json([
             'error' => false,
             'message' => 'Berhasil login.',
             'data' => [
-                'token' => $token
+                'token' => $token,
+                'user' => $user
             ]
         ]);
     }
