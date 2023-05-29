@@ -422,20 +422,6 @@
   <script src="{{url('assets/js/homepage-main.js')}}"></script>
   <script src="<?= url('assets/js/jquery-3.6.1.min.js') ?>"></script>
   <script src="<?= url('assets/js/dashboard-main.js') ?>"></script>
-  <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
-  <script>
-    // Enable pusher logging - don't include this in production
-    Pusher.logToConsole = true;
-
-    var pusher = new Pusher('5d8e462327809b06a3fe', {
-      cluster: 'ap1'
-    });
-
-    var channel = pusher.subscribe('simanika-channel');
-    channel.bind('simanika-event', function(data) {
-      alert(JSON.stringify(data));
-    });
-  </script>
     <script>
         $(document).ready(function() {
 

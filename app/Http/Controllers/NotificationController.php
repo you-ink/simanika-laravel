@@ -14,7 +14,6 @@ class NotificationController extends Controller
     public function index(Request $request)
     {
         $waktu = $request->query('waktu', now()->subDays(7));
-
         $notification = Notification::query();
         $notification->select('id', 'judul', 'isi', 'created_at')->where('created_at', '>', $waktu);
         $search = isset($request->search['value']) ? $request->search['value'] : '';

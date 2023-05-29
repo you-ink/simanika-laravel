@@ -18,7 +18,6 @@ class PresensiRapatController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'waktu_hadir' => 'required|date',
             'foto' => 'required|file|mimes:jpg,png,jpeg|max:5048',
             'peran' => 'required|in:ketua,sekretaris,bendahara,sie humas,sie pdd,sie perkab,sie konsumsi',
             'rapat_id' => 'required',
@@ -47,7 +46,7 @@ class PresensiRapatController extends Controller
         // End Upload File
 
         $presensirapat = PresensiRapat::create([
-            'waktu_hadir' => date("Y-m-d h:i:s", strtotime($request->tanggal)),
+            'waktu_hadir' => date("Y-m-d h:i:s"),
             'foto' => Storage::url($path),
             'peran' => $request->peran,
             'user_id' => Auth::user()->id,

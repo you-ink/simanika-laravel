@@ -140,34 +140,13 @@
                                     aria-expanded="false">
                                     <div class="nav-link-icon__wrapper">
                                         <i class="material-icons">&#xE7F4;</i>
-                                        <span class="badge badge-pill badge-danger">2</span>
+                                        <span class="badge badge-pill badge-danger jumlah-notif-terbaru"></span>
                                     </div>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-small" aria-labelledby="dropdownMenuLink">
-                                    <a class="dropdown-item" href="#">
-                                        <div class="notification__icon-wrapper">
-                                            <div class="notification__icon">
-                                                <i class="material-icons">&#xE6E1;</i>
-                                            </div>
-                                        </div>
-                                        <div class="notification__content">
-                                            <span class="notification__category">Rapat Proker</span>
-                                            <p>Rapat Disnat ke 3</p>
-                                                <p><span class="text-danger text-semibold">12/06/2023</span></p>
-                                        </div>
-                                    </a>
-                                    <a class="dropdown-item" href="#">
-                                        <div class="notification__icon-wrapper">
-                                            <div class="notification__icon">
-                                                <i class="material-icons">&#xE8D1;</i>
-                                            </div>
-                                        </div>
-                                        <div class="notification__content">
-                                            <span class="notification__category">Rapat Resmi</span>
-                                            <p>Rapat Penerimaan anggota baru</p>
-                                                <p> <span class="text-success text-semibold">12/05/2023</span></p>
-                                        </div>
-                                    </a>
+                                    <section class="notif-terbaru">
+
+                                    </section>
                                     <a class="dropdown-item notification__all text-center"  href="<?php echo url('dashboard/notifikasi') ?>"> View all
                                         Notifications </a>
                                 </div>
@@ -184,7 +163,7 @@
                                     <span class="d-none d-md-inline-block">{{ $user->nama }}</span>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-small">
-                                    <a class="dropdown-item" href="<?php echo url('dashboard/profile') ?>">
+                                    <a class="dropdown-item" href="<?php echo url('dashboard/user_profile') ?>">
                                         <i class="material-icons">&#xE7FD;</i> Profile
                                     </a>
                                     <div class="dropdown-divider"></div>
@@ -279,7 +258,51 @@
     </script>
 
     <script src="<?= url('assets/js/dashboard-main.js') ?>"></script>
+    <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+    <script>
+        // Enable pusher logging - don't include this in production
+        Pusher.logToConsole = true;
 
+        var pusher = new Pusher('5d8e462327809b06a3fe', {
+            cluster: 'ap1'
+        });
+
+        var channel = pusher.subscribe('simanika-channel');
+        channel.bind('simanika-event', function(data) {
+            let jumlah = $('.jumlah-notif-terbaru').html();
+            if (jumlah) {
+                jumlah = parseInt(jumlah)
+            } else {
+                jumlah = 0;
+            }
+            $('.jumlah-notif-terbaru').html(jumlah+1);
+            load_notifikasi();
+        });
+
+        function load_notifikasi(){
+            callApi("GET", "{{ route('api.notifikasi.index') }}?length=5&start=0", null, function(req) {
+                notifikasi = '';
+                $.each(req.data, function(index, val) {
+                    notifikasi += `<a class="dropdown-item" href="#">
+                                    <div class="notification__icon-wrapper">
+                                        <div class="notification__icon">
+                                            <i class="material-icons">&#xE7F7;</i>
+                                        </div>
+                                    </div>
+                                    <div class="notification__content">
+                                        <span class="notification__category">${val.judul}</span>
+                                        <p>${val.isi}</p>
+                                        <p><span class="text-secondary text-semibold">${new Date(val.created_at).toLocaleString()}</span></p>
+                                    </div>
+                                </a>`;
+                });
+
+                $(".notif-terbaru").html(notifikasi);
+            })
+        }
+
+        load_notifikasi();
+    </script>
     <script>
         var getUploadedFile = {};
         // Function For Upload File

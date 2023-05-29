@@ -44,7 +44,7 @@ function callApi(t, n, a, e, f = function(){}) {
         setContentType = 'application/x-www-form-urlencoded';
     }
 
-    console.log(formData);
+    // console.log(formData);
 
     $.ajax({ url: n, type: t, headers: setAuthorization, data: formData, processData: false, contentType: setContentType }).done(function (n) {
         e(n);
