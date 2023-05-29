@@ -56,6 +56,23 @@ class RapatController extends Controller
         ], 200);
     }
 
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function meeting_today()
+    {
+        $rapat = Rapat::query();
+        $rapat->where('tanggal', '=', date('Y-m-d'));
+        $rapat = $rapat->get();
+
+        return response()->json([
+            'error' => false,
+            'message' => 'Berhasil mengambil data.',
+            'data' => RapatResource::collection($rapat->loadMissing(['divisi:id,nama'])),
+        ], 200);
+    }
+
     /**
      * Display the specified resource.
      */

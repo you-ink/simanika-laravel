@@ -66,6 +66,7 @@ Route::get('artikel', [ArtikelController::class, 'index'])->name('api.artikel.in
 Route::get('artikel/{id}', [ArtikelController::class, 'show'])->name('api.artikel.detail');
 
 Route::get('rapat', [RapatController::class, 'index'])->name('api.rapat.index');
+Route::get('rapat_hari_ini', [RapatController::class, 'meeting_today'])->name('api.rapat.today');
 Route::get('rapat/{id}', [RapatController::class, 'show'])->name('api.rapat.detail');
 
 Route::get('notifikasi', [NotificationController::class, 'index'])->name('api.notifikasi.index');
