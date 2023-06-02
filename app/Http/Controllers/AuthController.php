@@ -34,7 +34,7 @@ class AuthController extends Controller
             ]);
         }
 
-        $user = User::select(['id', 'nama'])->where('email', $request->email)->first();
+        $user = User::select(['id', 'nama', 'status'])->where('email', $request->email)->first();
 
         // if (! $user || ! Hash::check($request->password, $user->password)) {
         //     return response()->json([

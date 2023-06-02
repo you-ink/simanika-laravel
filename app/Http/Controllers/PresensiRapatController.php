@@ -64,6 +64,27 @@ class PresensiRapatController extends Controller
         ]);
     }
 
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function checking_presensi($rapat_id)
+    {
+        $presensi = PresensiRapat::where('rapat_id', $rapat_id)->where('user_id', Auth::user()->id)->first();
+        if (!$presensi) {
+            return response()->json([
+                'error' => true,
+                'message' => 'Presensi belum dilakukan pada rapat ini.',
+                'data' => null
+            ]);
+        }
+
+        return response()->json([
+            'error' => false,
+            'message' => 'Presensi telah dilakukan pada rapat ini.',
+            'data' => null
+        ]);
+    }
+
     function generateRandomString($length = 10) {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $randomString = '';

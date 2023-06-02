@@ -36,6 +36,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     // Presensi Rapat
     Route::post('presensi', [PresensiRapatController::class, 'store']);
+    Route::get('cek_presensi/{rapat_id}', [PresensiRapatController::class, 'checking_presensi']);
 
     // Notifikasi
     Route::post('notifikasi', [NotificationController::class, 'store'])->name('api.notifikasi.store');
