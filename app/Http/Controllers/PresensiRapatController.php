@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DateTime;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\PresensiRapat;
@@ -45,8 +46,11 @@ class PresensiRapatController extends Controller
         $path = Storage::putFileAs('public/images/rapat/'.$request->rapat_id, $request->foto, $namaFoto.".".$ekstensiFoto);
         // End Upload File
 
+        $date = new DateTime();
+        $formattedDate = $date->format('Y-m-d H:i:s');
+
         $presensirapat = PresensiRapat::create([
-            'waktu_hadir' => date("Y-m-d h:i:s"),
+            'waktu_hadir' => $formattedDate,
             'foto' => Storage::url($path),
             'peran' => $request->peran,
             'user_id' => Auth::user()->id,
