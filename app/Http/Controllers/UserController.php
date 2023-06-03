@@ -380,6 +380,12 @@ class UserController extends Controller
         ]);
     }
 
+    public function akun()
+    {
+        $user = User::findOrFail(Auth::user()->id);
+        return response()->json($user->load('detailUser:id,foto,bukti_kesanggupan,bukti_mahasiswa,tanggal_wawancara,waktu_wawancara,user_id,divisi_id,jabatan_id', 'detailUser.divisi:id,nama', 'detailUser.jabatan:id,nama'), 200);
+    }
+
     function generateRandomString($length = 10) {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $randomString = '';

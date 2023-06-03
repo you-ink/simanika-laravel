@@ -72,12 +72,6 @@ class AuthController extends Controller
         $request->user()->currentAccessToken()->delete();
     }
 
-    public function akun(Request $request)
-    {
-        $user = Auth::user()->with('detailUser')->first();
-        return response()->json($user->load('detailUser:id,foto,bukti_kesanggupan,bukti_mahasiswa,tanggal_wawancara,waktu_wawancara,user_id,divisi_id,jabatan_id', 'detailUser.divisi:id,nama', 'detailUser.jabatan:id,nama'), 200);
-    }
-
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [

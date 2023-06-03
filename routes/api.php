@@ -44,7 +44,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::delete('notifikasi/{id}', [NotificationController::class, 'destroy'])->name('api.notifikasi.delete');
 
     // Auth
-    Route::post('akun', [AuthController::class, 'akun'])->name('api.akun');
+    Route::post('akun', [UserController::class, 'akun'])->name('api.akun');
     Route::post('logout', [AuthController::class, 'logout'])->name('api.logout');
     Route::post('lengkapi_profil', [AuthController::class, 'complete_profile'])->name('api.lengkapi_profile');
 
