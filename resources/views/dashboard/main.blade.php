@@ -98,6 +98,7 @@
         </div>
     </div>
 
+    @if ($user->status == 1)
     <div class="row">
         <!-- Users Stats -->
         <div class="col-lg-12 col-md-12 col-sm-12 mb-4">
@@ -159,6 +160,7 @@
             </div>
         </div>
     </div>
+    @endif
 </div>
 
 <!-- CRUD Modal -->

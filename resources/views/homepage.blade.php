@@ -216,7 +216,7 @@
           </div>
         </div>
 
-        <div class="row section-artikel">
+        <div class="row artikel-container section-artikel">
 
         </div>
 

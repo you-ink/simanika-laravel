@@ -142,6 +142,74 @@
 <script>
     $(document).ready(function () {
 
+        function load_new_article(params = []) {
+            $("table.table-new-article").DataTable().destroy()
+            $("table.table-new-article").DataTable({
+                "deferRender": true,
+                    "responsive": true,
+                    'serverSide': true,
+                    'processing': true,
+                    "ordering": false,
+                    "ajax": {
+                        "url": "{{ route('api.artikel.baru') }}",
+                        "type": "GET",
+                        "data": {
+                            "sort": "DESC",
+                            "length": 5
+                        },
+                        "headers": {
+                            "Authorization" : getAuthorization()
+                        },
+                        "dataSrc": "data"
+                    },
+                    "columns": [
+                        {
+                            data: null,
+                            render: function (data, type, row, meta) {
+                                return meta.row + meta.settings._iDisplayStart + 1 + '.';
+                            }
+                        },
+                        {
+                            data: 'judul'
+                        },
+                        {
+                            data: null,
+                            render: res => {
+                                return `<img src="{{ url('/') }}${res.sampul}" alt="Foto ${res.judul}" width="125px" height="125px">`;
+                            }
+                        },
+                    ],
+                    dom: "<'row'<'col-sm-12 mb-2'B>>lrtip",
+                    lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                    buttons: [
+                        {
+                            extend: 'excel',
+                            text: '<i class="fas fa-download"></i> Download Excel',
+                            filename: 'Data Agenda Rapat Himanika',
+                            title: null,
+                            className: 'btn btn-sm btn-success',
+                            exportOptions: {
+                                columns: [ 0, 1, 2, 3, 4 ]
+                            }
+                        },
+                        {
+                            extend: 'print',
+                            text: '<i class="fas fa-print"></i> Print',
+                            title: 'Data Agenda Rapat Himanika',
+                            className: 'btn btn-sm btn-success',
+                            exportOptions: {
+                                columns: [ 0, 1, 2, 3, 4 ]
+                            }
+                        },
+                    ]
+            });
+        }
+
+        load_new_article()
+
+
+        @if($user->level_id == 1)
+
         function load_meeting_this_month(params = []) {
             $("table.table-meeting-this-month").DataTable().destroy()
             $("table.table-meeting-this-month").DataTable({
@@ -241,75 +309,6 @@
         }
 
         load_meeting_this_month()
-
-
-        function load_new_article(params = []) {
-            $("table.table-new-article").DataTable().destroy()
-            $("table.table-new-article").DataTable({
-                "deferRender": true,
-                    "responsive": true,
-                    'serverSide': true,
-                    'processing': true,
-                    "ordering": false,
-                    "ajax": {
-                        "url": "{{ route('api.artikel.baru') }}",
-                        "type": "GET",
-                        "data": {
-                            "sort": "DESC",
-                            "length": 5
-                        },
-                        "headers": {
-                            "Authorization" : getAuthorization()
-                        },
-                        "dataSrc": "data"
-                    },
-                    "columns": [
-                        {
-                            data: null,
-                            render: function (data, type, row, meta) {
-                                return meta.row + meta.settings._iDisplayStart + 1 + '.';
-                            }
-                        },
-                        {
-                            data: 'judul'
-                        },
-                        {
-                            data: null,
-                            render: res => {
-                                return `<img src="{{ url('/') }}${res.sampul}" alt="Foto ${res.judul}" width="125px" height="125px">`;
-                            }
-                        },
-                    ],
-                    dom: "<'row'<'col-sm-12 mb-2'B>>lrtip",
-                    lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-                    buttons: [
-                        {
-                            extend: 'excel',
-                            text: '<i class="fas fa-download"></i> Download Excel',
-                            filename: 'Data Agenda Rapat Himanika',
-                            title: null,
-                            className: 'btn btn-sm btn-success',
-                            exportOptions: {
-                                columns: [ 0, 1, 2, 3, 4 ]
-                            }
-                        },
-                        {
-                            extend: 'print',
-                            text: '<i class="fas fa-print"></i> Print',
-                            title: 'Data Agenda Rapat Himanika',
-                            className: 'btn btn-sm btn-success',
-                            exportOptions: {
-                                columns: [ 0, 1, 2, 3, 4 ]
-                            }
-                        },
-                    ]
-            });
-        }
-
-        load_new_article()
-
-
-        @if($user->level_id == 1)
 
         function load_member(params = []) {
             $("table.table-member").DataTable().destroy()
