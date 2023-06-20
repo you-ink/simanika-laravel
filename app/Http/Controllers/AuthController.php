@@ -204,13 +204,14 @@ class AuthController extends Controller
         }
 
          // Tambahkan Notifikasi
+         $user = User::findOrFail($detailuser->id);
          $notifikasi = Notification::create([
             'user_id' => $detailuser->id,
             'judul' => "Telah Melengkapi Profile",
-            'isi' => "Anggota baru \"".$detailuser->nama."\" telah melengkapi profilenya. Cek sekarang!"
+            'isi' => "Anggota baru \"".$user->nama."\" telah melengkapi profilenya. Cek sekarang!"
         ]);
 
-        event(new ContentNotification("Anggota baru \"".$detailuser->nama."\" telah melengkapi profilenya. Cek sekarang!", $detailuser->id));
+        event(new ContentNotification("Anggota baru \"".$user->nama."\" telah melengkapi profilenya. Cek sekarang!", $detailuser->id));
 
         return response()->json([
             'error' => false,
