@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Notification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class NotificationController extends Controller
@@ -22,6 +24,14 @@ class NotificationController extends Controller
                 $query->where('judul', 'like', '%'.$search.'%')
                     ->orWhere('isi', 'like', '%'.$search.'%');
             });
+        }
+
+        $userLogin = Auth::user()->id;
+        $user = User::findOrFail($userLogin);
+        if ($user->status != 1) {
+            $notification->where('user_id', '=', $user->id);
+        } else if ($user->detailUser->divisi->id != 1) {
+            $notification->whereRaw("(user_id is null || user_id = ?)", $user->id);
         }
 
         $total_data = $notification->count();

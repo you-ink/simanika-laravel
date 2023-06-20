@@ -183,13 +183,14 @@ class UserController extends Controller
 
         // Tambahkan Notifikasi
         $notifikasi = Notification::create([
+            'user_id' => $infoUser->id,
             'judul' => "Jadwal Wawancara Baru",
             'isi' => "Calon pengurus baru \"".$infoUser->nama."\" akan wawancara pada \"".
                         $request->tanggal_wawancara." ".$request->waktu_wawancara."\"."
         ]);
 
         event(new ContentNotification("Calon pengurus baru \"".$infoUser->nama."\" akan wawancara pada \"".
-                $request->tanggal_wawancara." ".$request->waktu_wawancara."\"."));
+                $request->tanggal_wawancara." ".$request->waktu_wawancara."\".", $infoUser->id));
 
         return response()->json([
             'error' => false,
@@ -280,11 +281,12 @@ class UserController extends Controller
 
         // Tambahkan Notifikasi
         $notifikasi = Notification::create([
+            'user_id' => $infoUser->id,
             'judul' => "Pengurus Baru",
             'isi' => "Pendaftaran pengurus baru \"".$infoUser->nama."\" telah disetujui."
         ]);
 
-        event(new ContentNotification("Pendaftaran pengurus baru \"".$infoUser->nama."\" telah disetujui."));
+        event(new ContentNotification("Pendaftaran pengurus baru \"".$infoUser->nama."\" telah disetujui.", $infoUser->id));
 
         return response()->json([
             'error' => false,
@@ -341,11 +343,12 @@ class UserController extends Controller
 
         // Tambahkan Notifikasi
         $notifikasi = Notification::create([
+            'user_id' => $infoUser->id,
             'judul' => "Perubahan Divisi/Jabatan",
             'isi' => "Terjadi perubahan Divisi/Jabatan pada user \"".$infoUser->nama."\"."
         ]);
 
-        event(new ContentNotification("Terjadi perubahan Divisi/Jabatan pada user \"".$infoUser->nama."\"."));
+        event(new ContentNotification("Terjadi perubahan Divisi/Jabatan pada user \"".$infoUser->nama."\".", $infoUser->id));
 
         return response()->json([
             'error' => false,

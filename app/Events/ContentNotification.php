@@ -14,10 +14,12 @@ class ContentNotification implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public $user_id;
     public $message;
 
-    public function __construct($message)
+    public function __construct($message, $user_id = null)
     {
+        $this->user_id = $user_id;
         $this->message = $message;
     }
 

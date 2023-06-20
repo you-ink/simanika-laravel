@@ -208,7 +208,7 @@
         load_new_article()
 
 
-        @if($user->level_id == 1)
+        @if($user->status == 1)
 
         function load_meeting_this_month(params = []) {
             $("table.table-meeting-this-month").DataTable().destroy()

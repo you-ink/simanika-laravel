@@ -60,18 +60,18 @@ Route::middleware(['auth:sanctum'])->group(function () {
     // Lain-lain
     Route::get('divisi', [OtherController::class, 'get_divisi'])->name('api.divisi');
     Route::get('jabatan', [OtherController::class, 'get_jabatan'])->name('api.jabatan');
+
+    Route::get('notifikasi', [NotificationController::class, 'index'])->name('api.notifikasi.index');
+    Route::get('notifikasi/{id}', [NotificationController::class, 'show'])->name('api.notifikasi.detail');
+
+    Route::get('rapat', [RapatController::class, 'index'])->name('api.rapat.index');
+    Route::get('rapat_hari_ini', [RapatController::class, 'meeting_today'])->name('api.rapat.today');
+    Route::get('rapat/{id}', [RapatController::class, 'show'])->name('api.rapat.detail');
 });
 
 // Hanya untuk testing, nanti ditaruh di group sanctum lagi
 Route::get('artikel', [ArtikelController::class, 'index'])->name('api.artikel.index');
 Route::get('artikel/{id}', [ArtikelController::class, 'show'])->name('api.artikel.detail');
-
-Route::get('rapat', [RapatController::class, 'index'])->name('api.rapat.index');
-Route::get('rapat_hari_ini', [RapatController::class, 'meeting_today'])->name('api.rapat.today');
-Route::get('rapat/{id}', [RapatController::class, 'show'])->name('api.rapat.detail');
-
-Route::get('notifikasi', [NotificationController::class, 'index'])->name('api.notifikasi.index');
-Route::get('notifikasi/{id}', [NotificationController::class, 'show'])->name('api.notifikasi.detail');
 
 Route::get('user', [UserController::class, 'index'])->name('api.user.index');
 

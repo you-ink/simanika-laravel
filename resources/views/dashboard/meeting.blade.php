@@ -103,34 +103,35 @@
 	</div>
 </div>
 
-
-<!-- CRUD Modal Dokumen -->
-<div class="modal fade" id="crudModalDoc" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-	aria-hidden="true" data-backdrop="true">
-	<div class="modal-dialog modal-dialog-centered" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLongTitle">Upload Dokumen <span class="document-meeting-name"></span></h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<form>
-					<div class="form-row upload--notulensi">
-						<div class="form-group col-12">
-							<label>Notulensi</label>
-							<input id="notulensi" type="file" accept=".pdf, .docx, .doc">
-						</div>
-						<div class="form-group col-12 text-right btn--upload-file d-none">
-							<button type="button" class="btn btn-sm btn-secondary btn--upload-notulensi">Upload</button>
-						</div>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-</div>
+@if ($user->detailUser->divisi->id == 1)
+    <!-- CRUD Modal Dokumen -->
+    <div class="modal fade" id="crudModalDoc" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true" data-backdrop="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Upload Dokumen <span class="document-meeting-name"></span></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-row upload--notulensi">
+                            <div class="form-group col-12">
+                                <label>Notulensi</label>
+                                <input id="notulensi" type="file" accept=".pdf, .docx, .doc">
+                            </div>
+                            <div class="form-group col-12 text-right btn--upload-file d-none">
+                                <button type="button" class="btn btn-sm btn-secondary btn--upload-notulensi">Upload</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+@endif
 
 
 

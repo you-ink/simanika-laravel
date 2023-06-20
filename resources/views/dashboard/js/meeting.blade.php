@@ -59,7 +59,9 @@
                                     notulensi = '<p class="my-1">-</p>'
                                 }
 
-                                button = `<button type="button" class="btn btn-sm btn-secondary btn-upload-document" data-id="${res.id}" data-name="${res.nama}" data-toggle="modal" data-target="#crudModalDoc" ><i class="fas fa-upload"></i></button>`
+                                @if ($user->detailUser->divisi->id == 1)
+                                    button = `<button type="button" class="btn btn-sm btn-secondary btn-upload-document" data-id="${res.id}" data-name="${res.nama}" data-toggle="modal" data-target="#crudModalDoc" ><i class="fas fa-upload"></i></button>`
+                                @endif
 
 
                                 return `

@@ -55,7 +55,7 @@ class AuthController extends Controller
             ]);
         }
 
-        $user = $user->load('detailUser:id,foto,user_id,jabatan_id', 'detailUser.jabatan:id,nama');
+        $user = $user->load('detailUser:id,foto,user_id,jabatan_id,divisi_id', 'detailUser.jabatan:id,nama');
 
         return response()->json([
             'error' => false,
@@ -128,11 +128,12 @@ class AuthController extends Controller
 
         // Tambahkan Notifikasi
         $notifikasi = Notification::create([
+            'user_id' => $user_id,
             'judul' => "Anggota Baru",
-            'isi' => "Anggota baru telah mendaftar. Cek sekarang!"
+            'isi' => "Anggota baru \"".$request->nama."\" telah mendaftar. Cek sekarang!"
         ]);
 
-        event(new ContentNotification("Anggota baru telah mendaftar. Cek sekarang!"));
+        event(new ContentNotification("Anggota baru \"".$request->nama."\" telah mendaftar. Cek sekarang!", $user_id));
 
         return response()->json([
             'error' => false,
@@ -201,6 +202,15 @@ class AuthController extends Controller
         if (!empty($request->alamat)) {
             User::findOrFail(Auth::user()->id)->update(['alamat'=>$request->alamat]);
         }
+
+         // Tambahkan Notifikasi
+         $notifikasi = Notification::create([
+            'user_id' => $detailuser->id,
+            'judul' => "Telah Melengkapi Profile",
+            'isi' => "Anggota baru \"".$detailuser->nama."\" telah melengkapi profilenya. Cek sekarang!"
+        ]);
+
+        event(new ContentNotification("Anggota baru \"".$detailuser->nama."\" telah melengkapi profilenya. Cek sekarang!", $detailuser->id));
 
         return response()->json([
             'error' => false,
