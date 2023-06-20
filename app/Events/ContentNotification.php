@@ -17,7 +17,7 @@ class ContentNotification implements ShouldBroadcast
     public $user_id;
     public $message;
 
-    public function __construct($message, $user_id = null)
+    public function __construct($message, $user_id = "")
     {
         $this->user_id = $user_id;
         $this->message = $message;
