@@ -9,6 +9,7 @@ use App\Models\Notification;
 use Illuminate\Http\Request;
 use App\Events\ContentNotification;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -87,18 +88,19 @@ class UserController extends Controller
         $detailuser = DetailUser::where('user_id', Auth::user()->id)->firstOrFail();
         if (!empty($request->foto)) {
             if (!strpos($detailuser->foto, "user.png")) {
-                Storage::delete(str_replace('/storage', 'public', $detailuser->foto));
+                File::delete(public_path($detailuser->foto));
             }
 
             // Upload File
             $namaFoto = $this->generateRandomString(33).time();
             $ekstensiFoto = $request->foto->extension();
 
-            $pathFoto = Storage::putFileAs('public/images/user/profile', $request->foto, $namaFoto.".".$ekstensiFoto);
+            $pathFoto = '/assets/storage/document/user/profile/' . $namaFoto . "." . $ekstensiFoto;
+            $request->foto->move(public_path('assets/storage/document/user/profile'), $pathFoto);
             // End Upload File
 
             $detailuser->update([
-                'foto' => Storage::url($pathFoto),
+                'foto' => $pathFoto,
             ]);
         }
 

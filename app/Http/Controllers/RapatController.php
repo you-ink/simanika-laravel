@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Events\ContentNotification;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Date;
 use App\Http\Resources\RapatResource;
 use Illuminate\Support\Facades\Storage;
@@ -229,11 +230,12 @@ class RapatController extends Controller
         $namaNotulensi = $this->generateRandomString(33).time();
         $ekstensiNotulensi = $request->notulensi->extension();
 
-        $path = Storage::putFileAs('public/document/rapat/'.$request->id, $request->notulensi, $namaNotulensi.".".$ekstensiNotulensi);
+        $pathNotulensi = '/assets/storage/document/rapat/notulensi/' . $namaNotulensi . "." . $ekstensiNotulensi;
+        $request->notulensi->move(public_path('assets/storage/document/rapat/notulensi'), $pathNotulensi);
         // End Upload File
 
         $rapat = Rapat::findOrFail($request->id)->update([
-            'notulensi' => Storage::url($path),
+            'notulensi' => $pathNotulensi,
         ]);
 
         return response()->json([

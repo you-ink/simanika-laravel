@@ -9,6 +9,7 @@ use App\Models\Notification;
 use Illuminate\Http\Request;
 use App\Events\ContentNotification;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -167,35 +168,37 @@ class AuthController extends Controller
 
         if (!empty($request->bukti_kesanggupan)) {
             if (!empty($detailuser->bukti_kesanggupan)) {
-                Storage::delete(str_replace('/storage', 'public', $detailuser->bukti_kesanggupan));
+                File::delete(public_path($detailuser->bukti_kesanggupan));
             }
 
             // Upload File
             $namaKesanggupan = $this->generateRandomString(33).time();
             $ekstensiKesanggupan = $request->bukti_kesanggupan->extension();
 
-            $pathKesanggupan = Storage::putFileAs('public/document/user/bukti-kesanggupan', $request->bukti_kesanggupan, $namaKesanggupan.".".$ekstensiKesanggupan);
+            $pathKesanggupan = '/assets/storage/document/user/bukti-kesanggupan/' . $namaKesanggupan . "." . $ekstensiKesanggupan;
+            $request->bukti_kesanggupan->move(public_path('assets/storage/document/user/bukti-kesanggupan'), $pathKesanggupan);
             // End Upload File
 
             $detailuser->update([
-                'bukti_kesanggupan' => Storage::url($pathKesanggupan),
+                'bukti_kesanggupan' => $pathKesanggupan,
             ]);
         }
 
         if (!empty($request->bukti_mahasiswa)) {
             if (!empty($detailuser->bukti_mahasiswa)) {
-                Storage::delete(str_replace('/storage', 'public', $detailuser->bukti_mahasiswa));
+                File::delete(public_path($detailuser->bukti_mahasiswa));
             }
 
             // Upload File
             $namaBuktiMahasiswa = $this->generateRandomString(33).time();
             $ekstensiBuktiMahasiswa = $request->bukti_mahasiswa->extension();
 
-            $pathBuktiMahasiswa = Storage::putFileAs('public/document/user/bukti-mahasiswa', $request->bukti_mahasiswa, $namaBuktiMahasiswa.".".$ekstensiBuktiMahasiswa);
+            $pathBuktiMahasiswa = '/assets/storage/document/user/bukti-mahasiswa/' . $namaBuktiMahasiswa . "." . $ekstensiBuktiMahasiswa;
+            $request->bukti_mahasiswa->move(public_path('assets/storage/document/user/bukti-mahasiswa'), $pathBuktiMahasiswa);
             // End Upload File
 
             $detailuser->update([
-                'bukti_mahasiswa' => Storage::url($pathBuktiMahasiswa),
+                'bukti_mahasiswa' => $pathBuktiMahasiswa,
             ]);
         }
 

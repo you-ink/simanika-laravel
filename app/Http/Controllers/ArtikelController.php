@@ -13,6 +13,7 @@ use App\Events\ContentNotification;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\ArtikelResource;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 
@@ -123,13 +124,14 @@ class ArtikelController extends Controller
         $namaSampul = $this->generateRandomString(33).time();
         $ekstensiSampul = $request->sampul->extension();
 
-        $path = Storage::putFileAs('public/images/artikel/sampul', $request->sampul, $namaSampul.".".$ekstensiSampul);
+        $pathSampul = '/assets/storage/document/artikel/sampul/' . $namaSampul . "." . $ekstensiSampul;
+        $request->sampul->move(public_path('assets/storage/document/artikel/sampul'), $pathSampul);
         // End Upload File
 
         $artikel = Artikel::create([
             'judul' => $request->judul,
             'konten' => $request->konten,
-            'sampul' => Storage::url($path),
+            'sampul' => $pathSampul,
             'user_id' => Auth::user()->id,
             'divisi_id' => Auth::user()->detailUser->divisi_id
         ]);
@@ -142,11 +144,12 @@ class ArtikelController extends Controller
             $namaFile = $this->generateRandomString(33).time();
             $ekstensiFile = $file->extension();
 
-            $path = Storage::putFileAs('public/images/artikel/file', $file, $namaFile.".".$ekstensiFile);
+            $pathfile = '/assets/storage/document/artikel/file/' . $namaFile . "." . $ekstensiFile;
+            $file->move(public_path('assets/storage/document/artikel/file'), $pathfile);
             // End Upload File
 
             $fileArray[] = [
-                "file" => Storage::url($path),
+                "file" => $pathfile,
                 "artikel_id" => $artikel_id,
                 "created_at" => Carbon::now()
             ];
@@ -208,17 +211,18 @@ class ArtikelController extends Controller
             $namaSampul = $this->generateRandomString(33).time();
             $ekstensiSampul = $request->sampul->extension();
 
-            $path = Storage::putFileAs('public/images/artikel/sampul', $request->sampul, $namaSampul.".".$ekstensiSampul);
+            $pathSampul = '/assets/storage/document/artikel/sampul/' . $namaSampul . "." . $ekstensiSampul;
+            $request->sampul->move(public_path('assets/storage/document/artikel/sampul'), $pathSampul);
             // End Upload File
-            $dataArtikel['sampul'] = Storage::url($path);
-            Storage::delete(str_replace('/storage', 'public', $artikel->sampul));
+            $dataArtikel['sampul'] = $pathSampul;
+            File::delete(public_path($artikel->sampul));
         }
 
         if (isset($request->file) && !empty($request->file)) {
             $artikelData = new ArtikelResource($artikel);
             // Delete File
             foreach ($artikelData->file->pluck('file')->toArray() as $path) {
-                Storage::delete(str_replace('/storage', 'public', $path));
+                File::delete(public_path($path));
             }
 
             ArtikelFile::where(['artikel_id'=>$id])->delete();
@@ -228,11 +232,12 @@ class ArtikelController extends Controller
                 $namaFile = $this->generateRandomString(33).time();
                 $ekstensiFile = $file->extension();
 
-                $path = Storage::putFileAs('public/images/artikel/file', $file, $namaFile.".".$ekstensiFile);
+                $pathfile = '/assets/storage/document/artikel/file/' . $namaFile . "." . $ekstensiFile;
+                $file->move(public_path('assets/storage/document/artikel/file'), $pathfile);
                 // End Upload File
 
                 $fileArray[] = [
-                    "file" => Storage::url($path),
+                    "file" => $pathfile,
                     "artikel_id" => $id,
                     "created_at" => Carbon::now()
                 ];
@@ -258,12 +263,12 @@ class ArtikelController extends Controller
         $artikel = Artikel::findOrFail($id);
 
         // Delete Sampul
-        Storage::delete(str_replace('/storage', 'public', $artikel->sampul));
+        File::delete(public_path($artikel->sampul));
 
         $artikelData = new ArtikelResource($artikel);
         // Delete File
         foreach ($artikelData->file->pluck('file')->toArray() as $path) {
-            Storage::delete(str_replace('/storage', 'public', $path));
+            File::delete(public_path($path));
         }
 
         $artikel->delete();

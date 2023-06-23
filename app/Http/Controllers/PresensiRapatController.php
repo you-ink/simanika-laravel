@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\PresensiRapat;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -43,7 +44,8 @@ class PresensiRapatController extends Controller
         $namaFoto = $this->generateRandomString(33).time();
         $ekstensiFoto = $request->foto->extension();
 
-        $path = Storage::putFileAs('public/images/rapat/'.$request->rapat_id, $request->foto, $namaFoto.".".$ekstensiFoto);
+        $pathFoto = '/assets/storage/document/rapat/daftar-hadir/' . $namaFoto . "." . $ekstensiFoto;
+        $request->foto->move(public_path('assets/storage/document/rapat/daftar-hadir'), $pathFoto);
         // End Upload File
 
         $date = new DateTime();
@@ -51,7 +53,7 @@ class PresensiRapatController extends Controller
 
         $presensirapat = PresensiRapat::create([
             'waktu_hadir' => $formattedDate,
-            'foto' => Storage::url($path),
+            'foto' => $pathFoto,
             'peran' => $request->peran,
             'user_id' => Auth::user()->id,
             'rapat_id' => $request->rapat_id,
