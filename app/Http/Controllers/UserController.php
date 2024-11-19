@@ -7,6 +7,7 @@ use App\Models\DetailUser;
 use Illuminate\Support\Str;
 use App\Models\Notification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Events\ContentNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -48,7 +49,23 @@ class UserController extends Controller
         return response()->json([
             'error' => false,
             'message' => 'Berhasil mengambil data.',
-            'data' => $user->load('detailUser:id,foto,bukti_kesanggupan,bukti_mahasiswa,tanggal_wawancara,waktu_wawancara,user_id,divisi_id,jabatan_id', 'detailUser.divisi:id,nama', 'detailUser.jabatan:id,nama'),
+            'data' => $user->load([
+                'detailUser' => function ($query) {
+                    $query->select('id', 'foto as foto_path', 'user_id', 'jabatan_id', 'divisi_id')
+                        ->addSelect(
+                            DB::raw('
+                                CONCAT("/simanika", foto) as foto,
+                                CONCAT("/simanika", bukti_kesanggupan) as bukti_kesanggupan,
+                                CONCAT("/simanika", bukti_mahasiswa) as bukti_mahasiswa,
+                                tanggal_wawancara,waktu_wawancara,user_id,divisi_id,jabatan_id'));
+                },
+                'detailUser.divisi' => function ($query) {
+                    $query->select('id', 'nama');
+                },
+                'detailUser.jabatan' => function ($query) {
+                    $query->select('id', 'nama');
+                }
+            ]),
             'draw' => $request->draw,
             'recordsTotal' => $total_data,
             'recordsFiltered' => $total_data,
@@ -369,7 +386,23 @@ class UserController extends Controller
         return response()->json([
             'error' => false,
             'message' => 'Berhasil mengambil data.',
-            'data' => $user->load('detailUser:id,foto,bukti_kesanggupan,bukti_mahasiswa,tanggal_wawancara,waktu_wawancara,user_id,divisi_id,jabatan_id', 'detailUser.divisi:id,nama', 'detailUser.jabatan:id,nama'),
+            'data' => $user->load([
+                'detailUser' => function ($query) {
+                    $query->select('id', 'foto as foto_path', 'user_id', 'jabatan_id', 'divisi_id')
+                        ->addSelect(
+                            DB::raw('
+                                CONCAT("/simanika", foto) as foto,
+                                CONCAT("/simanika", bukti_kesanggupan) as bukti_kesanggupan,
+                                CONCAT("/simanika", bukti_mahasiswa) as bukti_mahasiswa,
+                                tanggal_wawancara,waktu_wawancara,user_id,divisi_id,jabatan_id'));
+                },
+                'detailUser.divisi' => function ($query) {
+                    $query->select('id', 'nama');
+                },
+                'detailUser.jabatan' => function ($query) {
+                    $query->select('id', 'nama');
+                }
+            ])
         ], 200);
     }
 
@@ -388,7 +421,27 @@ class UserController extends Controller
     public function akun()
     {
         $user = User::findOrFail(Auth::user()->id);
-        return response()->json($user->load('detailUser:id,foto,bukti_kesanggupan,bukti_mahasiswa,tanggal_wawancara,waktu_wawancara,user_id,divisi_id,jabatan_id', 'detailUser.divisi:id,nama', 'detailUser.jabatan:id,nama'), 200);
+        return response()->json(
+
+            $user->load([
+                'detailUser' => function ($query) {
+                    $query->select('id', 'foto as foto_path', 'user_id', 'jabatan_id', 'divisi_id')
+                        ->addSelect(
+                            DB::raw('
+                                CONCAT("/simanika", foto) as foto,
+                                CONCAT("/simanika", bukti_kesanggupan) as bukti_kesanggupan,
+                                CONCAT("/simanika", bukti_mahasiswa) as bukti_mahasiswa,
+                                tanggal_wawancara,waktu_wawancara,user_id,divisi_id,jabatan_id'));
+                },
+                'detailUser.divisi' => function ($query) {
+                    $query->select('id', 'nama');
+                },
+                'detailUser.jabatan' => function ($query) {
+                    $query->select('id', 'nama');
+                }
+            ])
+
+            , 200);
     }
 
     function generateRandomString($length = 10) {

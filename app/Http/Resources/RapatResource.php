@@ -22,7 +22,7 @@ class RapatResource extends JsonResource
             'id' => $this->id,
             'tanggal' => $this->tanggal,
             'waktu_mulai' => $this->waktu_mulai,
-            'notulensi' => $this->notulensi,
+            'notulensi' => '/simanika'.$this->notulensi,
             'nama' => $this->nama,
             'tipe' => $this->tipe,
             'deskripsi_tipe' => ($this->tipe == 1) ? 'Rapat Resmi' : 'Rapat Program Kerja',
@@ -32,6 +32,7 @@ class RapatResource extends JsonResource
                 if ($user->detailUser->divisi->id == 1) {
                     return collect($this->presensi)->each(function ($presensiItem) {
                         $presensiItem->detail_user = collect($presensiItem->user)->only(['id', 'nama'])->toArray();
+                        $presensiItem->foto = '/simanika'.$presensiItem->foto;
                         unset($presensiItem->user);
                         return $presensiItem;
                     });
@@ -39,6 +40,7 @@ class RapatResource extends JsonResource
                     return $this->presensi->map(function ($presensiItem) use ($user) {
                         if ($presensiItem->user_id == $user->id) {
                             $presensiItem->detail_user = collect($presensiItem->user)->only(['id', 'nama'])->toArray();
+                            $presensiItem->foto = '/simanika'.$presensiItem->foto;
                             unset($presensiItem->user);
                             return $presensiItem;
                         }

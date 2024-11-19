@@ -7,6 +7,7 @@ use App\Models\DetailUser;
 use Illuminate\Support\Str;
 use App\Models\Notification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Events\ContentNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -56,7 +57,15 @@ class AuthController extends Controller
             ]);
         }
 
-        $user = $user->load('detailUser:id,foto,user_id,jabatan_id,divisi_id', 'detailUser.jabatan:id,nama');
+        $user = $user->load([
+            'detailUser' => function ($query) {
+                $query->select('id', 'foto as foto_path', 'user_id', 'jabatan_id', 'divisi_id')
+                    ->addSelect(DB::raw('CONCAT("/simanika", foto) as foto'));
+            },
+            'detailUser.jabatan' => function ($query) {
+                $query->select('id', 'nama');
+            }
+        ]);
 
         return response()->json([
             'error' => false,

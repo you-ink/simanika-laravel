@@ -365,7 +365,7 @@
         $('.dt-button').removeClass("dt-button");
       }
 
-      $(document).ready(function() {
+      $(document).ready(function() { 
         change_datatable_button();
 
         @if (empty($user->detailUser->bukti_mahasiswa) || empty($user->detailUser->bukti_kesanggupan))

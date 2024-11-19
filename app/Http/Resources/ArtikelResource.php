@@ -26,10 +26,14 @@ class ArtikelResource extends JsonResource
             'id' => $this->id,
             'judul' => $this->judul,
             'konten' => $this->konten,
-            'sampul' => $this->sampul,
+            'sampul' => '/simanika'.$this->sampul,
             'tanggal' => date_format($this->created_at, "Y-m-d h:i:s"),
             'file' => $this->whenLoaded('file', function () {
-                return $this->file->pluck('file')->toArray();
+                $files = $this->file->pluck('file')->toArray();
+                foreach ($files as &$file) {
+                    $file = '/simanika' . $file;
+                }
+                return $files;
             }),
             'penulis' => $this->whenLoaded('penulis'),
             'divisi' => $this->whenLoaded('divisi'),

@@ -15,6 +15,12 @@ class FuncController extends Controller
         if (isset($_COOKIE['token']) && !empty($_COOKIE['token'])) {
             $token = PersonalAccessToken::findToken($_COOKIE['token']);
 
+            $token->tokenable->detailUser->foto = '/simanika'.$token->tokenable->detailUser->foto;
+
+            $token->tokenable->detailUser->bukti_kesanggupan = ($token->tokenable->detailUser->bukti_kesanggupan)? '/simanika'.$token->tokenable->detailUser->bukti_kesanggupan : "";
+
+            $token->tokenable->detailUser->bukti_mahasiswa = ($token->tokenable->detailUser->bukti_mahasiswa) ? '/simanika'.$token->tokenable->detailUser->bukti_mahasiswa : '';
+
             return $token->tokenable;
         } else {
             abort(Response::HTTP_NOT_FOUND);
